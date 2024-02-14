@@ -24,7 +24,7 @@ void NewGameState::leave() {
 }
 
 void NewGameState::update() {
-	if (ihdlr.keyDownEvent()) {
+ 	if (ihdlr.keyDownEvent()) {
 		fighter_mngr_->reset_lives();
 		Game::instance()->setState(Game::NEWROUND);
 	}

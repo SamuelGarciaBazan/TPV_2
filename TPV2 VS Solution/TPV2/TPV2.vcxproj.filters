@@ -285,4 +285,9 @@
       <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\config\asteroid.resources.json">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
