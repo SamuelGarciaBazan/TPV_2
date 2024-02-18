@@ -28,8 +28,7 @@ void FighterUtils::reset_fighter() {
 	int h = 50;
 	fighterTR->init(
 			Vector2D((sdlutils().width() - w) / 2,
-					(sdlutils().height() - h) / 2), Vector2D(), w, h, 0.0f,
-			true);
+					(sdlutils().height() - h) / 2), Vector2D(), w, h, 0.0f);
 
 	auto fighterGun = mngr_->getComponent<Gun>(fighter);
 	fighterGun->reset();

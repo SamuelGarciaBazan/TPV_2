@@ -18,7 +18,7 @@ RunningState::RunningState(AsteroidsFacade *ast_mngr,
 		ihdlr(ih()), //
 		ast_mngr_(ast_mngr), //
 		fighter_mngr_(fighter_mngr), //
-		lastTimeGenerated_() {
+		lastTimeGeneratedAsteroids_() {
 }
 
 RunningState::~RunningState() {
@@ -65,14 +65,15 @@ void RunningState::update() {
 
 	mngr->refresh();
 
-	if (sdlutils().virtualTimer().currTime() > lastTimeGenerated_ + 5000) {
+	if (sdlutils().virtualTimer().currTime() > lastTimeGeneratedAsteroids_ + 5000) {
 		ast_mngr_->create_asteroids(1);
-		lastTimeGenerated_ = sdlutils().virtualTimer().currTime();
+		lastTimeGeneratedAsteroids_ = sdlutils().virtualTimer().currTime();
 	}
 
 }
 
 void RunningState::enter() {
+	lastTimeGeneratedAsteroids_ = sdlutils().virtualTimer().currTime();
 }
 
 void RunningState::checkCollisions() {
@@ -100,7 +101,7 @@ void RunningState::checkCollisions() {
 				aTR->getHeight(), //
 				aTR->getRot())) {
 			onFigherDeath();
-			break;
+			return;
 		}
 
 		// asteroid with bullets
@@ -118,7 +119,7 @@ void RunningState::checkCollisions() {
 					ast_mngr_->split_astroid(a);
 					b.used = false;
 					sdlutils().soundEffects().at("explosion").play();
-					break;
+					continue;
 				}
 			}
 		}

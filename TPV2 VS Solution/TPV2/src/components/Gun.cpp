@@ -58,6 +58,7 @@ void Gun::update() {
 	for (Bullet &b : bullets_) {
 		if (b.used) {
 			b.pos = b.pos + b.vel;
+
 			/*
 			if (!b.pos.inRange(-b.width, width, -b.height, height)) {
 				b.used = false;

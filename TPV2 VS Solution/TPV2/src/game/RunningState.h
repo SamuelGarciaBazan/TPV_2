@@ -22,7 +22,7 @@ private:
 	InputHandler &ihdlr;
 	AsteroidsFacade *ast_mngr_;
 	FighterFacade *fighter_mngr_;
-	Uint32 lastTimeGenerated_;
+	Uint32 lastTimeGeneratedAsteroids_;
 
 };
 
