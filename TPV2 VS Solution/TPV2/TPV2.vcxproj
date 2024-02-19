@@ -19,27 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\components\DeAcceleration.h" />
-    <ClInclude Include="src\components\FighterCtrl.h" />
-    <ClInclude Include="src\components\Follow.h" />
-    <ClInclude Include="src\components\Generations.h" />
-    <ClInclude Include="src\components\Gun.h" />
-    <ClInclude Include="src\components\Health.h" />
-    <ClInclude Include="src\components\Image.h" />
-    <ClInclude Include="src\components\ImageWithFrames.h" />
-    <ClInclude Include="src\components\ShowAtOpossiteSide.h" />
-    <ClInclude Include="src\components\TowardsDestination.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\ecs\Component.h" />
     <ClInclude Include="src\ecs\ecs.h" />
     <ClInclude Include="src\ecs\ecs_defs_example.h" />
     <ClInclude Include="src\ecs\Entity.h" />
     <ClInclude Include="src\ecs\Manager.h" />
-    <ClInclude Include="src\game\AsteroidsFacade.h" />
-    <ClInclude Include="src\game\AsteroidsUtils.h" />
     <ClInclude Include="src\game\ecs_defs.h" />
-    <ClInclude Include="src\game\FighterFacade.h" />
-    <ClInclude Include="src\game\FighterUtils.h" />
     <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\game\GameOverState.h" />
     <ClInclude Include="src\game\GameState.h" />
@@ -69,21 +55,11 @@
     <ClInclude Include="src\utils\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\components\DeAcceleration.cpp" />
-    <ClCompile Include="src\components\FighterCtrl.cpp" />
-    <ClCompile Include="src\components\Follow.cpp" />
-    <ClCompile Include="src\components\Gun.cpp" />
-    <ClCompile Include="src\components\Health.cpp" />
-    <ClCompile Include="src\components\Image.cpp" />
-    <ClCompile Include="src\components\ImageWithFrames.cpp" />
-    <ClCompile Include="src\components\ShowAtOpossiteSide.cpp" />
-    <ClCompile Include="src\components\TowardsDestination.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\ecs\Manager.cpp" />
-    <ClCompile Include="src\game\AsteroidsUtils.cpp" />
-    <ClCompile Include="src\game\FighterUtils.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="src\game\GameOverState.cpp" />
+    <ClCompile Include="src\game\GameState.cpp" />
     <ClCompile Include="src\game\NewGameState.cpp" />
     <ClCompile Include="src\game\NewRoundState.cpp" />
     <ClCompile Include="src\game\PausedState.cpp" />
