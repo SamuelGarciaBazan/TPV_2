@@ -47,6 +47,8 @@ void Game::init() {
 
 
 	newgame_state_ = new NewGameState();
+	newround_state_ = new NewRoundState();
+	runing_state_ = new RunningState();
 
 	current_state_ = newgame_state_;
 
@@ -63,18 +65,25 @@ void Game::start() {
 	while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
 
+		//clear rendering
+		sdlutils().clearRenderer();
+
 		// refresh the input handler
 		ihdlr.refresh();
 
+		//exit game
 		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			exit = true;
 			continue;
 		}
 
+		//update state
 		current_state_->update();
 
+		//render
 		sdlutils().presentRenderer();
 
+		//sleep the process
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
 		if (frameTime < 10)
