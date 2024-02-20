@@ -1,4 +1,6 @@
 #pragma once
+#include "../sdlutils/SDLUtils.h"
+
 class GameState
 {
 
