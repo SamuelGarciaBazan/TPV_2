@@ -25,7 +25,11 @@
     <ClInclude Include="src\ecs\ecs_defs_example.h" />
     <ClInclude Include="src\ecs\Entity.h" />
     <ClInclude Include="src\ecs\Manager.h" />
+    <ClInclude Include="src\game\AsteroidsFacade.h" />
+    <ClInclude Include="src\game\AsteroidsUtils.h" />
     <ClInclude Include="src\game\ecs_defs.h" />
+    <ClInclude Include="src\game\FighterFacade.h" />
+    <ClInclude Include="src\game\FighterUtils.h" />
     <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\game\GameOverState.h" />
     <ClInclude Include="src\game\GameState.h" />
@@ -57,6 +61,8 @@
   <ItemGroup>
     <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\ecs\Manager.cpp" />
+    <ClCompile Include="src\game\AsteroidsUtils.cpp" />
+    <ClCompile Include="src\game\FighterUtils.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="src\game\GameOverState.cpp" />
     <ClCompile Include="src\game\GameState.cpp" />

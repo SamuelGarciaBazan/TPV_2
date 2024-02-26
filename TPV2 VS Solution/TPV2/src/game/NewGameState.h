@@ -2,6 +2,8 @@
 
 #include "GameState.h"
 
+class FighterFacade;
+
 class NewGameState :
     public GameState
 {
@@ -17,6 +19,8 @@ private:
 	Texture* messageTexture;
 
 	SDL_Rect messageRect;
+
+	FighterFacade* fighter;
 
 };
 

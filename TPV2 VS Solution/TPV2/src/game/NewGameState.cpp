@@ -3,6 +3,8 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 
+#include "FighterFacade.h"
+
 NewGameState::NewGameState()
 {
 	//text message
