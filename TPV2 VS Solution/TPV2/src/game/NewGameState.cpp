@@ -31,6 +31,7 @@ void NewGameState::update()
 
 		//resetear vidas del caza(con facade)
 		//...
+		fighter->reset_lives();
 		
 		//cambiar al estado newRound
 		Game::instance()->setState(Game::NEWROUND);

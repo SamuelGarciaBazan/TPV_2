@@ -1,6 +1,9 @@
 #pragma once
 #include "GameState.h"
 
+class FighterFacade;
+class AsteroidsFacade;
+
 class NewRoundState :
     public GameState
 {
@@ -17,5 +20,8 @@ private:
 	Texture* messageTexture;
 
 	SDL_Rect messageRect;
+
+	FighterFacade* fighter;
+	AsteroidsFacade* asteorids;
 };
 

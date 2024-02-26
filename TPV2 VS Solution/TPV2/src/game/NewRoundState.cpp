@@ -2,6 +2,9 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 
+#include "FighterFacade.h"
+#include "AsteroidsFacade.h"
+
 NewRoundState::NewRoundState()
 {
 	messageTexture = &sdlutils().msgs().at("newround");
@@ -24,12 +27,17 @@ void NewRoundState::update()
 
 		//reset fighter(fachada)
 		//...
+		fighter->reset_fighter();
 
 		//remove_all_asteroids (fachada)
 		//...
+		asteorids->remove_all_asteroids();
 
 		//create asteroids(10) (fachada)
 		//...
+		asteorids->create_asteroids(10);
+
+
 
 		Game::instance()->setState(Game::RUNNING);
 		
