@@ -51,7 +51,7 @@ void Game::init() {
 	runing_state_ = new RunningState();
 
 	current_state_ = newgame_state_;
-
+	newgame_state_->enter();
 
 }
 
