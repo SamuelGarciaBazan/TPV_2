@@ -12,8 +12,8 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
-//#include "AsteroidsUtils.h"
-//#include "FighterUtils.h"
+#include "AsteroidsUtils.h"
+#include "FighterUtils.h"
 #include "GameOverState.h"
 #include "NewGameState.h"
 #include "NewRoundState.h"
@@ -45,10 +45,12 @@ void Game::init() {
 	SDLUtils::init("ASTEROIDS", 800, 600,
 			"resources/config/asteroid.resources.json");
 
+	AsteroidsFacade* asteroids = new AsteroidsUtils();
+	FighterFacade* fighter = new FighterUtils();
 
-	newgame_state_ = new NewGameState();
-	newround_state_ = new NewRoundState();
-	runing_state_ = new RunningState();
+	newgame_state_ = new NewGameState(fighter);
+	newround_state_ = new NewRoundState(fighter,asteroids);
+	runing_state_ = new RunningState(fighter,asteroids);
 
 	current_state_ = newgame_state_;
 	newgame_state_->enter();

@@ -8,7 +8,7 @@ class NewGameState :
     public GameState
 {
 public:
-	NewGameState();
+	NewGameState(FighterFacade* fighter);
 	~NewGameState();
 
 	void update() override;

@@ -5,7 +5,7 @@
 #include "FighterFacade.h"
 #include "AsteroidsFacade.h"
 
-NewRoundState::NewRoundState()
+NewRoundState::NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids) :fighter(fighter), asteorids(asteorids)
 {
 	messageTexture = &sdlutils().msgs().at("newround");
 

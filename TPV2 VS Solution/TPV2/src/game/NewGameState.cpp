@@ -5,7 +5,7 @@
 
 #include "FighterFacade.h"
 
-NewGameState::NewGameState()
+NewGameState::NewGameState(FighterFacade* fighter) : fighter(fighter)
 {
 	//text message
 	messageTexture = &sdlutils().msgs().at("newgame");

@@ -1,7 +1,10 @@
 #include "RunningState.h"
 #include "../sdlutils/InputHandler.h"
 
-RunningState::RunningState()
+#include "FighterFacade.h"
+#include "AsteroidsFacade.h"
+
+RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids)
 {
 		
 }

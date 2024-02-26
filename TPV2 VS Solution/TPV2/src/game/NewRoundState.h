@@ -8,7 +8,7 @@ class NewRoundState :
     public GameState
 {
 public:
-	NewRoundState();
+	NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids) ;
 	~NewRoundState();
 
 	void update() override;
