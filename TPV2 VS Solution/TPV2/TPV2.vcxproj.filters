@@ -171,6 +171,9 @@
     <ClInclude Include="src\components\FighterCtrl.h">
       <Filter>Header Files\components</Filter>
     </ClInclude>
+    <ClInclude Include="src\components\DeAcceleration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\json\JSONValue.cpp">
@@ -241,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="src\components\FighterCtrl.cpp">
       <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\DeAcceleration.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

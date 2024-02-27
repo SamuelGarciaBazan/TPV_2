@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
+#include "../sdlutils/SDLUtils.h"
 
 
 FighterCtrl::FighterCtrl()
@@ -18,6 +19,8 @@ void FighterCtrl::update()
 	if(ih().keyDownEvent()) {
 		//acelaration
 		if (ih().isKeyDown(SDL_SCANCODE_UP)) {
+			
+			sdlutils().soundEffects().at("thrust").play();
 			myTransform->getVel().set(myTransform->getVel() + Vector2D(0, -1).rotate(myTransform->getRot() ) * thrust);
 			if (myTransform->getVel().magnitude() > speedLimit) {
 				myTransform->getVel().set(myTransform->getVel().normalize() * speedLimit);
@@ -37,8 +40,5 @@ void FighterCtrl::initComponent()
 {
 	myTransform = mngr_->getComponent<Transform>(ent_);
 
-	if (myTransform == nullptr) {
-		throw "error, no se pudo obtener el componente transform";
-	}
-	
+	assert(myTransform != nullptr);
 }

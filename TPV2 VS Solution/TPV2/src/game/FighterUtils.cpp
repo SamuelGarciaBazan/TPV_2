@@ -5,7 +5,7 @@
 #include "../components/Transform.h"
 #include "../components/Image.h"
 #include "../components/FighterCtrl.h"
-
+#include "../components/DeAcceleration.h"
 
 
 
@@ -21,7 +21,8 @@ void FighterUtils::create_fighter()
 	Transform* transform = mngr->addComponent<Transform>(fighter);
 
 	//deAcceleration
-	
+	mngr->addComponent<DeAcceleration>(fighter);
+
 	//image
 	Image* image = mngr->addComponent<Image>(fighter,"fighter");
 

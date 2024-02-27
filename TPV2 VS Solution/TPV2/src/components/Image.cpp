@@ -26,8 +26,6 @@ void Image::initComponent()
 {
 	myTransform = mngr_->getComponent<Transform>(ent_);
 	
-	if (myTransform == nullptr) {
-		throw "error, no se pudo obtener el componente transform";
-	}
+	assert(myTransform != nullptr);
 }
 
