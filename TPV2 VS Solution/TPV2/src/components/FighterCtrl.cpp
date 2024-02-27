@@ -18,13 +18,16 @@ void FighterCtrl::update()
 	if(ih().keyDownEvent()) {
 		//acelaration
 		if (ih().isKeyDown(SDL_SCANCODE_UP)) {
-			myTransform->getVel().set(myTransform->getVel() + Vector2D(0, -1).rotate(myTransform->getRot() * thrust));
+			myTransform->getVel().set(myTransform->getVel() + Vector2D(0, -1).rotate(myTransform->getRot() ) * thrust);
+			if (myTransform->getVel().magnitude() > speedLimit) {
+				myTransform->getVel().set(myTransform->getVel().normalize() * speedLimit);
+			}
 		}		
 		else if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {//rotation
-
+			myTransform->setRot(myTransform->getRot() - rotationRate);
 		}
 		else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {//rotation
-
+			myTransform->setRot(myTransform->getRot() + rotationRate);
 		}
 
 	}
