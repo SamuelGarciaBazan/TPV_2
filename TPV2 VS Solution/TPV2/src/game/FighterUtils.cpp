@@ -4,6 +4,7 @@
 
 #include "../components/Transform.h"
 #include "../components/Image.h"
+#include "../components/FighterCtrl.h"
 
 
 
@@ -20,13 +21,14 @@ void FighterUtils::create_fighter()
 	mngr->addComponent<Transform>(fighter);
 
 	//deAcceleration
-	mngr->addComponent<Image>(fighter,"fighter");
+	
 	//image
+	mngr->addComponent<Image>(fighter,"fighter");
 
 	//health
 
 	//fighterCrl
-
+	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
 
 	//showAtOpposie site
