@@ -3,6 +3,8 @@
 #include "../ecs/Manager.h"
 
 #include "../components/Transform.h"
+#include "../components/Image.h"
+
 
 
 
@@ -13,12 +15,12 @@ void FighterUtils::create_fighter()
 	//añadir la entidad al manager (FALTA GRUPO?/ HANDLER?)
 	auto fighter =  mngr->addEntity();
 
-	mngr->addComponent<Transform>(fighter);
 
 	//transform
+	mngr->addComponent<Transform>(fighter);
 
 	//deAcceleration
-
+	mngr->addComponent<Image>(fighter,"fighter");
 	//image
 
 	//health

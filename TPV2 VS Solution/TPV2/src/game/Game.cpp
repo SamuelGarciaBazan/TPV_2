@@ -48,6 +48,8 @@ void Game::init() {
 	AsteroidsFacade* asteroids = new AsteroidsUtils();
 	FighterFacade* fighter = new FighterUtils();
 
+	fighter->create_fighter();
+
 	newgame_state_ = new NewGameState(fighter);
 	newround_state_ = new NewRoundState(fighter,asteroids);
 	runing_state_ = new RunningState(fighter,asteroids);

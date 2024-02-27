@@ -4,6 +4,11 @@
 #include "FighterFacade.h"
 #include "AsteroidsFacade.h"
 
+#include "Game.h"
+#include "../ecs/Manager.h"
+
+
+
 RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids)
 {
 		
@@ -27,6 +32,8 @@ void RunningState::update()
 	//collisions
 
 	//render de todo
+
+	Game::instance()->getMngr()->render();
 
 	//refresh del manager
 
