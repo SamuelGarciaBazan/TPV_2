@@ -21,5 +21,6 @@ private:
 
     Transform* myTransform;
     
+    double thrust =0.1f;
 };
 

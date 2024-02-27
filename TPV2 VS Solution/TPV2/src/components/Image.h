@@ -20,6 +20,8 @@ public:
 
     void initComponent() override;
 
+    Texture& getTexture() { return *myTexture; }
+
 private:
 
     Texture* myTexture;

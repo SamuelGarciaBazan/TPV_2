@@ -18,22 +18,25 @@ void FighterUtils::create_fighter()
 
 
 	//transform
-	mngr->addComponent<Transform>(fighter);
+	Transform* transform = mngr->addComponent<Transform>(fighter);
 
 	//deAcceleration
 	
 	//image
-	mngr->addComponent<Image>(fighter,"fighter");
+	Image* image = mngr->addComponent<Image>(fighter,"fighter");
 
 	//health
 
 	//fighterCrl
-	mngr->addComponent<FighterCtrl>(fighter);
+ 	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
 
 	//showAtOpposie site
 
 
+
+	transform->getPos().set((sdlutils().width() - image->getTexture().width() ) / 2,
+							(sdlutils().height() - image->getTexture().height()) / 2);
 }
 
 void FighterUtils::reset_fighter()

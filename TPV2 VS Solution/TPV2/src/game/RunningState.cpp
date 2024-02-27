@@ -27,7 +27,7 @@ void RunningState::update()
 	}
 
 	//update de entidades
-
+	Game::instance()->getMngr()->update();
 
 	//collisions
 
