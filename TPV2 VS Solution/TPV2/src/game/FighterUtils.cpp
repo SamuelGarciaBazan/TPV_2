@@ -28,7 +28,7 @@ void FighterUtils::create_fighter()
 	Image* image = mngr->addComponent<Image>(fighter,"fighter");
 
 	//health
-	mngr->addComponent<Health>(fighter, "heart");
+	mngr->addComponent<Health>(fighter, "heart",0.35);
 	//fighterCrl
  	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
