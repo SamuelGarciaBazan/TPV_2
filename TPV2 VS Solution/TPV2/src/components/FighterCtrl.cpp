@@ -26,10 +26,10 @@ void FighterCtrl::update()
 				myTransform->getVel().set(myTransform->getVel().normalize() * speedLimit);
 			}
 		}		
-		else if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {//rotation
+		if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {//rotation
 			myTransform->setRot(myTransform->getRot() - rotationRate);
 		}
-		else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {//rotation
+		if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {//rotation
 			myTransform->setRot(myTransform->getRot() + rotationRate);
 		}
 

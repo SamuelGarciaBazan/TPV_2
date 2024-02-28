@@ -6,6 +6,7 @@
 #include "../components/Image.h"
 #include "../components/FighterCtrl.h"
 #include "../components/DeAcceleration.h"
+#include "../components/ShowAtOpposieSide.h"
 
 
 
@@ -33,7 +34,7 @@ void FighterUtils::create_fighter()
 	//gun 
 
 	//showAtOpposie site
-
+	mngr->addComponent<ShowAtOpposieSide>(fighter);
 
 
 	transform->getPos().set((sdlutils().width() - image->getTexture().width() ) / 2,

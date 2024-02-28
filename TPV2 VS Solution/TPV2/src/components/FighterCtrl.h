@@ -23,7 +23,7 @@ private:
     
     double thrust = 0.1;
 
-    double rotationRate = 3.0;
+    double rotationRate = 3.3;
 
     double speedLimit = 3.0;
 
