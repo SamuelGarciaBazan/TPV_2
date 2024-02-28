@@ -21,6 +21,8 @@ public:
     
     void resetLifes() { currentLifes = maxLifes; }
 
+    void setLifes(int n) { currentLifes = n; }
+
 private:
 
     Texture* healthTexture;

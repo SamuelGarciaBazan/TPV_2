@@ -19,16 +19,17 @@ void FighterUtils::create_fighter()
 
 
 	//transform
-	Transform* transform = mngr->addComponent<Transform>(fighter);
+	transform = mngr->addComponent<Transform>(fighter);
 
 	//deAcceleration
 	mngr->addComponent<DeAcceleration>(fighter);
 
 	//image
-	Image* image = mngr->addComponent<Image>(fighter,"fighter");
+	image = mngr->addComponent<Image>(fighter,"fighter");
 
 	//health
-	mngr->addComponent<Health>(fighter, "heart",0.35);
+	health =  mngr->addComponent<Health>(fighter, "heart",0.35);
+
 	//fighterCrl
  	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
@@ -37,16 +38,18 @@ void FighterUtils::create_fighter()
 	mngr->addComponent<ShowAtOpposieSide>(fighter);
 
 
-	transform->getPos().set((sdlutils().width() - image->getTexture().width() ) / 2,
-							(sdlutils().height() - image->getTexture().height()) / 2);
+	
 }
 
 void FighterUtils::reset_fighter()
 {
+	transform->getPos().set((sdlutils().width() - image->getTexture().width()) / 2,
+		(sdlutils().height() - image->getTexture().height()) / 2);
 }
 
 void FighterUtils::reset_lives()
 {
+	health->resetLifes();
 }
 
 int FighterUtils::update_lives(int n)

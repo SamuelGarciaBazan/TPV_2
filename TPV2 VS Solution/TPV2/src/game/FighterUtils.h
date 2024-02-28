@@ -1,6 +1,9 @@
 #pragma once
 #include "FighterFacade.h"
 
+class Transform;
+class Health;
+class Image;
 
 class FighterUtils :
     public FighterFacade
@@ -13,6 +16,12 @@ public:
     void  reset_fighter() override;
     void  reset_lives() override;
     int  update_lives(int n) override;
+
+
+private:
+    Transform* transform;
+    Health* health;
+    Image* image;
 
 };
 
