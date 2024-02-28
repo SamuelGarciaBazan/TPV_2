@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="src\components\DeAcceleration.h" />
     <ClInclude Include="src\components\FighterCtrl.h" />
+    <ClInclude Include="src\components\Health.h" />
     <ClInclude Include="src\components\Image.h" />
     <ClInclude Include="src\components\ShowAtOpposieSide.h" />
     <ClInclude Include="src\components\Transform.h" />
@@ -65,6 +66,7 @@
   <ItemGroup>
     <ClCompile Include="src\components\DeAcceleration.cpp" />
     <ClCompile Include="src\components\FighterCtrl.cpp" />
+    <ClCompile Include="src\components\Health.cpp" />
     <ClCompile Include="src\components\Image.cpp" />
     <ClCompile Include="src\components\ShowAtOpposieSide.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />

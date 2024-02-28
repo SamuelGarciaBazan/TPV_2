@@ -7,7 +7,7 @@
 #include "../components/FighterCtrl.h"
 #include "../components/DeAcceleration.h"
 #include "../components/ShowAtOpposieSide.h"
-
+#include "../components/Health.h"
 
 
 void FighterUtils::create_fighter()
@@ -28,7 +28,7 @@ void FighterUtils::create_fighter()
 	Image* image = mngr->addComponent<Image>(fighter,"fighter");
 
 	//health
-
+	mngr->addComponent<Health>(fighter, "heart");
 	//fighterCrl
  	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
