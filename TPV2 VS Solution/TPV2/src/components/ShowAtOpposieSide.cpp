@@ -15,6 +15,7 @@ ShowAtOpposieSide::~ShowAtOpposieSide()
 
 void ShowAtOpposieSide::update()
 {
+	/*
 	if (myTransform->getPos().getX() < (0 -myImage->getTexture().width())) {
 		myTransform->getPos().setX(myTransform->getPos().getX() + sdlutils().width());
 	}
@@ -27,10 +28,23 @@ void ShowAtOpposieSide::update()
 	if (myTransform->getPos().getY() > sdlutils().height()) {
 		myTransform->getPos().setY(myTransform->getPos().getY() - sdlutils().height());
 	}
+	*/
+	if (myTransform->getPos().getX() < (0)) {
+		myTransform->getPos().setX(myTransform->getPos().getX() + sdlutils().width());
+	}
+	if (myTransform->getPos().getX() > sdlutils().width()) {
+		myTransform->getPos().setX(myTransform->getPos().getX() - sdlutils().width());
+	}
+	if (myTransform->getPos().getY() < (0)) {
+		myTransform->getPos().setY(myTransform->getPos().getY() + sdlutils().height());
+	}
+	if (myTransform->getPos().getY() > sdlutils().height()) {
+		myTransform->getPos().setY(myTransform->getPos().getY() - sdlutils().height());
+	}
 }
 
 void ShowAtOpposieSide::initComponent()
 {
 	myTransform = mngr_->getComponent<Transform>(ent_);
-	myImage = mngr_->getComponent<Image>(ent_);
+	//myImage = mngr_->getComponent<Image>(ent_);
 }

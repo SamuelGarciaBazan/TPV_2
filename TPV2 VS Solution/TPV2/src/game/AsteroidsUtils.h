@@ -13,5 +13,8 @@ public:
 	void remove_all_asteroids() override;
 	void split_astroid(ecs::Entity* a) override;
 
+private:
+
+	void create_asteroid() override;
 };
 

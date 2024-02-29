@@ -21,7 +21,7 @@ public:
 
 private:
     Transform* myTransform;
-    Image* myImage;
+    //Image* myImage;
 
 };
 
