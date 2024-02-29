@@ -15,27 +15,13 @@ ShowAtOpposieSide::~ShowAtOpposieSide()
 
 void ShowAtOpposieSide::update()
 {
-	/*
-	if (myTransform->getPos().getX() < (0 -myImage->getTexture().width())) {
+	if (myTransform->getPos().getX() < (0 -myTransform->getWidth())) {
 		myTransform->getPos().setX(myTransform->getPos().getX() + sdlutils().width());
 	}
 	if (myTransform->getPos().getX() > sdlutils().width()) {
 		myTransform->getPos().setX(myTransform->getPos().getX() - sdlutils().width());
 	}
-	if (myTransform->getPos().getY() < (0 - myImage->getTexture().height())) {
-		myTransform->getPos().setY(myTransform->getPos().getY() + sdlutils().height());
-	}
-	if (myTransform->getPos().getY() > sdlutils().height()) {
-		myTransform->getPos().setY(myTransform->getPos().getY() - sdlutils().height());
-	}
-	*/
-	if (myTransform->getPos().getX() < (0)) {
-		myTransform->getPos().setX(myTransform->getPos().getX() + sdlutils().width());
-	}
-	if (myTransform->getPos().getX() > sdlutils().width()) {
-		myTransform->getPos().setX(myTransform->getPos().getX() - sdlutils().width());
-	}
-	if (myTransform->getPos().getY() < (0)) {
+	if (myTransform->getPos().getY() < (0 -myTransform->getHeight())) {
 		myTransform->getPos().setY(myTransform->getPos().getY() + sdlutils().height());
 	}
 	if (myTransform->getPos().getY() > sdlutils().height()) {
