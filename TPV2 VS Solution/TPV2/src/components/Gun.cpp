@@ -92,6 +92,8 @@ void Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r)
 {
 	while (bullets_[lastUsed].used) lastUsed = (lastUsed + 1) % bullets_.size();
 
+	sdlutils().soundEffects().at("gunshot").play();
+
 	auto bullet = &bullets_[lastUsed];
 	
 	bullet->used = true;

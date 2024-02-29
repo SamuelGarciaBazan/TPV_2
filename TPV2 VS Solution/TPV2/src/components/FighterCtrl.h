@@ -21,11 +21,11 @@ private:
 
     Transform* myTransform;
     
-    double thrust = 0.1;
+    double thrust = 0.055;
 
-    double rotationRate = 3.3;
+    double rotationRate = 1;
 
-    double speedLimit = 3.0;
+    double speedLimit = 2.5;
 
 };
 
