@@ -31,7 +31,7 @@ void ImageWithFrames::update()
 void ImageWithFrames::render()
 {
 	myTexture->render(build_sdlrect((currentFrame%cols)*frameWidth, (currentFrame/cols)*frameHeight, frameWidth, frameHeight),
-		build_sdlrect(myTransform->getPos(), frameWidth, frameHeight));
+		build_sdlrect(myTransform->getPos(), myTransform->getWidth(), myTransform->getHeight()),myTransform->getRot());
 }
 
 void ImageWithFrames::initComponent()
