@@ -8,7 +8,7 @@
 #include "../components/DeAcceleration.h"
 #include "../components/ShowAtOpposieSide.h"
 #include "../components/Health.h"
-
+#include "../components/Gun.h"
 
 void FighterUtils::create_fighter()
 {
@@ -33,7 +33,7 @@ void FighterUtils::create_fighter()
 	//fighterCrl
  	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
-
+	mngr->addComponent<Gun>(fighter);
 	//showAtOpposie site
 	mngr->addComponent<ShowAtOpposieSide>(fighter);
 

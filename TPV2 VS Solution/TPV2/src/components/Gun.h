@@ -7,7 +7,7 @@
 #include <array>
 
 class Transform;
-
+class Image;
 
 class Gun :
     public ecs::Component
@@ -57,6 +57,11 @@ private:
     int lastUsed = 0;
 
     Transform* myTransform;
+
+    Image* myImage;
+
+    Uint32 lastShoot = 0;
+    Uint16 fireRate = 250;
 };
 
 
