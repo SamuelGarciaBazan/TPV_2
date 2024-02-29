@@ -184,7 +184,7 @@
       <Filter>Header Files\components</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ImageWithFrames.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +270,7 @@
       <Filter>Source Files\components</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ImageWithFrames.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

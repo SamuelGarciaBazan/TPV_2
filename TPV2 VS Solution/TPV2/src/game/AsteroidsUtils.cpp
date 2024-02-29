@@ -6,8 +6,7 @@
 
 #include "../components/Transform.h"
 #include "../components/ShowAtOpposieSide.h"
-#include "../components/Image.h"
-
+#include "../components/ImageWithFrames.h"
 
 void AsteroidsUtils::create_asteroids(int n)
 {
@@ -33,7 +32,7 @@ void AsteroidsUtils::create_asteroid()
 	//transform
 	mngr->addComponent<Transform>(ast);
 	//imageWithFrames
-	//mngr->addComponent<Image>(ast, "asteroid");
+	mngr->addComponent<ImageWithFrames>(ast, "asteroid",5,6);
 
 	//ShowAtOppostiteSide
 	mngr->addComponent<ShowAtOpposieSide>(ast);

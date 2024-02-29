@@ -35,7 +35,7 @@ void NewRoundState::update()
 
 		//create asteroids(10) (fachada)
 		//...
-		asteorids->create_asteroids(10);
+		asteorids->create_asteroids(1);
 
 
 

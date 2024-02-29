@@ -60,8 +60,8 @@ private:
 
     Image* myImage;
 
-    Uint32 lastShoot = 0;
-    Uint16 fireRate = 250;
+    uint32_t lastShoot = 0;
+    uint16_t fireRate = 250;
 };
 
 
