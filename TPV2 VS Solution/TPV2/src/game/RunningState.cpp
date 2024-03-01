@@ -15,7 +15,8 @@
 
 #include <vector>
 
-RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids)
+RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids) 
+	:fighter(fighter),asteorids(asteorids)
 {
 		
 }
@@ -70,11 +71,15 @@ void RunningState::update()
 			auto health = mngr->getComponent<Health>(fighter);
 			health->decreaseLifes();
 
+			while (it != mngr->getComponent<Gun>(fighter)->end()) { (*it).used = false; ++it; }
+
 			if (health->getCurrentLifes() == 0) {
 				Game::instance()->setState(Game::GAMEOVER);
 
 			}
 			else {
+				//reset del timer
+				lastGeneration = sdlutils().virtualTimer().currTime();
 				Game::instance()->setState(Game::NEWROUND);
 			}
 		}
@@ -108,10 +113,15 @@ void RunningState::update()
 
 	//añadir un asteroide cada 5 segundos
 
+	if ((lastGeneration + asteroidSpawnRate) < sdlutils().virtualTimer().currTime()) {
+		lastGeneration = sdlutils().virtualTimer().currTime();
+		asteorids->create_asteroids(1);
+	}
 }
 
 void RunningState::enter()
 {
+
 }
 
 void RunningState::leave()

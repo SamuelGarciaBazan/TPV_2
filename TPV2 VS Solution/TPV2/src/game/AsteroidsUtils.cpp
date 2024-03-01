@@ -33,6 +33,7 @@ void AsteroidsUtils::remove_all_asteroids()
 
 void AsteroidsUtils::split_astroid(ecs::Entity* a)
 {
+
 }
 
 void AsteroidsUtils::create_asteroid()
@@ -40,6 +41,7 @@ void AsteroidsUtils::create_asteroid()
 	auto mngr = Game::instance()->getMngr();
 
 	auto ast = mngr->addEntity(ecs::grp::ASTEROIDS);
+
 
 	//size of centerZone
 	int centerZone = 100;
@@ -49,7 +51,7 @@ void AsteroidsUtils::create_asteroid()
 		sdlutils().rand().nextInt(0, sdlutils().height()));
 
 	//Colocacion del asteroide fuera del centro
-
+	
 	//si la X esta en la center zone
 	if (pos.getX() >= (sdlutils().width() / 2) - centerZone &&
 		pos.getX() <= (sdlutils().width() / 2) + centerZone) {
@@ -88,13 +90,15 @@ void AsteroidsUtils::create_asteroid()
 	int nFils = 5;
 	int nCols = 6;
 
-	mngr->addComponent<ImageWithFrames>(ast, "asteroid",nFils,nCols);
+	bool follow = sdlutils().rand().nextInt(0, 2) == 0;
+
+	mngr->addComponent<ImageWithFrames>(ast, follow ? "asteroid_gold" : "asteroid", nFils, nCols);
 	//ShowAtOppostiteSide
 	mngr->addComponent<ShowAtOpposieSide>(ast);
 	//Generations
 	mngr->addComponent<Generations>(ast,3);
 
-	bool follow = sdlutils().rand().nextInt(0, 2) == 0;
+	
 
 	if (follow) {
 		//Follow
@@ -106,6 +110,5 @@ void AsteroidsUtils::create_asteroid()
 	}
 	
 	
-
 
 }
