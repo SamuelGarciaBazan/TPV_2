@@ -22,8 +22,14 @@ void RunningState::update()
 {
 	//if 0 asteroids, set gameOverState
 
+	if (Game::instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size() == 0) {
+		std::cout << "GAMEOVERSTATE" << std::endl;
+	}
+
 	if (ih().isKeyDown(SDL_SCANCODE_P)) {
 		//go pause state
+		Game::instance()->setState(Game::PAUSED);
+
 	}
 
 	//update de entidades
