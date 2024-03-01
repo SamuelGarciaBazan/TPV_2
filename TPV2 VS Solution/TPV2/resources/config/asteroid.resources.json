@@ -22,7 +22,8 @@
     { "id" : "newgame", "text" : "press any key to start a new game", "font" : "ARIAL24", "color" : "0x0000ffff" },
     { "id" : "newround", "text" : "press ENTER to start the round", "font" : "ARIAL24", "color" : "0x0000ffff" },
     { "id" : "continue", "text" : "Press space to continue", "font" : "ARIAL24", "color" : "0x112233ff", "bg" : "0xffffffff" },
-    { "id" : "game_over", "text" : "Game Over: Loser!", "font" : "ARIAL24", "color" : "0x0000ffff" }
+    { "id" : "game_over_win", "text" : "Game Over: Champion!", "font" : "ARIAL24", "color" : "0x0000ffff" },
+    { "id" : "game_over_lose", "text" : "Game Over: Loser!", "font" : "ARIAL24", "color" : "0x0000ffff" }
   ],
   
   "sounds" : [

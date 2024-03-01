@@ -23,7 +23,8 @@ void RunningState::update()
 	//if 0 asteroids, set gameOverState
 
 	if (Game::instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size() == 0) {
-		std::cout << "GAMEOVERSTATE" << std::endl;
+		Game::instance()->setState(Game::GAMEOVER);
+
 	}
 
 	if (ih().isKeyDown(SDL_SCANCODE_P)) {
@@ -42,6 +43,7 @@ void RunningState::update()
 	Game::instance()->getMngr()->render();
 
 	//refresh del manager
+	Game::instance()->getMngr()->refresh();
 
 	//añadir un asteroide cada 5 segundos
 
