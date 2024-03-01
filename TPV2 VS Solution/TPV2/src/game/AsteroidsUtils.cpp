@@ -4,10 +4,13 @@
 #include "../ecs/Manager.h"
 #include "../ecs/ecs.h"
 
+#include "../sdlutils/SDLUtils.h"
+
 #include "../components/Transform.h"
 #include "../components/ShowAtOpposieSide.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Generations.h"
+#include "../components/Follow.h"
 
 
 void AsteroidsUtils::create_asteroids(int n)
@@ -31,19 +34,65 @@ void AsteroidsUtils::create_asteroid()
 
 	auto ast = mngr->addEntity(ecs::grp::ASTEROIDS);
 
+	//size of centerZone
+	int centerZone = 100;
+
+	//posicion de inicio del asteroide
+	Vector2D pos(sdlutils().rand().nextInt(0, sdlutils().width()),
+		sdlutils().rand().nextInt(0, sdlutils().height()));
+
+	//Colocacion del asteroide fuera del centro
+
+	//si la X esta en la center zone
+	if (pos.getX() >= (sdlutils().width() / 2) - centerZone &&
+		pos.getX() <= (sdlutils().width() / 2) + centerZone) {
+
+		pos.setX(pos.getX() + sdlutils().rand().nextInt(0, (sdlutils().width() - (2 * centerZone))));
+	}
+
+	//si la Y esta en la center zone
+	if (pos.getY() >= (sdlutils().height() / 2) - centerZone &&
+		pos.getY() <= (sdlutils().height() / 2) + centerZone) {
+
+		pos.setY(pos.getY() + sdlutils().rand().nextInt(0, (sdlutils().height() - (2 * centerZone))));
+	}
+
+	//posicon del centro de la pantalla
+	Vector2D cPos(sdlutils().width() / 2 + sdlutils().rand().nextInt(0, centerZone),
+		sdlutils().height() / 2 + sdlutils().rand().nextInt(0, centerZone));
+
+	//velocidad del asteroide aleatoria (entre 0,1)
+	float speed = sdlutils().rand().nextInt(1, 10) / 10.0f;
+	Vector2D velVector = (cPos - pos).normalize() * speed;
+
+	//rotacion aleatoria
+	float rotation = sdlutils().rand().nextInt(0, 3600) / 10.0f;
+
+	//numero de generaciones aleatoria
+	int nGens = sdlutils().rand().nextInt(1, 4);
+
+	//tamanos aleatorios(en cierto margen)
+	float sizeX = sdlutils().rand().nextInt(8, 13) + (5.0) * nGens;
+	float sizeY = sdlutils().rand().nextInt(8, 13) + (5.0) * nGens;
+
 	//transform
-	mngr->addComponent<Transform>(ast, Vector2D(100,100), Vector2D(0,0), 50.f,40.f, 30.f);
+	mngr->addComponent<Transform>(ast, pos, velVector, sizeX,sizeY, rotation);
 	//imageWithFrames
-	mngr->addComponent<ImageWithFrames>(ast, "asteroid",5,6);
+	int nFils = 5;
+	int nCols = 6;
+
+	mngr->addComponent<ImageWithFrames>(ast, "asteroid",nFils,nCols);
 	//ShowAtOppostiteSide
 	mngr->addComponent<ShowAtOpposieSide>(ast);
 	//Generations
 	mngr->addComponent<Generations>(ast,3);
-	//Follow
 
+
+	//Follow
+	mngr->addComponent<Follow>(ast,& mngr->getComponent<Transform>(mngr->getHandler(ecs::hdlr::FIGHTER))->getPos());
 	//TowardDestination
 
-
+	
 
 
 }

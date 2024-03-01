@@ -17,6 +17,7 @@ void FighterUtils::create_fighter()
 	//añadir la entidad al manager (FALTA GRUPO?/ HANDLER?)
 	auto fighter =  mngr->addEntity();
 
+	mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
 
 	//transform
 	transform = mngr->addComponent<Transform>(fighter);
