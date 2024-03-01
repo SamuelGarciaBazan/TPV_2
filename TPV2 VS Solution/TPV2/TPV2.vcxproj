@@ -28,6 +28,7 @@
     <ClInclude Include="src\components\Image.h" />
     <ClInclude Include="src\components\ImageWithFrames.h" />
     <ClInclude Include="src\components\ShowAtOpposieSide.h" />
+    <ClInclude Include="src\components\TowardDestination.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\ecs\Component.h" />
     <ClInclude Include="src\ecs\ecs.h" />
@@ -77,6 +78,7 @@
     <ClCompile Include="src\components\Image.cpp" />
     <ClCompile Include="src\components\ImageWithFrames.cpp" />
     <ClCompile Include="src\components\ShowAtOpposieSide.cpp" />
+    <ClCompile Include="src\components\TowardDestination.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\ecs\Manager.cpp" />
     <ClCompile Include="src\game\AsteroidsUtils.cpp" />

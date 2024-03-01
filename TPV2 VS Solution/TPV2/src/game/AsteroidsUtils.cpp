@@ -11,6 +11,7 @@
 #include "../components/ImageWithFrames.h"
 #include "../components/Generations.h"
 #include "../components/Follow.h"
+#include "../components/TowardDestination.h"
 
 
 void AsteroidsUtils::create_asteroids(int n)
@@ -87,11 +88,17 @@ void AsteroidsUtils::create_asteroid()
 	//Generations
 	mngr->addComponent<Generations>(ast,3);
 
+	bool follow = sdlutils().rand().nextInt(0, 2) == 0;
 
-	//Follow
-	mngr->addComponent<Follow>(ast,& mngr->getComponent<Transform>(mngr->getHandler(ecs::hdlr::FIGHTER))->getPos());
-	//TowardDestination
-
+	if (follow) {
+		//Follow
+		mngr->addComponent<Follow>(ast,& mngr->getComponent<Transform>(mngr->getHandler(ecs::hdlr::FIGHTER))->getPos());
+	}
+	else{
+		//TowardDestination
+		mngr->addComponent<TowardDestination>(ast);
+	}
+	
 	
 
 
