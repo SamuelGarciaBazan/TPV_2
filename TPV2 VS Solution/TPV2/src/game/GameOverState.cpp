@@ -3,11 +3,15 @@
 #include "Game.h"
 #include "../ecs/Manager.h"
 
-
+#include "../sdlutils/InputHandler.h"
 
 void GameOverState::update()
 {
 	messageTexture->render(messageRect);
+
+	if (ih().keyDownEvent()) {
+		Game::instance()->setState(Game::NEWGAME);
+	}
 }
 
 void GameOverState::enter()

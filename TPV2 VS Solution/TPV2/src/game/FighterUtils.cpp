@@ -46,6 +46,8 @@ void FighterUtils::reset_fighter()
 {
 	transform->getPos().set((sdlutils().width() - image->getTexture().width()) / 2,
 		(sdlutils().height() - image->getTexture().height()) / 2);
+	transform->setRot(0);
+	transform->getVel().set(0, 0);
 }
 
 void FighterUtils::reset_lives()

@@ -23,6 +23,12 @@ void AsteroidsUtils::create_asteroids(int n)
 
 void AsteroidsUtils::remove_all_asteroids()
 {
+	auto mngr = Game::instance()->getMngr();
+	for (auto& e : mngr->getEntities(ecs::grp::ASTEROIDS)) {
+		mngr->setAlive(e, false);
+	}
+
+	mngr->refresh();
 }
 
 void AsteroidsUtils::split_astroid(ecs::Entity* a)
