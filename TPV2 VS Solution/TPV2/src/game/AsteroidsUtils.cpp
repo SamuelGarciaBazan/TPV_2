@@ -33,7 +33,9 @@ void AsteroidsUtils::remove_all_asteroids()
 
 void AsteroidsUtils::split_astroid(ecs::Entity* a)
 {
-
+	//int r = sdlutils().rand().nextInt(0, 360);
+	//Vector2D pos = p + v.rotate(r) * 2 * std::max(w, h).
+	//Vector2D vel = v.rotate(r) * 1.1f
 }
 
 void AsteroidsUtils::create_asteroid()

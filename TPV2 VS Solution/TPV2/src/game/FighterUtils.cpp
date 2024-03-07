@@ -34,7 +34,7 @@ void FighterUtils::create_fighter()
 	//fighterCrl
  	mngr->addComponent<FighterCtrl>(fighter);
 	//gun 
-	mngr->addComponent<Gun>(fighter);
+	gun = mngr->addComponent<Gun>(fighter);
 	//showAtOpposie site
 	mngr->addComponent<ShowAtOpposieSide>(fighter);
 
@@ -48,6 +48,12 @@ void FighterUtils::reset_fighter()
 		(sdlutils().height() - image->getTexture().height()) / 2);
 	transform->setRot(0);
 	transform->getVel().set(0, 0);
+
+	//reset de las balas
+	auto it = gun->begin();
+	while (it != gun->end()) { (*it).used = false; ++it; }
+
+
 }
 
 void FighterUtils::reset_lives()

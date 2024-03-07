@@ -29,8 +29,8 @@ void RunningState::update()
 {
 
 	auto mngr = Game::instance()->getMngr();
-	//if 0 asteroids, set gameOverState
 
+	//if 0 asteroids, set gameOverState
 	if (mngr->getEntities(ecs::grp::ASTEROIDS).size() == 0) {
 		Game::instance()->setState(Game::GAMEOVER);
 
@@ -52,10 +52,14 @@ void RunningState::update()
 	//fighter transform
 	auto ft = mngr->getComponent<Transform>(fighter);
 	
+	//vector de asteroids
 	auto _asteroids = mngr->getEntities(ecs::grp::ASTEROIDS);
 
 	//recorrer los asteroides
-	for (int i = 0; i < _asteroids.size(); i++) {
+	int i = 0;
+	bool changeState = false;
+
+	while(i < _asteroids.size() && !changeState){
 
 		//asteroid transform
 		auto aT = mngr->getComponent<Transform>(_asteroids[i]);
@@ -63,6 +67,7 @@ void RunningState::update()
 		//bullet it
 		auto it = mngr->getComponent<Gun>(fighter)->begin();
 
+		//colision con el fighter
 		if (Collisions::collidesWithRotation(
 			ft->getPos(), ft->getWidth(), ft->getHeight(), ft->getRot(),
 			aT->getPos(), aT->getWidth(), aT->getHeight(), aT->getRot())) {
@@ -71,7 +76,6 @@ void RunningState::update()
 			auto health = mngr->getComponent<Health>(fighter);
 			health->decreaseLifes();
 
-			while (it != mngr->getComponent<Gun>(fighter)->end()) { (*it).used = false; ++it; }
 
 			if (health->getCurrentLifes() == 0) {
 				Game::instance()->setState(Game::GAMEOVER);
@@ -82,9 +86,11 @@ void RunningState::update()
 				lastGeneration = sdlutils().virtualTimer().currTime();
 				Game::instance()->setState(Game::NEWROUND);
 			}
+
+			changeState = true;
 		}
 
-
+		//colision balas con asteroides
 		while (it != mngr->getComponent<Gun>(fighter)->end()) {
 
 			if ((*it).used) {
@@ -93,13 +99,18 @@ void RunningState::update()
 						(*it).pos, (*it).width, (*it).height, (*it).rot,
 						aT->getPos(), aT->getWidth(), aT->getHeight(), aT->getRot())) {
 
+					//desmarcar la bala
 					(*it).used = false;
-				
+					
 					mngr->setAlive(_asteroids[i], false);
+
+					asteorids->split_astroid(_asteroids[i]);
 				}
 			}
 			++it;
 		}
+
+		i++;
 	}
 
 

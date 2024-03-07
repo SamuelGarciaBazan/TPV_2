@@ -4,6 +4,8 @@
 class Transform;
 class Health;
 class Image;
+class Gun;
+
 
 class FighterUtils :
     public FighterFacade
@@ -22,6 +24,7 @@ private:
     Transform* transform;
     Health* health;
     Image* image;
+    Gun* gun;
 
 };
 
