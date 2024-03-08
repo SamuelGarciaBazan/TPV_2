@@ -1,6 +1,8 @@
 #pragma once
 #include "../ecs/Entity.h"
 
+class Vector2D;
+
 class AsteroidsFacade {
 public:
 	AsteroidsFacade() {}
@@ -10,5 +12,5 @@ public:
 	virtual void split_astroid(ecs::Entity* a) = 0;
 
 private:
-	virtual void create_asteroid() = 0;
+	virtual void create_asteroid(Vector2D pos,Vector2D v,int g) = 0;
 };

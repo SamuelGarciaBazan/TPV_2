@@ -17,7 +17,44 @@
 void AsteroidsUtils::create_asteroids(int n)
 {
 	for (int i = 0; i < n; i++) {
-		create_asteroid();
+
+		//posicion de inicio del asteroide
+		Vector2D pos(sdlutils().rand().nextInt(0, sdlutils().width()),
+			sdlutils().rand().nextInt(0, sdlutils().height()));
+
+
+		//size of centerZone
+		int centerZone = 100;
+		//Colocacion del asteroide fuera del centro
+
+		//si la X esta en la center zone
+		if (pos.getX() >= (sdlutils().width() / 2) - centerZone &&
+			pos.getX() <= (sdlutils().width() / 2) + centerZone) {
+
+			pos.setX(pos.getX() + sdlutils().rand().nextInt(0, (sdlutils().width() - (2 * centerZone))));
+		}
+
+		//si la Y esta en la center zone
+		if (pos.getY() >= (sdlutils().height() / 2) - centerZone &&
+			pos.getY() <= (sdlutils().height() / 2) + centerZone) {
+
+			pos.setY(pos.getY() + sdlutils().rand().nextInt(0, (sdlutils().height() - (2 * centerZone))));
+		}
+
+
+		//posicon del centro de la pantalla
+		Vector2D cPos(sdlutils().width() / 2 + sdlutils().rand().nextInt(0, centerZone),
+			sdlutils().height() / 2 + sdlutils().rand().nextInt(0, centerZone));
+
+		//velocidad del asteroide aleatoria (entre 0,1)
+		float speed = sdlutils().rand().nextInt(1, 10) / 10.0f;
+		Vector2D velVector = (cPos - pos).normalize() * speed;
+
+		//numero de generaciones aleatoria
+		int nGens = sdlutils().rand().nextInt(0, 3);
+
+
+		create_asteroid(pos,velVector,nGens);
 	}
 }
 
@@ -33,58 +70,50 @@ void AsteroidsUtils::remove_all_asteroids()
 
 void AsteroidsUtils::split_astroid(ecs::Entity* a)
 {
-	//int r = sdlutils().rand().nextInt(0, 360);
-	//Vector2D pos = p + v.rotate(r) * 2 * std::max(w, h).
-	//Vector2D vel = v.rotate(r) * 1.1f
+	auto mngr = Game::instance()->getMngr();
+	
+	auto genComponent = mngr->getComponent<Generations>(a);
+
+	if (genComponent->getGenerations() >= 0) {
+
+		auto astTransform = mngr->getComponent<Transform>(a);
+
+
+		Vector2D p = astTransform->getPos();
+		Vector2D v = astTransform->getVel();
+
+		int r = sdlutils().rand().nextInt(0, 360);
+	
+		int w = 10;
+
+		Vector2D pos = p + v.rotate(r) * 2 * w;
+		Vector2D vel = v.rotate(r) * 1.1f;
+
+		create_asteroid(pos, vel, genComponent->getGenerations() - 1);
+
+		r = sdlutils().rand().nextInt(0, 360);
+		pos = p + v.rotate(r) * 2 * w;
+
+		create_asteroid(pos, vel, genComponent->getGenerations() - 1);
+
+	 vel = v.rotate(r) * 1.1f;
+	}
+
+	mngr->setAlive(a, false);
 }
 
-void AsteroidsUtils::create_asteroid()
+void AsteroidsUtils::create_asteroid(Vector2D pos, Vector2D velVector, int nGens)
 {
 	auto mngr = Game::instance()->getMngr();
 
 	auto ast = mngr->addEntity(ecs::grp::ASTEROIDS);
 
-
-	//size of centerZone
-	int centerZone = 100;
-
-	//posicion de inicio del asteroide
-	Vector2D pos(sdlutils().rand().nextInt(0, sdlutils().width()),
-		sdlutils().rand().nextInt(0, sdlutils().height()));
-
-	//Colocacion del asteroide fuera del centro
-	
-	//si la X esta en la center zone
-	if (pos.getX() >= (sdlutils().width() / 2) - centerZone &&
-		pos.getX() <= (sdlutils().width() / 2) + centerZone) {
-
-		pos.setX(pos.getX() + sdlutils().rand().nextInt(0, (sdlutils().width() - (2 * centerZone))));
-	}
-
-	//si la Y esta en la center zone
-	if (pos.getY() >= (sdlutils().height() / 2) - centerZone &&
-		pos.getY() <= (sdlutils().height() / 2) + centerZone) {
-
-		pos.setY(pos.getY() + sdlutils().rand().nextInt(0, (sdlutils().height() - (2 * centerZone))));
-	}
-
-	//posicon del centro de la pantalla
-	Vector2D cPos(sdlutils().width() / 2 + sdlutils().rand().nextInt(0, centerZone),
-		sdlutils().height() / 2 + sdlutils().rand().nextInt(0, centerZone));
-
-	//velocidad del asteroide aleatoria (entre 0,1)
-	float speed = sdlutils().rand().nextInt(1, 10) / 10.0f;
-	Vector2D velVector = (cPos - pos).normalize() * speed;
-
 	//rotacion aleatoria
 	float rotation = sdlutils().rand().nextInt(0, 3600) / 10.0f;
 
-	//numero de generaciones aleatoria
-	int nGens = sdlutils().rand().nextInt(1, 4);
-
 	//tamanos aleatorios(en cierto margen)
-	float sizeX = sdlutils().rand().nextInt(8, 13) + (5.0) * nGens;
-	float sizeY = sdlutils().rand().nextInt(8, 13) + (5.0) * nGens;
+	float sizeX = sdlutils().rand().nextInt(19, 23) + (4.0) * nGens;
+	float sizeY = sdlutils().rand().nextInt(19, 23) + (4.0) * nGens;
 
 	//transform
 	mngr->addComponent<Transform>(ast, pos, velVector, sizeX,sizeY, rotation);
@@ -98,7 +127,7 @@ void AsteroidsUtils::create_asteroid()
 	//ShowAtOppostiteSide
 	mngr->addComponent<ShowAtOpposieSide>(ast);
 	//Generations
-	mngr->addComponent<Generations>(ast,3);
+	mngr->addComponent<Generations>(ast,nGens);
 
 	
 

@@ -16,6 +16,7 @@ private:
 
     int currentGenerations;
 
+public:
     int getGenerations() { return currentGenerations; }
 
     void setGenerations(int n) { currentGenerations = n; }

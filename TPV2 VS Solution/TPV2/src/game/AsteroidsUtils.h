@@ -15,6 +15,6 @@ public:
 
 private:
 
-	void create_asteroid() override;
+	void create_asteroid(Vector2D pos, Vector2D v, int g) override;
 };
 
