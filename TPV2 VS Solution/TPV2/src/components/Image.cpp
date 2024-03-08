@@ -19,7 +19,7 @@ Image::~Image()
 
 void Image::render()
 {
-	myTexture->render(build_sdlrect(myTransform->getPos(), myTexture->width(), myTexture->height()),myTransform->getRot());	
+	myTexture->render(build_sdlrect(myTransform->getPos(), myTransform->getWidth(), myTransform->getHeight()),myTransform->getRot());	
 }
 
 void Image::initComponent()

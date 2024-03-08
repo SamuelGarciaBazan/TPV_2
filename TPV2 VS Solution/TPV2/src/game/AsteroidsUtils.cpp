@@ -74,7 +74,7 @@ void AsteroidsUtils::split_astroid(ecs::Entity* a)
 	
 	auto genComponent = mngr->getComponent<Generations>(a);
 
-	if (genComponent->getGenerations() >= 0) {
+	if (genComponent->getGenerations() > 0) {
 
 		auto astTransform = mngr->getComponent<Transform>(a);
 

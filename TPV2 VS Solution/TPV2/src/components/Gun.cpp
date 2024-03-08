@@ -83,8 +83,8 @@ void Gun::initComponent()
 {
 	myImage = mngr_->getComponent<Image>(ent_);
 	myTransform = mngr_->getComponent<Transform>(ent_);
-	myTransform->setWidth(myImage->getTexture().width());
-	myTransform->setHeight(myImage->getTexture().height());
+	myTransform->setWidth(myImage->getTexture().width()*0.65);
+	myTransform->setHeight(myImage->getTexture().height()*0.65);
 
 }
 
