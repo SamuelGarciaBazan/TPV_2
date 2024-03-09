@@ -9,8 +9,7 @@
 
 #include "../components/Transform.h"
 #include "../components/Image.h"
-
-
+#include "../components/ConstRotation.h"
 
 BlackHolesUtils::BlackHolesUtils()
 {
@@ -47,9 +46,11 @@ void BlackHolesUtils::create_black_hole(Vector2D pos)
 	int width = 30;
 	int height = 30;
 
+	float rotation = sdlutils().rand().nextInt(200, 500) / 100.f;
 
 	mngr->addComponent<Transform>(bh,pos,Vector2D(0,0), width, height, 0);
 	mngr->addComponent<Image>(bh,"blackHole");
+	mngr->addComponent<ConstRotation>(bh,rotation);
 	
 	
 }
