@@ -3,6 +3,7 @@
 
 #include "FighterFacade.h"
 #include "AsteroidsFacade.h"
+#include "MissilesFacade.h"
 
 #include "Game.h"
 #include "../ecs/Manager.h"
@@ -15,8 +16,8 @@
 
 #include <vector>
 
-RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids) 
-	:fighter(fighter),asteorids(asteorids)
+RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids, MissilesFacade* missiles)
+	:fighter(fighter),asteorids(asteorids),missiles(missiles)
 {
 		
 }
@@ -82,8 +83,8 @@ void RunningState::update()
 
 			}
 			else {
-				//reset del timer
-				lastGeneration = sdlutils().virtualTimer().currTime();
+				
+
 				Game::instance()->setState(Game::NEWROUND);
 			}
 
@@ -145,6 +146,9 @@ void RunningState::update()
 	}
 
 	//colisions black holes
+	#pragma region BlackHolesCollisions
+
+
 
 	auto blackHolesList = mngr->getEntities(ecs::grp::BLACKHOLES);
 
@@ -169,8 +173,7 @@ void RunningState::update()
 				Game::instance()->setState(Game::GAMEOVER);
 			}
 			else {
-				//reset del timer
-				lastGeneration = sdlutils().virtualTimer().currTime();
+				
 				Game::instance()->setState(Game::NEWROUND);
 			}
 
@@ -180,6 +183,77 @@ void RunningState::update()
 		i++;
 	}
 
+#pragma endregion
+
+	
+	#pragma region Missiles collision
+
+
+
+	auto misilesList = mngr->getEntities(ecs::grp::MISSILES);
+
+	auto misilesIndex = 0;
+
+	while (misilesIndex < misilesList.size() && !changeState) {
+
+		//misilTransform
+		auto mT = mngr->getComponent<Transform>(misilesList[misilesIndex]);
+
+		//colision con el fighter
+		if (Collisions::collidesWithRotation(
+			ft->getPos(), ft->getWidth(), ft->getHeight(), ft->getRot(),
+			mT->getPos(), mT->getWidth(), mT->getHeight(), mT->getRot())) {
+
+
+			auto health = mngr->getComponent<Health>(fighter);
+			health->decreaseLifes();
+
+			if (health->getCurrentLifes() == 0) {
+				Game::instance()->setState(Game::GAMEOVER);
+			}
+			else {
+				Game::instance()->setState(Game::NEWROUND);
+			}
+
+			changeState = true;
+		}
+
+
+		auto it = mngr->getComponent<Gun>(fighter)->begin();
+
+
+		//colision balas con misiles
+		while (it != mngr->getComponent<Gun>(fighter)->end()) {
+
+			if ((*it).used) {
+
+				if (Collisions::collidesWithRotation(
+					(*it).pos, (*it).width, (*it).height, (*it).rot,
+					mT->getPos(), mT->getWidth(), mT->getHeight(), mT->getRot())) {
+
+					//desmarcar la bala
+					(*it).used = false;
+
+					mngr->setAlive(misilesList[misilesIndex],false);
+
+				}
+			}
+			++it;
+		}
+
+
+		//si sale de la pantalla se destruye
+		if (mT->getPos().getX() < 0 || mT->getPos().getX() > sdlutils().width() ||
+			mT->getPos().getY() < 0 || mT->getPos().getY() > sdlutils().height()) {
+			mngr->setAlive(misilesList[misilesIndex], false);
+		}
+
+
+
+		misilesIndex++;
+	}
+
+#pragma endregion
 
 
 	//render de todo
@@ -195,11 +269,19 @@ void RunningState::update()
 		lastGeneration = sdlutils().virtualTimer().currTime();
 		asteorids->create_asteroids(1);
 	}
+
+	//añadir un mision cada 15 segundos
+	if ((lastMissile + missileSpawnRate) < sdlutils().virtualTimer().currTime()) {
+		lastMissile = sdlutils().virtualTimer().currTime();
+		missiles->createMisile();
+	}
 }
 
 void RunningState::enter()
 {
-
+	//reset del timer
+	lastGeneration = sdlutils().virtualTimer().currTime();
+	lastMissile = sdlutils().virtualTimer().currTime();
 }
 
 void RunningState::leave()

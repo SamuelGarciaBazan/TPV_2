@@ -48,7 +48,7 @@ void NewRoundState::update()
 
 		missiles->remove_all_missiles();
 
-		missiles->createMisile();
+		//missiles->createMisile();
 
 		Game::instance()->setState(Game::RUNNING);
 		

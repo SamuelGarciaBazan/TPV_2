@@ -56,7 +56,7 @@ void Game::init() {
 
 	newgame_state_ = new NewGameState(fighter);
 	newround_state_ = new NewRoundState(fighter,asteroids,blackHoles,missile);
-	runing_state_ = new RunningState(fighter,asteroids);
+	runing_state_ = new RunningState(fighter,asteroids,missile);
 	paused_state_ = new PausedState();
 	gameover_state_ = new GameOverState();
 

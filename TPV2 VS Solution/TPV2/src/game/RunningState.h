@@ -4,6 +4,7 @@
 
 class FighterFacade;
 class AsteroidsFacade;
+class MissilesFacade;
 
 class RunningState :
     public GameState
@@ -11,7 +12,8 @@ class RunningState :
 
 public:
 
-	RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids);
+	RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids,
+		MissilesFacade* missiles);
 	~RunningState();
 
 
@@ -23,8 +25,13 @@ private:
 
 	FighterFacade* fighter;
 	AsteroidsFacade* asteorids;
+	MissilesFacade* missiles;
 
 	uint32_t lastGeneration = 0;
 	uint16_t asteroidSpawnRate = 5000;
+
+
+	uint32_t lastMissile = 0;
+	uint16_t missileSpawnRate = 15000;
 };
 
