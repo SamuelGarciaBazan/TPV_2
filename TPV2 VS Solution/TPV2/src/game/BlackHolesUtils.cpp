@@ -24,7 +24,7 @@ void BlackHolesUtils::create_black_holes(int n)
 	float angle = 360.f / n;
 	Vector2D pos;
 
-	int radius = 200;
+	int radius = sdlutils().rand().nextInt(100,300);
 
 	for (int i = 0; i < n; i++) {
 		pos = Vector2D(sdlutils().width()/2, sdlutils().height()/2) + Vector2D(0, -radius).rotate(angle * i);
@@ -35,6 +35,12 @@ void BlackHolesUtils::create_black_holes(int n)
 
 void BlackHolesUtils::remove_all_black_holes()
 {
+	auto mngr = Game::instance()->getMngr();
+	for (auto& e : mngr->getEntities(ecs::grp::BLACKHOLES)) {
+		mngr->setAlive(e, false);
+	}
+
+	mngr->refresh();
 }
 
 void BlackHolesUtils::create_black_hole(Vector2D pos)
