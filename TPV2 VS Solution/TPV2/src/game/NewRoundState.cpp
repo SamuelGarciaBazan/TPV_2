@@ -5,9 +5,11 @@
 #include "FighterFacade.h"
 #include "AsteroidsFacade.h"
 #include "BlackHolesFacade.h"
+#include "MissilesFacade.h"
 
-NewRoundState::NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids, BlackHolesFacade* blackHoles) 
-	:fighter(fighter), asteorids(asteorids),blackHoles(blackHoles)
+NewRoundState::NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids, 
+	BlackHolesFacade* blackHoles, MissilesFacade* missiles)
+	:fighter(fighter), asteorids(asteorids),blackHoles(blackHoles),missiles(missiles)
 {
 	messageTexture = &sdlutils().msgs().at("newround");
 
@@ -37,14 +39,16 @@ void NewRoundState::update()
 
 		//create asteroids(10) (fachada)
 		//...
-		asteorids->create_asteroids(8);
+		asteorids->create_asteroids(6);
 
 		blackHoles->remove_all_black_holes();
 
 
-		blackHoles->create_black_holes(6);
+		blackHoles->create_black_holes(5);
 
+		missiles->remove_all_missiles();
 
+		missiles->createMisile();
 
 		Game::instance()->setState(Game::RUNNING);
 		

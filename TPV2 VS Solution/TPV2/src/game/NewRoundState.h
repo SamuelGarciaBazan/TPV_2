@@ -4,12 +4,14 @@
 class FighterFacade;
 class AsteroidsFacade;
 class BlackHolesFacade;
+class MissilesFacade;
 
 class NewRoundState :
     public GameState
 {
 public:
-	NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids, BlackHolesFacade* blackHoles) ;
+	NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids,
+				BlackHolesFacade* blackHoles, MissilesFacade*missiles) ;
 	~NewRoundState();
 
 	void update() override;
@@ -25,5 +27,6 @@ private:
 	FighterFacade* fighter;
 	AsteroidsFacade* asteorids;
 	BlackHolesFacade* blackHoles;
+	MissilesFacade* missiles;
 };
 

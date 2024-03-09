@@ -202,7 +202,16 @@
       <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ConstRotation.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\MissilesFacade.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\MissileUtils.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\LookAt.h">
+      <Filter>Header Files\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -303,7 +312,13 @@
       <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ConstRotation.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\MissileUtils.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\LookAt.cpp">
+      <Filter>Source Files\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

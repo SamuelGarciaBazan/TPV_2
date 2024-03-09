@@ -28,6 +28,7 @@
     <ClInclude Include="src\components\Health.h" />
     <ClInclude Include="src\components\Image.h" />
     <ClInclude Include="src\components\ImageWithFrames.h" />
+    <ClInclude Include="src\components\LookAt.h" />
     <ClInclude Include="src\components\ShowAtOpposieSide.h" />
     <ClInclude Include="src\components\TowardDestination.h" />
     <ClInclude Include="src\components\Transform.h" />
@@ -46,6 +47,8 @@
     <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\game\GameOverState.h" />
     <ClInclude Include="src\game\GameState.h" />
+    <ClInclude Include="src\game\MissilesFacade.h" />
+    <ClInclude Include="src\game\MissileUtils.h" />
     <ClInclude Include="src\game\NewGameState.h" />
     <ClInclude Include="src\game\NewRoundState.h" />
     <ClInclude Include="src\game\PausedState.h" />
@@ -81,6 +84,7 @@
     <ClCompile Include="src\components\Health.cpp" />
     <ClCompile Include="src\components\Image.cpp" />
     <ClCompile Include="src\components\ImageWithFrames.cpp" />
+    <ClCompile Include="src\components\LookAt.cpp" />
     <ClCompile Include="src\components\ShowAtOpposieSide.cpp" />
     <ClCompile Include="src\components\TowardDestination.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
@@ -91,6 +95,7 @@
     <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="src\game\GameOverState.cpp" />
     <ClCompile Include="src\game\GameState.cpp" />
+    <ClCompile Include="src\game\MissileUtils.cpp" />
     <ClCompile Include="src\game\NewGameState.cpp" />
     <ClCompile Include="src\game\NewRoundState.cpp" />
     <ClCompile Include="src\game\PausedState.cpp" />
