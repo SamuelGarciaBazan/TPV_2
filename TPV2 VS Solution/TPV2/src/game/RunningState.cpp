@@ -113,6 +113,43 @@ void RunningState::update()
 		i++;
 	}
 
+	//colisions black holes
+
+	auto blackHolesList = mngr->getEntities(ecs::grp::BLACKHOLES);
+
+	i = 0;
+
+	while (i < blackHolesList.size() && !changeState) {
+
+		//black hole transform
+		auto bhT = mngr->getComponent<Transform>(blackHolesList[i]);
+
+		//colision con el fighter
+		if (Collisions::collidesWithRotation(
+			ft->getPos(), ft->getWidth(), ft->getHeight(), ft->getRot(),
+			bhT->getPos(), bhT->getWidth(), bhT->getHeight(), bhT->getRot())) {
+
+
+			auto health = mngr->getComponent<Health>(fighter);
+			health->decreaseLifes();
+
+
+			if (health->getCurrentLifes() == 0) {
+				Game::instance()->setState(Game::GAMEOVER);
+			}
+			else {
+				//reset del timer
+				lastGeneration = sdlutils().virtualTimer().currTime();
+				Game::instance()->setState(Game::NEWROUND);
+			}
+
+			changeState = true;
+		}
+
+
+		i++;
+	}
+
 
 
 	//render de todo
