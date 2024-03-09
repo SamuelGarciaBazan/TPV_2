@@ -110,6 +110,37 @@ void RunningState::update()
 			++it;
 		}
 
+		//colision asteroides con agujeros negros
+
+		auto blackHolesList = mngr->getEntities(ecs::grp::BLACKHOLES);
+
+		auto blackHolesIndex = 0;
+
+		bool colision = false;
+
+		while (blackHolesIndex < blackHolesList.size() && !colision) {
+
+			//blackHolesTransform
+			auto bhT = mngr->getComponent<Transform>(blackHolesList[blackHolesIndex]);
+
+			if (Collisions::collidesWithRotation(
+				bhT->getPos(), bhT->getWidth(), bhT->getHeight(), bhT->getRot(),
+				aT->getPos(), aT->getWidth(), aT->getHeight(), aT->getRot())) {
+
+				colision = true;
+
+				int x = sdlutils().rand().nextInt(0, sdlutils().width());
+				int y = sdlutils().rand().nextInt(0, sdlutils().height());
+
+				aT->getPos().set(x, y);
+
+			}
+			++blackHolesIndex;
+		}
+
+
+
+
 		i++;
 	}
 
@@ -145,7 +176,6 @@ void RunningState::update()
 
 			changeState = true;
 		}
-
 
 		i++;
 	}
