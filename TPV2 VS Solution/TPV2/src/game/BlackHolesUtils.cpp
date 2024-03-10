@@ -24,9 +24,9 @@ void BlackHolesUtils::create_black_holes(int n)
 	float angle = 360.f / n;
 	Vector2D pos;
 
-	int radius = sdlutils().rand().nextInt(100,300);
 
 	for (int i = 0; i < n; i++) {
+		int radius = sdlutils().rand().nextInt(100,300);
 		pos = Vector2D(sdlutils().width()/2, sdlutils().height()/2) + Vector2D(0, -radius).rotate(angle * i);
 
 		create_black_hole(pos);

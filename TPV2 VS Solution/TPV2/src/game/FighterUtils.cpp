@@ -63,5 +63,6 @@ void FighterUtils::reset_lives()
 
 int FighterUtils::update_lives(int n)
 {
-	return 0;
+	health->decreaseLifes(-n);
+	return health->getCurrentLifes();
 }
