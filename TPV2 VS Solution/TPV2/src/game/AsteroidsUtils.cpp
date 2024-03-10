@@ -18,29 +18,68 @@ void AsteroidsUtils::create_asteroids(int n)
 {
 	for (int i = 0; i < n; i++) {
 
-		//posicion de inicio del asteroide
-		Vector2D pos(sdlutils().rand().nextInt(0, sdlutils().width()),
-			sdlutils().rand().nextInt(0, sdlutils().height()));
+		Vector2D pos;
 
+		bool generateInborders = true;
 
 		//size of centerZone
 		int centerZone = 100;
-		//Colocacion del asteroide fuera del centro
 
-		//si la X esta en la center zone
-		if (pos.getX() >= (sdlutils().width() / 2) - centerZone &&
-			pos.getX() <= (sdlutils().width() / 2) + centerZone) {
 
-			pos.setX(pos.getX() + sdlutils().rand().nextInt(0, (sdlutils().width() - (2 * centerZone))));
+		//otro metodo de generacion
+		if (!generateInborders) {
+
+			//posicion de inicio del asteroide
+			pos = Vector2D(sdlutils().rand().nextInt(0, sdlutils().width()),
+				sdlutils().rand().nextInt(0, sdlutils().height()));
+
+
+			//Colocacion del asteroide fuera del centro
+
+			//si la X esta en la center zone
+			if (pos.getX() >= (sdlutils().width() / 2) - centerZone &&
+				pos.getX() <= (sdlutils().width() / 2) + centerZone) {
+
+				pos.setX(pos.getX() + sdlutils().rand().nextInt(0, (sdlutils().width() - (2 * centerZone))));
+			}
+
+			//si la Y esta en la center zone
+			if (pos.getY() >= (sdlutils().height() / 2) - centerZone &&
+				pos.getY() <= (sdlutils().height() / 2) + centerZone) {
+
+				pos.setY(pos.getY() + sdlutils().rand().nextInt(0, (sdlutils().height() - (2 * centerZone))));
+			}
+
 		}
+		else {
+			int border = sdlutils().rand().nextInt(0, 4);
 
-		//si la Y esta en la center zone
-		if (pos.getY() >= (sdlutils().height() / 2) - centerZone &&
-			pos.getY() <= (sdlutils().height() / 2) + centerZone) {
+			/*
+			    1
+			0       2
+			    3
+			*/
 
-			pos.setY(pos.getY() + sdlutils().rand().nextInt(0, (sdlutils().height() - (2 * centerZone))));
+			switch (border)
+			{
+				case 0:
+					pos = Vector2D(0, sdlutils().rand().nextInt(0, sdlutils().height()));
+					break;
+				case 1:
+					pos = Vector2D(sdlutils().rand().nextInt(0, sdlutils().width()),0);
+
+					break;
+				case 2:
+					pos = Vector2D(sdlutils().width(), sdlutils().rand().nextInt(0, sdlutils().height()));
+					break;
+				case 3:
+					pos = Vector2D(sdlutils().rand().nextInt(0, sdlutils().width()), sdlutils().height());
+					break;
+				default:
+					break;
+			}
+
 		}
-
 
 		//posicon del centro de la pantalla
 		Vector2D cPos(sdlutils().width() / 2 + sdlutils().rand().nextInt(0, centerZone),
@@ -52,6 +91,7 @@ void AsteroidsUtils::create_asteroids(int n)
 
 		//numero de generaciones aleatoria
 		int nGens = sdlutils().rand().nextInt(0, 3);
+
 
 
 		create_asteroid(pos,velVector,nGens);

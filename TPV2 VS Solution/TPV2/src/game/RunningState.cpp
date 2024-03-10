@@ -286,6 +286,7 @@ bool RunningState::collidesWithRotation(Transform* t1, Transform* t2)
 
 void RunningState::fighterDeath()
 {
+	sdlutils().soundEffects().at("explosion").play();
 	auto mngr = Game::instance()->getMngr();
 	
 	if (fighter->update_lives(-1) == 0) {
