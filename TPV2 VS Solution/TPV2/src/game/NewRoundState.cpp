@@ -39,7 +39,7 @@ void NewRoundState::update()
 
 		//create asteroids(10) (fachada)
 		//...
-		asteorids->create_asteroids(6);
+		asteorids->create_asteroids(sdlutils().gameConstants().at("nAsteroids"));
 
 		blackHoles->remove_all_black_holes();
 

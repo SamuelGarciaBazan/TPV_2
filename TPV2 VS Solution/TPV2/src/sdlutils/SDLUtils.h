@@ -152,6 +152,11 @@ public:
 		return musicsAccessWrapper_;
 	}
 
+// gameConstants maps
+	inline auto& gameConstants() {
+		return gameConstantsAccessWrapper_;
+	}
+
 // Access to the random number generator. It is important to always
 // use this generator, this way you can regenerate the same sequence
 // if you start from the same seed
@@ -174,13 +179,13 @@ private:
 	SDLUtils();
 	SDLUtils(std::string windowTitle, int width, int height);
 	SDLUtils(std::string windowTitle, int width, int height,
-			std::string filename);
+			std::string filenameResources,std::string filenameConfig);
 
 	void initWindow();
 	void closeWindow();
 	void initSDLExtensions(); // initialize resources (fonts, textures, audio, etc.)
 	void closeSDLExtensions(); // free resources the
-	void loadReasources(std::string filename); // load resources from the json file
+	void loadReasources(std::string filenameResources,std::string filenameConfig); // load resources from the json file
 
 	std::string windowTitle_; // window title
 	int width_; // window width
@@ -194,12 +199,14 @@ private:
 	sdl_resource_table<Texture> msgs_; // textures map (string -> texture)
 	sdl_resource_table<SoundEffect> sounds_; // sounds map (string -> sound)
 	sdl_resource_table<Music> musics_; // musics map (string -> music)
+	sdl_resource_table<float> gameConstants_; // musics map (string -> music)
 
 	map_access_wrapper<Font> fontsAccessWrapper_;
 	map_access_wrapper<Texture> imagesAccessWrapper_;
 	map_access_wrapper<Texture> msgsAccessWrapper_;
 	map_access_wrapper<SoundEffect> soundsAccessWrapper_;
 	map_access_wrapper<Music> musicsAccessWrapper_;
+	map_access_wrapper<float> gameConstantsAccessWrapper_;
 
 	RandomNumberGenerator random_; // (pseudo) random numbers generator
 	VirtualTimer timer_; // virtual timer

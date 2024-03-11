@@ -8,6 +8,8 @@
 
 FighterCtrl::FighterCtrl()
 {
+	speedLimit = sdlutils().gameConstants().at("MaxVelFighter");
+	rotationRate = sdlutils().gameConstants().at("RotationFigher");
 }
 
 FighterCtrl::~FighterCtrl()

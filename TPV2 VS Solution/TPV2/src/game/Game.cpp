@@ -45,7 +45,7 @@ void Game::init() {
 
 	// initialise the SDLUtils singleton
 	SDLUtils::init("ASTEROIDS", 800, 600,
-			"resources/config/asteroid.resources.json");
+			"resources/config/asteroid.resources.json","resources/config/asteroid.config.json");
 
 	AsteroidsFacade* asteroids = new AsteroidsUtils();
 	FighterFacade* fighter = new FighterUtils();

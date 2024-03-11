@@ -19,7 +19,8 @@ SDLUtils::SDLUtils(std::string windowTitle, int width, int height) :
 		imagesAccessWrapper_(images_, "Images Table"), //
 		msgsAccessWrapper_(msgs_, "Messages Table"), //
 		soundsAccessWrapper_(sounds_, "Sounds Table"), //
-		musicsAccessWrapper_(musics_, "Musics Table") ///
+		musicsAccessWrapper_(musics_, "Musics Table"), ///
+		gameConstantsAccessWrapper_(gameConstants_, "GameConstants Table") ///
 {
 
 	initWindow();
@@ -27,9 +28,9 @@ SDLUtils::SDLUtils(std::string windowTitle, int width, int height) :
 }
 
 SDLUtils::SDLUtils(std::string windowTitle, int width, int height,
-		std::string filename) :
+		std::string filenameResources, std::string filenameConfig) :
 		SDLUtils(windowTitle, width, height) {
-	loadReasources(filename);
+	loadReasources(filenameResources,filenameConfig);
 }
 
 SDLUtils::~SDLUtils() {
@@ -109,7 +110,7 @@ void SDLUtils::initSDLExtensions() {
 
 }
 
-void SDLUtils::loadReasources(std::string filename) {
+void SDLUtils::loadReasources(std::string filenameResources,std::string filenameConfig) {
 	// TODO check the correctness of values and issue a corresponding
 	// exception. Now we just do some simple checks, and assume input
 	// is correct.
@@ -117,23 +118,25 @@ void SDLUtils::loadReasources(std::string filename) {
 	// Load JSON configuration file. We use a unique pointer since we
 	// can exit the method in different ways, this way we guarantee that
 	// it is always deleted
-	std::unique_ptr<JSONValue> jValueRoot(JSON::ParseFromFile(filename));
+	std::unique_ptr<JSONValue> jValueRootResources(JSON::ParseFromFile(filenameResources));
+	std::unique_ptr<JSONValue> jValueRootConfig(JSON::ParseFromFile(filenameConfig));
 
 	// check it was loaded correctly
 	// the root must be a JSON object
-	if (jValueRoot == nullptr || !jValueRoot->IsObject()) {
-		throw "Something went wrong while load/parsing '" + filename + "'";
+	if (jValueRootResources == nullptr || !jValueRootResources->IsObject()) {
+		throw "Something went wrong while load/parsing '" + filenameResources + "'";
 	}
 
 	// we know the root is JSONObject
-	JSONObject root = jValueRoot->AsObject();
+	JSONObject rootResources = jValueRootResources->AsObject();
+	JSONObject rootConfig = jValueRootConfig->AsObject();
 	JSONValue *jValue = nullptr;
 
 	// TODO improve syntax error checks below, now we do not check
 	//      validity of keys with values as sting or integer
 
 	// load fonts
-	jValue = root["fonts"];
+	jValue = rootResources["fonts"];
 	if (jValue != nullptr) {
 		if (jValue->IsArray()) {
 			fonts_.reserve(jValue->AsArray().size()); // reserve enough space to avoid resizing
@@ -149,17 +152,17 @@ void SDLUtils::loadReasources(std::string filename) {
 #endif
 					fonts_.emplace(key, Font(file, size));
 				} else {
-					throw "'fonts' array in '" + filename
+					throw "'fonts' array in '" + filenameResources
 							+ "' includes and invalid value";
 				}
 			}
 		} else {
-			throw "'fonts' is not an array in '" + filename + "'";
+			throw "'fonts' is not an array in '" + filenameResources + "'";
 		}
 	}
 
 	// load images
-	jValue = root["images"];
+	jValue = rootResources["images"];
 	if (jValue != nullptr) {
 		if (jValue->IsArray()) {
 			images_.reserve(jValue->AsArray().size()); // reserve enough space to avoid resizing
@@ -173,17 +176,17 @@ void SDLUtils::loadReasources(std::string filename) {
 #endif
 					images_.emplace(key, Texture(renderer(), file));
 				} else {
-					throw "'images' array in '" + filename
+					throw "'images' array in '" + filenameResources
 							+ "' includes and invalid value";
 				}
 			}
 		} else {
-			throw "'images' is not an array in '" + filename + "'";
+			throw "'images' is not an array in '" + filenameResources + "'";
 		}
 	}
 
 	// load messages
-	jValue = root["messages"];
+	jValue = rootResources["messages"];
 	if (jValue != nullptr) {
 		if (jValue->IsArray()) {
 			msgs_.reserve(jValue->AsArray().size()); // reserve enough space to avoid resizing
@@ -210,17 +213,17 @@ void SDLUtils::loadReasources(std::string filename) {
 										build_sdlcolor(
 												vObj["bg"]->AsString())));
 				} else {
-					throw "'messages' array in '" + filename
+					throw "'messages' array in '" + filenameResources
 							+ "' includes and invalid value";
 				}
 			}
 		} else {
-			throw "'messages' is not an array in '" + filename + "'";
+			throw "'messages' is not an array in '" + filenameResources + "'";
 		}
 	}
 
 	// load sounds
-	jValue = root["sounds"];
+	jValue = rootResources["sounds"];
 	if (jValue != nullptr) {
 		if (jValue->IsArray()) {
 			sounds_.reserve(jValue->AsArray().size()); // reserve enough space to avoid resizing
@@ -235,7 +238,7 @@ void SDLUtils::loadReasources(std::string filename) {
 #endif
 					sounds_.emplace(key, SoundEffect(file));
 				} else {
-					throw "'sounds' array in '" + filename
+					throw "'sounds' array in '" + filenameResources
 							+ "' includes and invalid value";
 				}
 			}
@@ -245,7 +248,7 @@ void SDLUtils::loadReasources(std::string filename) {
 	}
 
 	// load musics
-	jValue = root["musics"];
+	jValue = rootResources["musics"];
 	if (jValue != nullptr) {
 		if (jValue->IsArray()) {
 			musics_.reserve(jValue->AsArray().size()); // reserve enough space to avoid resizing
@@ -259,12 +262,40 @@ void SDLUtils::loadReasources(std::string filename) {
 #endif
 					musics_.emplace(key, Music(file));
 				} else {
-					throw "'musics' array in '" + filename
+					throw "'musics' array in '" + filenameResources
 							+ "' includes and invalid value";
 				}
 			}
 		} else {
 			throw "'musics' is not an array";
+		}
+	}
+
+
+
+	// load gameConsttans
+	jValue = rootConfig["GameConstants"];
+	if (jValue != nullptr) {
+		if (jValue->IsArray()) {
+			gameConstants_.reserve(jValue->AsArray().size()); // reserve enough space to avoid resizing
+			for (auto& v : jValue->AsArray()) {
+				if (v->IsObject()) {
+					JSONObject vObj = v->AsObject();
+					std::string key = vObj["id"]->AsString();
+					float value = vObj["value"]->AsNumber();
+#ifdef _DEBUG
+					std::cout << "Loading GameConstant with id: " << key << std::endl;
+#endif
+					gameConstants_.emplace(key, value);
+				}
+				else {
+					throw "'GameConstants' array in '" + filenameResources
+						+ "' includes and invalid value";
+				}
+			}
+		}
+		else {
+			throw "'GameConstant' is not an array";
 		}
 	}
 

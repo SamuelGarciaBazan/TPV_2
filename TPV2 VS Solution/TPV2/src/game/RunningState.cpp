@@ -19,7 +19,8 @@
 RunningState::RunningState(FighterFacade* fighter, AsteroidsFacade* asteorids, MissilesFacade* missiles)
 	:fighter(fighter),asteorids(asteorids),missiles(missiles)
 {
-		
+	asteroidSpawnRate = sdlutils().gameConstants().at("AsteroidsSpawnRate");
+	missileSpawnRate = sdlutils().gameConstants().at("MissilesSpawnRate");
 }
 
 RunningState::~RunningState()

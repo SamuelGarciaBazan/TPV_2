@@ -9,6 +9,7 @@
 Gun::Gun()
 {
 	bulletTexture = &sdlutils().images().at("fire");
+	bulletSpeed = sdlutils().gameConstants().at("bulletSpeed");
 }
 
 Gun::~Gun()
@@ -51,9 +52,7 @@ void Gun::update()
 		 
 		Vector2D bp = c - Vector2D(bwidth / 2 , h / 2.0f + 5.0f + bheight).rotate(r) - Vector2D(bwidth / 2, bheight / 2);
 
-		//bp = c;
-
-		Vector2D bv = Vector2D(0, -1).rotate(r) * (vel.magnitude() + 5.0f);
+		Vector2D bv = Vector2D(0, -1).rotate(r) * (vel.magnitude() +bulletSpeed);
 
 		shoot(bp, bv, bwidth, bheight, Vector2D(0, -1).angle(bv));
 

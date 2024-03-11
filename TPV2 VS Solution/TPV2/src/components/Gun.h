@@ -62,6 +62,9 @@ private:
 
     uint32_t lastShoot = 0;
     uint16_t fireRate = 250;
+
+    float bulletSpeed = 5.0f;
+
 };
 
 
