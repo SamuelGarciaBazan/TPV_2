@@ -242,9 +242,6 @@
     <ClCompile Include="src\sdlutils\Texture.cpp">
       <Filter>Source Files\sdlutil</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ecs\Manager.cpp">
       <Filter>Source Files\ecs</Filter>
     </ClCompile>
@@ -320,9 +317,15 @@
     <ClCompile Include="src\components\LookAt.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\config\asteroid.resources.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resources\config\asteroid.config.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

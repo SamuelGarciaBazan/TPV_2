@@ -112,6 +112,7 @@
     <ClCompile Include="src\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\config\asteroid.config.json" />
     <None Include="resources\config\asteroid.resources.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
