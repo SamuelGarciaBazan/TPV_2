@@ -37,7 +37,7 @@ void Game::init() {
 
 	// initialise the SDLUtils singleton
 	SDLUtils::init("ASTEROIDS", 800, 600,
-			"resources/config/asteroid.resources.json","resources/config/asteroid.config.json");
+			"resources/config/pacman.resources.json","resources/config/pacman.config.json");
 
 
 	newgame_state_ = new NewGameState();

@@ -16,7 +16,7 @@ void GameOverState::update()
 
 void GameOverState::enter()
 {
-	if (Game::instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size() == 0) {
+	if (true) {
 		messageTexture = &sdlutils().msgs().at("game_over_win");
 	}
 	else {

@@ -3,9 +3,7 @@
 #include "Game.h"
 
 
-NewRoundState::NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids, 
-	BlackHolesFacade* blackHoles, MissilesFacade* missiles)
-	:fighter(fighter), asteorids(asteorids),blackHoles(blackHoles),missiles(missiles)
+NewRoundState::NewRoundState()
 {
 	messageTexture = &sdlutils().msgs().at("newround");
 
@@ -25,30 +23,7 @@ void NewRoundState::update()
 
 	if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
 
-		//reset fighter(fachada)
-		//...
-		fighter->reset_fighter();
-
-		//remove_all_asteroids (fachada)
-		//...
-		asteorids->remove_all_asteroids();
-
-		//create asteroids(10) (fachada)
-		//...
-		asteorids->create_asteroids(sdlutils().gameConstants().at("nAsteroids"));
-
-		blackHoles->remove_all_black_holes();
-
-
-		blackHoles->create_black_holes(5);
-
-		missiles->remove_all_missiles();
-
-		//missiles->createMisile();
-
 		Game::instance()->setState(Game::RUNNING);
-		
-
 	}
 }
 
