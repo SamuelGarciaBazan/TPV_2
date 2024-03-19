@@ -15,12 +15,11 @@ namespace ecs {
  * A struct that represents a collection of components.
  *
  */
-
 struct Entity {
 public:
 	Entity(grpId_t gId) :
+			currCmps_(),
 			cmps_(), //
-			currCmps_(), //
 			alive_(),  //
 			gId_(gId) //
 	{
@@ -44,21 +43,27 @@ public:
 
 		// we delete all available components
 		//
-		for (auto c : currCmps_)
-			delete c;
+		for (auto c : cmps_)
+			if (c != nullptr)
+				delete c;
 	}
+
 
 private:
 
-	// We could make the constructors private as well, so only
-	// the manager can create instances (because it is a friend)
+	// the field currCmps_ can be removed, and instead we can traverse cmps_
+	// and process non-null elements. We keep it because sometimes the order
+	// in which the components are executed is important
 
-	friend Manager; // so we can update these fields directly from the manager
+	friend Manager;
 
-	std::array<Component*, maxComponentId> cmps_;
+	// the list of components is not really needed when using systems,
+	// but for now we keep it just in case
+	//
 	std::vector<Component*> currCmps_;
+	std::array<Component*, maxComponentId> cmps_;
 	bool alive_;
-	grpId_t gId_;
+	ecs::grpId_t gId_;
 };
 
 } // end of name space

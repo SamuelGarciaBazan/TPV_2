@@ -8,14 +8,23 @@
 
 #include "Component.h"
 #include "ecs.h"
+#include "messages.h"
 #include "Entity.h"
+#include "System.h"
 
 namespace ecs {
 
 /*
  * A class for managing the list of entities, groups, etc.
  *
- */
+ * In this version the manager is responsible on several things
+ * that used to be done by the class Entity (like addComponent), just
+ * to make it easier to develop the memory management later.
+ *
+ * Note that no outside the classes of ECS can access an Entity directly,
+ * they just have a reference to it.
+ *
+ *  */
 class Manager {
 
 public:
@@ -23,7 +32,7 @@ public:
 	virtual ~Manager();
 
 	// Adding an entity simply creates an instance of Entity, adds
-	// it to the list of entities and returns it to the caller.
+	// it to the list of the given group and returns it to the caller.
 	//
 	inline entity_t addEntity(ecs::grpId_t gId = ecs::grp::DEFAULT) {
 
@@ -55,27 +64,28 @@ public:
 		return e;
 	}
 
-	// Setting the state of the entity (alive or dead)
+	// Setting the state of entity 'e' (alive or dead)
 	//
 	inline void setAlive(entity_t e, bool alive) {
 		e->alive_ = alive;
 	}
 
-	// Returns the state of the entity (alive o dead)
+	// Returns the state of the entity 'e' (alive o dead)
 	//
 	inline bool isAlive(entity_t e) {
 		return e->alive_;
 	}
 
-	// Adds a component to an entity. It receives the type T (to be created),
-	// and the list of arguments (if any) to be passed to the constructor.
+	// Adds a component to the entity 'e'. It receives the type
+	// T (to be created), and the list of arguments (if any) to
+	// be passed to the constructor. The component identifier
+	// 'cId' is taken from cmpId<T>.
 	//
 	template<typename T, typename ...Ts>
 	inline T* addComponent(entity_t e, Ts &&... args) {
 
-		// the component id
 		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		assert(cId < maxComponentId);
 
 		// delete the current component, if any
 		//
@@ -93,18 +103,17 @@ public:
 		return static_cast<T*>(c);
 	}
 
-	// Removes the component T, from the entity.
+	// Removes the component of Entity 'e' at position cmpId<T>.
 	//
 	template<typename T>
 	inline void removeComponent(entity_t e) {
 
-		// the component id
 		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		assert(cId < maxComponentId);
 
 		if (e->cmps_[cId] != nullptr) {
 
-			// find the element that is equal tocmps_[cId] (returns an iterator)
+			// find the element that is equal to e->cmps_[cId] (returns an iterator)
 			//
 			auto iter = std::find(e->currCmps_.begin(), e->currCmps_.end(),
 					e->cmps_[cId]);
@@ -114,7 +123,6 @@ public:
 
 			// and then remove it
 			e->currCmps_.erase(iter);
-
 			// destroy it
 			//
 			delete e->cmps_[cId];
@@ -125,57 +133,172 @@ public:
 		}
 	}
 
-	// Returns the component, of the entity, that corresponds to position T,
-	// casting it to T*. The casting is done just for ease of use, to avoid casting
+	// Returns the component that corresponds to position cmpId<T>, casting it
+	// to T*. The casting is done just for ease of use, to avoid casting
 	// outside.
 	//
 	template<typename T>
 	inline T* getComponent(entity_t e) {
 
-		// the component id
 		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		assert(cId < maxComponentId);
 
 		return static_cast<T*>(e->cmps_[cId]);
 	}
 
-	// return true if there is a component with identifier T::id in the entity
+	// returns true if there is a component with identifier cmpId<T>
+	// in the entity 'e'
 	//
 	template<typename T>
 	inline bool hasComponent(entity_t e) {
 
-		constexpr cmpId_t cId = T::id;
-		assert(cId < ecs::maxComponentId);
+		constexpr cmpId_t cId = cmpId<T>;
+		assert(cId < maxComponentId);
 
 		return e->cmps_[cId] != nullptr;
 	}
 
-	// returns the entity's group 'gId'
+	// returns the group 'gId' of entity 'e'
 	//
-	inline ecs::grpId_t groupId(entity_t e) {
+	inline grpId_t groupId(entity_t e) {
 		return e->gId_;
 	}
 
-	// returns the vector of all entities
+	// returns the vector of all entities of a given group
 	//
-	inline const auto& getEntities(grpId_t gId = ecs::grp::DEFAULT) {
-		return entsByGroup_[gId];;
+	inline const auto& getEntities(grpId_t gId = grp::DEFAULT) {
+		return entsByGroup_[gId];
 	}
 
 	// associates the entity 'e' to the handler 'hId'
 	//
 	inline void setHandler(hdlrId_t hId, entity_t e) {
-		assert(hId < ecs::maxHandlerId);
+		assert(hId < maxHandlerId);
 		hdlrs_[hId] = e;
 	}
 
 	// returns the entity associated to the handler 'hId'
 	//
 	inline entity_t getHandler(hdlrId_t hId) {
-		assert(hId < ecs::maxHandlerId);
+		assert(hId < maxHandlerId);
 		return hdlrs_[hId];
 	}
 
+	// Adds a System to the manager. It receives the type
+	// T of the system (to be created), and the list of
+	// arguments (if any) to be passed to the system. The
+	// system's identifier 'cId' is taken from sysId<T>.
+	//
+	template<typename T, typename ...Ts>
+	inline T* addSystem(Ts &&... args) {
+
+		constexpr sysId_t sId = sysId<T>;
+		assert(sId < maxSystemId);
+
+		removeSystem<T>();
+
+		// create, initialise and install the new component
+		//
+		System *s = new T(std::forward<Ts>(args)...);
+		s->setContext(this);
+		s->initSystem();
+		sys_[sId] = s;
+
+		// return it to the user so it can be initialised if needed
+		return static_cast<T*>(s);
+	}
+
+	// Removes the system at position sysId<T>.
+	//
+	template<typename T>
+	inline void removeSystem() {
+
+		constexpr sysId_t sId = sysId<T>;
+		assert(sId < maxSystemId);
+
+		if (sys_[sId] != nullptr) {
+
+			// destroy it
+			//
+			delete sys_[sId];
+
+			// remove the pointer
+			//
+			sys_[sId] = nullptr;
+		}
+	}
+
+	// Returns the system that corresponds to position sysId<T>, casting it
+	// to T*. The casting is done just for ease of use, to avoid casting
+	// outside.
+	//
+	template<typename T>
+	inline T* getSystem() {
+
+		constexpr sysId_t sId = sysId<T>;
+		assert(sId < maxSystemId);
+
+		return static_cast<T*>(sys_[sId]);
+	}
+
+	inline void send(const Message &m, bool delay = false) {
+		if (!delay) {
+			for (System *s : sys_) {
+				if (s != nullptr)
+					s->recieve(m);
+			}
+		} else {
+			// will make a copy of m, we could use std::move to move it
+			// but then we will have to remove const from above
+			msgs_.emplace_back(m);
+		}
+	}
+
+	// this method should be called in the main loop to send queued
+	// messages, i.e., those were sent using send(m,true)
+	//
+	inline void flushMessages() {
+
+		// we traverse until msgs_.size(), so if new message
+		// we added we don't send them now. If you wish to send
+		// them as will you should write this loop in a different way
+		// and maybe using std::list would be better.
+		//
+		auto size = msgs_.size();
+		for (auto i = 0u; i < size; i++) {
+			auto &m = msgs_[i];
+			for (System *s : sys_) {
+				if (s != nullptr)
+					s->recieve(m);
+			}
+		}
+
+		// delete all message that we have sent. This might be expensive
+		// since it has to shift all remaining elements to the left. A better
+		// solution would be to keep two vectors 'v1' and 'v2', when sending a
+		// message we always add it to 'v1' and in flush we swap them and send
+		// all messages in v2. After flush we simply clear v2
+		//
+		msgs_.erase(msgs_.begin(), msgs_.begin() + size);
+	}
+
+	// THIS IS THE VERSION THAT SWAP QUEUES, IF YOU WANT TO USE IT
+	//
+	// this method should be called in the main loop to send queued
+	// messages, i.e., those were sent using send(m,true)
+	//
+	inline void flushMessagesWithSwap() {
+		std::swap(msgs_, msgs_aux_);
+		for (auto &m : msgs_aux_) {
+			for (System *s : sys_) {
+				if (s != nullptr)
+					s->recieve(m);
+			}
+		}
+
+		msgs_aux_.clear();
+	}
+	
 	// Updating  an entity simply calls the update of all
 	// components
 	//
@@ -194,7 +317,7 @@ public:
 			e->currCmps_[i]->render();
 	}
 
-	// update all entities
+	// call update of all entities
 	//
 	void update() {
 		for (auto &ents : entsByGroup_) {
@@ -204,7 +327,7 @@ public:
 		}
 	}
 
-	// render all entities
+	// call render of all entities
 	//
 	void render() {
 		for (auto &ents : entsByGroup_) {
@@ -214,15 +337,18 @@ public:
 		}
 	}
 
-	// eliminate dead entities (the implementation of this method
-	// is in Manager.cpp, but we could also defined it here).
-	//
+
 	void refresh();
 
 private:
 
 	std::array<entity_t, maxHandlerId> hdlrs_;
 	std::array<std::vector<entity_t>, maxGroupId> entsByGroup_;
+	std::array<System*, maxSystemId> sys_;
+
+	std::vector<Message> msgs_;
+	std::vector<Message> msgs_aux_;
+
 };
 
 } // end of namespace

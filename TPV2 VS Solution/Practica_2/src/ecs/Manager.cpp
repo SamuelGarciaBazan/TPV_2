@@ -6,15 +6,24 @@ namespace ecs {
 
 Manager::Manager() :
 		hdlrs_(), //
-		entsByGroup_() //
+		entsByGroup_(), //
+		sys_(), //
+		msgs_(), //
+		msgs_aux_() //
 {
 
 	// for each group we reserve space for 100 entities,
-	// just to avoid copies
+	// just to avoid resizing
 	//
 	for (auto &groupEntities : entsByGroup_) {
 		groupEntities.reserve(100);
 	}
+
+	// allocate enough space for the messages queue,
+	// just to avoid resizing
+	//
+	msgs_.reserve(100);
+	msgs_aux_.reserve(100);
 }
 
 Manager::~Manager() {
@@ -25,6 +34,10 @@ Manager::~Manager() {
 		for (auto e : ents)
 			delete e;
 	}
+
+	for (auto i = 0u; i < maxSystemId; i++)
+		if (sys_[i] != nullptr)
+			delete sys_[i];
 }
 
 void Manager::refresh() {
@@ -35,8 +48,8 @@ void Manager::refresh() {
 		auto &groupEntities = entsByGroup_[gId];
 		groupEntities.erase(
 				std::remove_if(groupEntities.begin(), groupEntities.end(),
-						[this](Entity *e) {
-							if (isAlive(e)) {
+						[](entity_t e) {
+							if (e->alive_) {
 								return false;
 							} else {
 								delete e;

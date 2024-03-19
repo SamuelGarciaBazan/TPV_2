@@ -1,8 +1,11 @@
-# Entity-Component-System v3
+# Entity-Component-System v4
 
-This version implements only Entity-Component. Components inherit from the class Component, Entity maintains an array with a fixed number of (possible) components, and Manager maintains a list of entities. 
+This version implements Entity-Component-Systems. Components inherit from the struct Component, Entity maintains an array with a fixed number of (possible) components, and Manager maintains a list of entities. We also have systems and they manager via the manager to ease access to them.
 
-It also support groups of entities and handlers (assigning identifiers to entities for fast global access). Each entity belongs to a single group, resulting in a more efficient implementation. Entities keep no information on groups, everything is done in the manager.
+We still have update/render in Component just to allow using it without systems as well, they can be removed if we desire a cleaner implementation.
 
-The difference from v2 is in that we moved all methods from Entity to Manager, this way the user does not need to know anything about the Entity type, and will see it as entity_t. Later we can change the actual type of entity and it will still work with previous code.
+It also support groups of entities and handlers (assigning identifiers to entities for fast global access). Each entity belongs to a single group, resulting in a more efficient implementation.
+
+It supports sending messages between systems. See messages_defs_examples.h for more information.
+
 
