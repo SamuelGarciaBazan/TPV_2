@@ -9,11 +9,7 @@
   "images" : [
     { "id" : "fighter", "file" : "resources/images/fighter.png" },
     { "id" : "fire", "file" : "resources/images/fire.png"},
-    { "id" : "heart", "file" : "resources/images/heart.png"},
-    { "id" : "asteroid", "file" : "resources/images/asteroid.png"},
-    { "id" : "asteroid_gold", "file" : "resources/images/asteroid_gold.png"},
-    { "id" : "blackHole", "file" : "resources/images/black-hole.png"},
-    { "id" : "missile", "file" : "resources/images/missle.png"}
+    { "id" : "heart", "file" : "resources/images/heart.png"}
   ],
   
   "messages" : [
