@@ -7,8 +7,6 @@
   ],
   
   "images" : [
-    { "id" : "fighter", "file" : "resources/images/fighter.png" },
-    { "id" : "fire", "file" : "resources/images/fire.png"},
     { "id" : "heart", "file" : "resources/images/heart.png"}
   ],
   
@@ -24,10 +22,7 @@
   
   "sounds" : [
     { "id" : "fire", "file" : "resources/sound/fire.wav" },
-    { "id" : "gunshot", "file" : "resources/sound/fire.wav" },
-    { "id" : "explosion", "file" : "resources/sound/explosion.wav" },
-    { "id" : "thrust", "file" : "resources/sound/thrust.wav" },
-    { "id" : "thrust1", "file" : "resources/sound/thrust1.wav" }
+    { "id" : "explosion", "file" : "resources/sound/explosion.wav" }
   ],
 
   "musics" : [
