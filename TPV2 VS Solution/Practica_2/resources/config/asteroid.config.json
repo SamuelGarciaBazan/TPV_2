@@ -1,0 +1,13 @@
+{
+
+  "GameConstants": [
+    {"id":  "nAsteroids","value": 6 },
+    {"id":  "AsteroidsSpawnRate","value": 5000 },
+    {"id":  "MaxVelFighter","value": 2.5 },
+    {"id":  "RotationFigher","value": 1 },
+    {"id":  "bulletSpeed","value": 4.5 },
+    {"id":  "MissilesSpawnRate","value": 10000 }
+  ]
+
+
+}
