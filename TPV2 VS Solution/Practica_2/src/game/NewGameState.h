@@ -2,13 +2,11 @@
 
 #include "GameState.h"
 
-class FighterFacade;
-
 class NewGameState :
     public GameState
 {
 public:
-	NewGameState(FighterFacade* fighter);
+	NewGameState();
 	~NewGameState();
 
 	void update() override;
@@ -19,8 +17,6 @@ private:
 	Texture* messageTexture;
 
 	SDL_Rect messageRect;
-
-	FighterFacade* fighter;
 
 };
 

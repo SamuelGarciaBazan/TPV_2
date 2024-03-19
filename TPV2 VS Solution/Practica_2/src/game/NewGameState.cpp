@@ -3,9 +3,8 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 
-#include "FighterFacade.h"
 
-NewGameState::NewGameState(FighterFacade* fighter) : fighter(fighter)
+NewGameState::NewGameState() 
 {
 	//text message
 	messageTexture = &sdlutils().msgs().at("newgame");
@@ -29,10 +28,6 @@ void NewGameState::update()
 	
 	if (ih().keyDownEvent()) {
 
-		//resetear vidas del caza(con facade)
-		//...
-		fighter->reset_lives();
-		
 		//cambiar al estado newRound
 		Game::instance()->setState(Game::NEWROUND);
 	}

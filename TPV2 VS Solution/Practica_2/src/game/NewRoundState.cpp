@@ -2,10 +2,6 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 
-#include "FighterFacade.h"
-#include "AsteroidsFacade.h"
-#include "BlackHolesFacade.h"
-#include "MissilesFacade.h"
 
 NewRoundState::NewRoundState(FighterFacade* fighter, AsteroidsFacade* asteorids, 
 	BlackHolesFacade* blackHoles, MissilesFacade* missiles)

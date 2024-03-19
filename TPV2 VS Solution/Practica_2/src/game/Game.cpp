@@ -2,20 +2,12 @@
 
 #include "Game.h"
 
-//#include "../components/DeAcceleration.h"
-//#include "../components/FighterCtrl.h"
-//#include "../components/Image.h"
-//#include "../components/ShowAtOpossiteSide.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
-#include "AsteroidsUtils.h"
-#include "FighterUtils.h"
-#include "BlackHolesUtils.h"
-#include "MissileUtils.h"
 #include "GameOverState.h"
 #include "NewGameState.h"
 #include "NewRoundState.h"
@@ -47,16 +39,10 @@ void Game::init() {
 	SDLUtils::init("ASTEROIDS", 800, 600,
 			"resources/config/asteroid.resources.json","resources/config/asteroid.config.json");
 
-	AsteroidsFacade* asteroids = new AsteroidsUtils();
-	FighterFacade* fighter = new FighterUtils();
-	BlackHolesFacade* blackHoles = new BlackHolesUtils();
-	MissilesFacade* missile = new MissileUtils();
 
-	fighter->create_fighter();
-
-	newgame_state_ = new NewGameState(fighter);
-	newround_state_ = new NewRoundState(fighter,asteroids,blackHoles,missile);
-	runing_state_ = new RunningState(fighter,asteroids,missile);
+	newgame_state_ = new NewGameState();
+	newround_state_ = new NewRoundState();
+	runing_state_ = new RunningState();
 	paused_state_ = new PausedState();
 	gameover_state_ = new GameOverState();
 

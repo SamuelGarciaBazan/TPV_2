@@ -1,14 +1,10 @@
 #include "RunningState.h"
 #include "../sdlutils/InputHandler.h"
 
-#include "FighterFacade.h"
-#include "AsteroidsFacade.h"
-#include "MissilesFacade.h"
 
 #include "Game.h"
 #include "../ecs/Manager.h"
 
-#include "../components/Gun.h"
 #include "../components/Transform.h"
 #include "../components/Health.h"
 

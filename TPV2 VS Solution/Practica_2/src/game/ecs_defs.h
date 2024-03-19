@@ -8,28 +8,18 @@
 #define _CMPS_LIST_ \
 	TRANSFORM, \
 	IMAGE, \
-	DEACCELERATION, \
-	FIGHTERCTRL, \
-	SHOWATOPOSSITESIDE, \
 	FOLLOW, \
-	TOWARDSDESTINATION, \
-	GENERATIONS, \
 	HEALTH, \
-	GUN, \
 	IMAGEWITHFRAMES,\
-	CONSTROTATION, \
-	LOOKAT
 
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	ASTEROIDS, \
-	BLACKHOLES, \
-	MISSILES
+	FRUITS
 
 // Handlers list - must have at least one element
 //
 #define _HDLRS_LIST_ \
-    FIGHTER
+    PACMAN
 
