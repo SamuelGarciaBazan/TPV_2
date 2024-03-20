@@ -49,6 +49,12 @@
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{4399b8be-0199-45fe-9b5a-4252b4c6f101}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\systems">
+      <UniqueIdentifier>{35ddebce-c2e8-4e37-8f8f-470783217579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems">
+      <UniqueIdentifier>{8df4a76a-5c31-43e6-b2b0-ef78528d7a2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -113,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="src\components\Transform.cpp">
       <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\systems\PacManSystem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="src\game\messages_defs.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\systems\PacManSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
