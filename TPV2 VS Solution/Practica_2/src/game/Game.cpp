@@ -72,12 +72,15 @@ void Game::start() {
 			exit = true;
 			continue;
 		}
-
+		
 		//update state
 		current_state_->update();
 
 		//render
 		sdlutils().presentRenderer();
+
+		//envio de mensajes
+		mngr_->flushMessagesWithSwap();
 
 		//sleep the process
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
@@ -85,6 +88,6 @@ void Game::start() {
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
 	}
-
+	
 }
 

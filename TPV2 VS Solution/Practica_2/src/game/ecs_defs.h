@@ -23,3 +23,12 @@
 #define _HDLRS_LIST_ \
     PACMAN
 
+// Systems list - must have at least one element
+//
+#define _SYS_LIST_ \
+	PACMAN, \
+	GHOST, \
+	FOOD, \
+	IMMUNITY, \
+	COLLISIONS, \
+	RENDER, \

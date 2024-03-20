@@ -79,7 +79,7 @@ namespace sys {
 // list of system identifiers - note that we rely on that the
 // first number is 0 in C/C++ standard
 enum sysId : hdlrId_t {
-	_SYS_LIST_, /* taken from ../game/ecs_defs */
+	_SYS_LIST_ /* taken from ../game/ecs_defs */
 
 	// do not remove this
 	_LAST_SYS_ID
