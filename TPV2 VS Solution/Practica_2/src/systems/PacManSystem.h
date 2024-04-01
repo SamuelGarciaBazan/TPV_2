@@ -16,6 +16,7 @@ public:
 
 private:
 
+    ecs::entity_t pacMan;
 
 };
 

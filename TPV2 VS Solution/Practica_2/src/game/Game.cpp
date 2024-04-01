@@ -39,7 +39,7 @@ void Game::init() {
 	SDLUtils::init("ASTEROIDS", 800, 600,
 			"resources/config/pacman.resources.json","resources/config/pacman.config.json");
 
-
+	//creacion de estados
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
 	runing_state_ = new RunningState();
@@ -48,6 +48,10 @@ void Game::init() {
 
 	current_state_ = newgame_state_;
 	newgame_state_->enter();
+
+	//creacion de los sistemas
+
+
 
 }
 

@@ -121,7 +121,7 @@
       <Filter>Source Files\components</Filter>
     </ClCompile>
     <ClCompile Include="src\systems\PacManSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,7 +243,7 @@
       <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\systems\PacManSystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
