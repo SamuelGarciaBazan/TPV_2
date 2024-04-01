@@ -35,6 +35,7 @@ void RunningState::update()
 		Game::instance()->setState(Game::PAUSED);
 	}
 
+	/*antiguo update
 	//update de entidades
 	mngr->update();
 
@@ -46,6 +47,7 @@ void RunningState::update()
 
 	//refresh del manager
 	mngr->refresh();
+	*/
 
 	
 	pacManSystem->update();

@@ -81,7 +81,7 @@ public:
 			draw();
 	}
 
-private:
+//private: ahora es public 
 	void draw();
 	Vector2D pos_;
 	Vector2D vel_;
