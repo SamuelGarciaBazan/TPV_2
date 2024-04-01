@@ -12,6 +12,9 @@ class Manager;
 
 class InputHandler;
 
+class PacManSystem;
+
+
 class Game: public Singleton<Game> {
 	friend Singleton<Game> ;
 	Game();
@@ -60,5 +63,8 @@ private:
 	GameState *newgame_state_;
 	GameState *newround_state_;
 	GameState *gameover_state_;
+
+
+	PacManSystem* pacManSystem;
 };
 

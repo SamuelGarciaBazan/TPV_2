@@ -3,13 +3,15 @@
 
 class Transform;
 
+class PacManSystem;
+
 class RunningState :
     public GameState
 {
 
 public:
 
-	RunningState();
+	RunningState(PacManSystem* pacManSystem);
 	~RunningState();
 
 	void update() override;
@@ -22,5 +24,7 @@ private:
 
 	bool collidesWithRotation(Transform* t1, Transform* t2);
 
+
+	PacManSystem* pacManSystem;
 };
 

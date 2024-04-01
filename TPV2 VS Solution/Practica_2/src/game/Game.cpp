@@ -15,6 +15,8 @@
 #include "PausedState.h"
 #include "RunningState.h"
 
+#include "../systems/PacManSystem.h"
+
 using ecs::Manager;
 
 Game::Game() :
@@ -39,10 +41,14 @@ void Game::init() {
 	SDLUtils::init("ASTEROIDS", 800, 600,
 			"resources/config/pacman.resources.json","resources/config/pacman.config.json");
 
+	//creacion de los sistemas
+	pacManSystem = mngr_->addSystem<PacManSystem>();
+
+
 	//creacion de estados
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
-	runing_state_ = new RunningState();
+	runing_state_ = new RunningState(pacManSystem);
 	paused_state_ = new PausedState();
 	gameover_state_ = new GameOverState();
 

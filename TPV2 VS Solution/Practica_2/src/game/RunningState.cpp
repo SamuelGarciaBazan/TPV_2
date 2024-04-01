@@ -12,7 +12,11 @@
 
 #include <vector>
 
-RunningState::RunningState()
+
+#include "../systems/PacManSystem.h"
+
+RunningState::RunningState(PacManSystem* pacManSystem)
+	:pacManSystem(pacManSystem)
 {
 
 }
@@ -24,7 +28,6 @@ RunningState::~RunningState()
 void RunningState::update()
 {
 	auto mngr = Game::instance()->getMngr();
-
 
 
 	if (ih().isKeyDown(SDL_SCANCODE_P)) {
@@ -45,7 +48,7 @@ void RunningState::update()
 	mngr->refresh();
 
 	
-
+	pacManSystem->update();
 }
 
 

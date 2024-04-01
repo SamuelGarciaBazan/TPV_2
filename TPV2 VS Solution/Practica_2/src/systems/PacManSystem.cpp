@@ -5,6 +5,7 @@
 #include "../components/ImageWithFrames.h"
 #include "../components/Health.h"
 
+#include "../sdlutils/SDLUtils.h"
 
 
 PacManSystem::PacManSystem()
@@ -20,14 +21,27 @@ void PacManSystem::initSystem()
 	//creacion del pacMan
 	pacMan = mngr_->addEntity();
 
-	float healthImageScale = 1.f;
+	float healthImageScale = 0.35;
 
-	int fils = 3;
-	int cols = 3;
+	int fils = 8;
+	int cols = 8;
 
-	mngr_->addComponent<Transform>(pacMan);
-	mngr_->addComponent<ImageWithFrames>(pacMan,"id",fils,cols);
-	mngr_->addComponent<Health>(pacMan,"heart",healthImageScale);
+	int pacmanWidth = 40;
+	int pacmanHeight = 40;
+
+	//añadir componentes
+	auto trasnformCmp = mngr_->addComponent<Transform>(pacMan);
+	auto imgF_Cmp = mngr_->addComponent<ImageWithFrames>(pacMan,"spriteSheet",fils,cols);
+	auto healthCmp =  mngr_->addComponent<Health>(pacMan,"heart",healthImageScale);
+
+	healthCmp->setLifes(3);
+	
+	trasnformCmp->setHeight(pacmanHeight);
+	trasnformCmp->setWidth(pacmanWidth);
+
+	trasnformCmp->getPos().set(	(sdlutils().width() -pacmanWidth)/2,
+								(sdlutils().height()-pacmanHeight)/2);
+
 
 
 }
@@ -35,7 +49,7 @@ void PacManSystem::initSystem()
 void PacManSystem::update()
 {
 	//mover el pacman
-
+	//mngr_->update();
 
 }
 
