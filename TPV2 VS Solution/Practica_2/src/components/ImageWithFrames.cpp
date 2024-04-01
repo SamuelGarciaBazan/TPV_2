@@ -21,11 +21,12 @@ ImageWithFrames::~ImageWithFrames()
 
 void ImageWithFrames::update()
 {
-
+	/*
 	if ((lastFrame + frameTime) < sdlutils().virtualTimer().currTime()) {
 		lastFrame = sdlutils().virtualTimer().currTime();
 		currentFrame = (currentFrame + 1) % (fils * cols);
 	}
+	*/
 }
 
 void ImageWithFrames::render()

@@ -42,7 +42,10 @@ void PacManSystem::initSystem()
 	trasnformCmp->getPos().set(	(sdlutils().width() -pacmanWidth)/2,
 								(sdlutils().height()-pacmanHeight)/2);
 
+	imgF_Cmp->firstIndex = 0;
+	imgF_Cmp->lastIndex = 3;
 
+	
 
 }
 
@@ -51,6 +54,20 @@ void PacManSystem::update()
 	//mover el pacman
 	//mngr_->update();
 
+
+	//update del imageWithFrames
+	auto imgF_Cmp = mngr_->getComponent<ImageWithFrames>(pacMan);
+
+
+
+	if ((imgF_Cmp->lastFrame + imgF_Cmp->frameTime) < sdlutils().virtualTimer().currTime()) {
+
+		imgF_Cmp->lastFrame = sdlutils().virtualTimer().currTime();
+		imgF_Cmp->currentFrame++;
+		if (imgF_Cmp->currentFrame > imgF_Cmp->lastIndex) {
+			imgF_Cmp->currentFrame = imgF_Cmp->firstIndex;
+		}
+	}
 }
 
 void PacManSystem::recieve(const Message& msg)

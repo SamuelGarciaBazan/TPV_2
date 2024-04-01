@@ -22,7 +22,8 @@ public:
 
     void initComponent() override;
 
-private:
+
+//private:, ahora todos los atributos son publicos
     Texture* myTexture;
     int fils;
     int cols;
@@ -36,5 +37,9 @@ private:
     uint16_t frameTime = 50 ;
 
     Transform* myTransform;
+
+    int firstIndex;
+    int lastIndex;
+
 };
 
