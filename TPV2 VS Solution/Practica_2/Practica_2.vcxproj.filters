@@ -123,6 +123,9 @@
     <ClCompile Include="src\systems\PacManSystem.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\systems\GhostSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\json\JSON.h">
@@ -243,6 +246,9 @@
       <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\systems\PacManSystem.h">
+      <Filter>Header Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\systems\GhostSystem.h">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
