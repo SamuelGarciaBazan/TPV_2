@@ -18,13 +18,25 @@ private:
 
     ecs::entity_t pacMan;
 
+
+    void movePacMan();
+
+
+    void resetPos();
+    void resetLifes();
+
     void animatePacMan();
+
+    void renderLifes();
+
+
 
     float pacManVel = 1.f;
 
     bool leftPressed = false;
     bool rightPressed = false;
 
-
+    int pacmanWidth = 40;
+    int pacmanHeight = 40;
 };
 
