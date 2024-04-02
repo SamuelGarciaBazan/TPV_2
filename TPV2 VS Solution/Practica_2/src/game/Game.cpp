@@ -66,11 +66,6 @@ void Game::init() {
 
 	current_state_ = newgame_state_;
 	newgame_state_->enter();
-
-	//creacion de los sistemas
-
-
-
 }
 
 void Game::start() {

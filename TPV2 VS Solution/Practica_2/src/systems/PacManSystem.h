@@ -16,11 +16,7 @@ public:
 
 private:
 
-    ecs::entity_t pacMan;
-
-
     void movePacMan();
-
 
     void resetPos();
     void resetLifes();
@@ -30,6 +26,7 @@ private:
     void renderLifes();
 
 
+    ecs::entity_t pacMan;
 
     float pacManVel = 1.f;
 

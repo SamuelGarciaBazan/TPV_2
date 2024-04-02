@@ -23,7 +23,7 @@ public:
     void initComponent() override;
 
 
-//private:, ahora todos los atributos son publicos
+//private:, ahora es public 
     Texture* myTexture;
     int fils;
     int cols;
