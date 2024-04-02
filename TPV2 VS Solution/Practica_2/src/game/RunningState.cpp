@@ -14,9 +14,16 @@
 
 
 #include "../systems/PacManSystem.h"
+#include "../systems/GhostSystem.h"
+#include "../systems/FoodSystem.h"
+#include "../systems/ImmunitySystem.h"
+#include "../systems/CollisionsSystem.h"
+#include "../systems/RenderSystem.h"
 
-RunningState::RunningState(PacManSystem* pacManSystem)
-	:pacManSystem(pacManSystem)
+RunningState::RunningState(PacManSystem* pc, GhostSystem*gh, FoodSystem*fo,
+	ImmunitySystem*im, CollisionsSystem*col, RenderSystem*r)
+	:pacManSystem(pc),ghostSystem(gh),foodSystem(fo),
+	immunitySystem(im),collisionsSystem(col),renderSystem(r)
 {
 
 }
@@ -51,6 +58,11 @@ void RunningState::update()
 
 	
 	pacManSystem->update();
+	ghostSystem->update();
+	foodSystem->update();
+	immunitySystem->update();
+	collisionsSystem->update();
+	renderSystem->update();
 }
 
 

@@ -4,6 +4,12 @@
 class Transform;
 
 class PacManSystem;
+class GhostSystem;
+class FoodSystem;
+class ImmunitySystem;
+class CollisionsSystem;
+class RenderSystem;
+
 
 class RunningState :
     public GameState
@@ -11,7 +17,8 @@ class RunningState :
 
 public:
 
-	RunningState(PacManSystem* pacManSystem);
+	RunningState(PacManSystem*,GhostSystem*,FoodSystem*,
+				ImmunitySystem*,CollisionsSystem*,RenderSystem*);
 	~RunningState();
 
 	void update() override;
@@ -26,5 +33,10 @@ private:
 
 
 	PacManSystem* pacManSystem;
+	GhostSystem* ghostSystem;
+	FoodSystem* foodSystem;
+	ImmunitySystem* immunitySystem;
+	CollisionsSystem* collisionsSystem;
+	RenderSystem* renderSystem;
 };
 

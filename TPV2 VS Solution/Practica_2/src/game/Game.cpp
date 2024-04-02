@@ -58,7 +58,9 @@ void Game::init() {
 	//creacion de estados
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
-	runing_state_ = new RunningState(pacManSystem);
+	runing_state_ = new RunningState(pacManSystem,ghostSystem,foodSystem,
+									immunitySystem,collisionsSystem,renderSystem);
+
 	paused_state_ = new PausedState();
 	gameover_state_ = new GameOverState();
 
