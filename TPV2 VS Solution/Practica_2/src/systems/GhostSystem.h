@@ -21,5 +21,12 @@ private:
 
     void moveGhosts();
 
+    void destroyGhosts();
+
+
+    bool pacManImmune = false;
+
+    uint32_t ghostSpawnRate = 5000;
+    uint32_t lastSpawn = 0;
 };
 

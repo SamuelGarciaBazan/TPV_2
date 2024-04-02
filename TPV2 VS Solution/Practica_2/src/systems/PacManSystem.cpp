@@ -22,6 +22,8 @@ void PacManSystem::initSystem()
 	//creacion del pacMan
 	pacMan = mngr_->addEntity();
 
+	mngr_->setHandler(ecs::hdlr::PACMAN, pacMan);
+
 	float healthImageScale = 0.35;
 
 	int fils = 8;
@@ -48,8 +50,6 @@ void PacManSystem::update()
 {
 	//mover el pacman
 	movePacMan();
-	animatePacMan();
-	renderLifes();
 }
 
 void PacManSystem::recieve(const Message& msg)
@@ -63,25 +63,6 @@ void PacManSystem::recieve(const Message& msg)
 		resetLifes();
 	}	
 }
-
-void PacManSystem::animatePacMan()
-{
-	//update del imageWithFrames, Animacion del pacman
-	auto imgF_Cmp = mngr_->getComponent<ImageWithFrames>(pacMan);
-
-
-	if ((imgF_Cmp->lastFrame + imgF_Cmp->frameTime) < sdlutils().virtualTimer().currTime()) {
-
-		imgF_Cmp->lastFrame = sdlutils().virtualTimer().currTime();
-		imgF_Cmp->currentFrame++;
-		if (imgF_Cmp->currentFrame > imgF_Cmp->lastIndex) {
-			imgF_Cmp->currentFrame = imgF_Cmp->firstIndex;
-		}
-	}
-
-	imgF_Cmp->render();//cambiar al render system??
-}
-
 
 void PacManSystem::movePacMan()
 {
@@ -137,9 +118,3 @@ void PacManSystem::resetLifes()
 
 
 
-void PacManSystem::renderLifes()
-{
-	auto healthCmp = mngr_->getComponent<Health>(pacMan);
-
-	healthCmp->render();//cambiar para evitar llamada a metodos virtuales
-}

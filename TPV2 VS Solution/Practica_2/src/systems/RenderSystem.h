@@ -1,6 +1,8 @@
 #pragma once
 #include "../ecs/System.h"
 
+class ImageWithFrames;
+
 class RenderSystem
 	:public ecs::System
 {
@@ -23,7 +25,10 @@ private:
 
     void renderPacman();
 
+    void renderLifes();
 
+    void renderImageWithFrames(ImageWithFrames*);
+    void updateImageWithFrames(ImageWithFrames*);
 
 };
 
