@@ -62,30 +62,34 @@ void PacManSystem::update()
 	if (lastInput + inputDelay <= sdlutils().virtualTimer().currTime()) {
 
 		if (ih().isKeyDown(SDL_SCANCODE_UP)) {
-			 tf->getVel().set(0, -pacManVel);
-			 tf->getVel() = tf->getVel().rotate(tf->rot_);
+			//setear la velocidad y rotar
+			tf->getVel().set(0, -pacManVel);
+			tf->getVel() = tf->getVel().rotate(tf->rot_);
+
+			//guardar el tiempo
 			lastInput = sdlutils().virtualTimer().currTime();
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_DOWN)) {
 			tf->getVel().set(0, 0);
-			lastInput = sdlutils().virtualTimer().currTime();
 
+			//guardar el tiempo
+			lastInput = sdlutils().virtualTimer().currTime();
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
-			tf->rot_ += 90;
-			tf->getVel().set(0, -pacManVel);
 
-			tf->getVel() = tf->getVel().rotate(tf->rot_);
+			tf->rot_ += 90;
+			tf->getVel() = tf->getVel().rotate(90);
+
+			//guardar el tiempo
 			lastInput = sdlutils().virtualTimer().currTime();
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
 
 			tf->rot_ -= 90;
-			tf->getVel().set(0, -pacManVel);
+			tf->getVel()= tf->getVel().rotate(-90);
 
-			tf->getVel()= tf->getVel().rotate(tf->rot_);
+			//guardar el tiempo
 			lastInput = sdlutils().virtualTimer().currTime();
-
 		}
 	}
 
