@@ -26,14 +26,12 @@ void GhostSystem::recieve(const Message& msg)
 	if (msg.id == _m_PACMAN_GHOST_COLLISION) {
 
 	}
-	if (msg.id == _m_IMMUNITY_START) {
+	else if (msg.id == _m_IMMUNITY_START) {
 
 	}
-	if (msg.id == _m_IMMUNITY_END) {
+	else if (msg.id == _m_IMMUNITY_END) {
 
 	}
-
-
 
 }
 

@@ -54,8 +54,6 @@ void PacManSystem::update()
 
 void PacManSystem::recieve(const Message& msg)
 {
-
-	
 	if (msg.id == _m_ROUND_START) {
 		//nueva ronda, resetear posicion
 		resetPos();
