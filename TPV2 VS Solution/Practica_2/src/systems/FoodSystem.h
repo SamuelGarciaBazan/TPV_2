@@ -2,7 +2,7 @@
 #include "../ecs/System.h"
 
 class FoodSystem
-    :ecs::System
+    :public ecs::System
 {
 public:
     __SYSID_DECL__(ecs::sys::FOOD);

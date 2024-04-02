@@ -13,6 +13,12 @@ class Manager;
 class InputHandler;
 
 class PacManSystem;
+class GhostSystem;
+class FoodSystem;
+class ImmunitySystem;
+class CollisionsSystem;
+class RenderSystem;
+
 
 
 class Game: public Singleton<Game> {
@@ -66,5 +72,11 @@ private:
 
 
 	PacManSystem* pacManSystem;
+	GhostSystem* ghostSystem;
+	FoodSystem* foodSystem;
+	ImmunitySystem* immunitySystem;
+	CollisionsSystem* collisionsSystem;
+	RenderSystem* renderSystem;
+	
 };
 

@@ -16,6 +16,11 @@
 #include "RunningState.h"
 
 #include "../systems/PacManSystem.h"
+#include "../systems/GhostSystem.h"
+#include "../systems/FoodSystem.h"
+#include "../systems/ImmunitySystem.h"
+#include "../systems/CollisionsSystem.h"
+#include "../systems/RenderSystem.h"
 
 using ecs::Manager;
 
@@ -43,6 +48,11 @@ void Game::init() {
 
 	//creacion de los sistemas
 	pacManSystem = mngr_->addSystem<PacManSystem>();
+	ghostSystem = mngr_->addSystem<GhostSystem>();
+	foodSystem = mngr_->addSystem<FoodSystem>();
+	immunitySystem = mngr_->addSystem<ImmunitySystem>();
+	collisionsSystem = mngr_->addSystem<CollisionsSystem>();
+	renderSystem = mngr_->addSystem<RenderSystem>();
 
 
 	//creacion de estados

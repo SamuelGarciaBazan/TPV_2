@@ -5,7 +5,7 @@ class RenderSystem
 	:public ecs::System
 {
 public:
-    __SYSID_DECL__(ecs::sys::FOOD);
+    __SYSID_DECL__(ecs::sys::RENDER);
 
     RenderSystem();
 
