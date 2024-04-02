@@ -46,7 +46,6 @@ void PacManSystem::initSystem()
 	imgF_Cmp->firstIndex = 0;
 	imgF_Cmp->lastIndex = 3;
 
-	lastInput = sdlutils().virtualTimer().currTime();
 
 
 }
@@ -59,39 +58,32 @@ void PacManSystem::update()
 	auto tf = mngr_->getComponent<Transform>(pacMan);
 
 
-	if (lastInput + inputDelay <= sdlutils().virtualTimer().currTime()) {
-
-		if (ih().isKeyDown(SDL_SCANCODE_UP)) {
-			//setear la velocidad y rotar
-			tf->getVel().set(0, -pacManVel);
-			tf->getVel() = tf->getVel().rotate(tf->rot_);
-
-			//guardar el tiempo
-			lastInput = sdlutils().virtualTimer().currTime();
-		}
-		if (ih().isKeyDown(SDL_SCANCODE_DOWN)) {
-			tf->getVel().set(0, 0);
-
-			//guardar el tiempo
-			lastInput = sdlutils().virtualTimer().currTime();
-		}
-		if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
-
-			tf->rot_ += 90;
-			tf->getVel() = tf->getVel().rotate(90);
-
-			//guardar el tiempo
-			lastInput = sdlutils().virtualTimer().currTime();
-		}
-		if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
-
-			tf->rot_ -= 90;
-			tf->getVel()= tf->getVel().rotate(-90);
-
-			//guardar el tiempo
-			lastInput = sdlutils().virtualTimer().currTime();
-		}
+	if (ih().isKeyDown(SDL_SCANCODE_UP)) {
+		//setear la velocidad y rotar
+		tf->getVel().set(0, -pacManVel);
+		tf->getVel() = tf->getVel().rotate(tf->rot_);
 	}
+	if (ih().isKeyDown(SDL_SCANCODE_DOWN)) {
+		tf->getVel().set(0, 0);
+	}
+	if (ih().isKeyDown(SDL_SCANCODE_RIGHT) && !rightPressed) {
+		tf->rot_ += 90;
+		tf->getVel() = tf->getVel().rotate(90);
+		rightPressed = true;
+	}
+	if (ih().isKeyDown(SDL_SCANCODE_LEFT)&& !leftPressed) {
+		tf->rot_ -= 90;
+		tf->getVel() = tf->getVel().rotate(-90);
+		leftPressed = true;
+	}
+
+	if (ih().isKeyUp(SDL_SCANCODE_RIGHT)) {
+		rightPressed = false;
+	}
+	if (ih().isKeyUp(SDL_SCANCODE_LEFT)) {
+		leftPressed = false;
+	}
+
 
 	
 	tf->pos_ = tf->pos_ + tf->vel_;

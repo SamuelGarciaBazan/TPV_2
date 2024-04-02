@@ -22,8 +22,9 @@ private:
 
     float pacManVel = 1.f;
 
-    uint32_t inputDelay = 500u;
-    uint32_t lastInput = 0u;
+    bool leftPressed = false;
+    bool rightPressed = false;
+
 
 };
 
