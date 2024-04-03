@@ -100,20 +100,7 @@ void RunningState::leave()
 
 
 
-void RunningState::collisions()
-{
-	
-	
 
-}
-
-
-bool RunningState::collidesWithRotation(Transform* t1, Transform* t2)
-{
-	return Collisions::collidesWithRotation(
-		t1->getPos(), t1->getWidth(), t1->getHeight(), t1->getRot(),
-		t2->getPos(), t2->getWidth(), t2->getHeight(), t2->getRot());
-}
 
 
 

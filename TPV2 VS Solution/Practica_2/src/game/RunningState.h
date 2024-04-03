@@ -27,10 +27,6 @@ public:
 
 private:
 
-	void collisions();
-
-	bool collidesWithRotation(Transform* t1, Transform* t2);
-
 
 	PacManSystem* pacManSystem;
 	GhostSystem* ghostSystem;
