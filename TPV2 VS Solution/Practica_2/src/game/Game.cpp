@@ -37,7 +37,17 @@ Game::Game() :
 }
 
 Game::~Game() {
+
+	//delete de los estados
+	delete paused_state_;
+	delete runing_state_;
+	delete newgame_state_;
+	delete newround_state_;
+	delete gameover_state_;
+
+	//delete del manager
 	delete mngr_;
+
 }
 
 void Game::init() {
