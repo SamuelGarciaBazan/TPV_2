@@ -118,6 +118,10 @@ void PacManSystem::resetPos()
 
 	tf->getPos().set((sdlutils().width() - pacmanWidth) / 2,
 		(sdlutils().height() - pacmanHeight) / 2);
+
+	//reset de la velocidad y de la rotacion
+	tf->vel_.set(0, 0);
+	tf->rot_ = 0;
 }
 
 void PacManSystem::resetLifes()

@@ -4,7 +4,8 @@
 
 #include "../components/Transform.h"
 #include "../components/ImageWithFrames.h"
-
+#include "../components/Health.h"
+#include "../game/Game.h"
 
 GhostSystem::GhostSystem()
 {
@@ -35,7 +36,40 @@ void GhostSystem::recieve(const Message& msg)
 			mngr_->setAlive(msg.ghost_collision_data.e, false);
 		}
 		else {
+			auto pacMan = mngr_->getHandler(ecs::hdlr::PACMAN);
 
+			auto health = mngr_->getComponent<Health>(pacMan);
+
+			health->currentLifes--;
+
+			if (health->currentLifes <= 0) {
+
+				Message msg1;
+
+				msg1.id = _m_ROUND_OVER;
+
+				mngr_->send(msg1, true);
+
+				Message msg2;
+
+				msg2.id = _m_NEW_GAME;
+
+				mngr_->send(msg2, true);
+
+
+				Game::instance()->setState(Game::NEWGAME);
+
+			}
+			else {
+				Message msg;
+
+				msg.id = _m_ROUND_OVER;
+
+				mngr_->send(msg, true);
+
+				Game::instance()->setState(Game::NEWROUND);
+			
+			}
 		}
 	}
 	else if (msg.id == _m_IMMUNITY_START) {

@@ -1,7 +1,7 @@
 #include "NewRoundState.h"
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
-
+#include "../ecs/Manager.h"
 
 NewRoundState::NewRoundState()
 {
@@ -24,6 +24,14 @@ void NewRoundState::update()
 	if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
 
 		Game::instance()->setState(Game::RUNNING);
+
+
+		//lanzar mensaje
+		Message msg;
+
+		msg.id = _m_ROUND_START;
+
+		Game::instance()->getMngr()->send(msg, true);
 	}
 }
 
