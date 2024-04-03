@@ -32,13 +32,16 @@ struct Message {
 
 		// _m_FRUIT_EATEN
 		struct {
-			ecs::Entity* e;
+			ecs::entity_t e;
 		} fruit_eaten_data;
 
 		// _m_CREATE_FRUITS
 		struct {
 			unsigned int n;
 		} create_fruit_data;
-
+		
+		struct {
+			ecs::entity_t e;
+		} ghost_collision_data;
 	};
 };

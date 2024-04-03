@@ -96,6 +96,9 @@ void Game::start() {
 		//render
 		sdlutils().presentRenderer();
 
+		//eliminar entidades muertas
+		mngr_->refresh();
+
 		//envio de mensajes
 		mngr_->flushMessagesWithSwap();
 

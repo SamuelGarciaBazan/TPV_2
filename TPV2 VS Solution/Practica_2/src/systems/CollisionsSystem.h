@@ -1,6 +1,9 @@
 #pragma once
 #include "../ecs/System.h"
 
+#include <utility>
+
+class Transform;
 
 class CollisionsSystem
 	:public ecs::System
@@ -20,5 +23,10 @@ private:
 
     void checkCollisions();
 
+    std::pair<bool,ecs::entity_t> collisionsGhosts();
+
+    std::pair<bool, ecs::entity_t> collisionsFood();
+
+    bool collidesWithRotation(Transform* t1, Transform* t2);
 };
 

@@ -31,6 +31,12 @@ void GhostSystem::recieve(const Message& msg)
 {
 	if (msg.id == _m_PACMAN_GHOST_COLLISION) {
 
+		if (pacManImmune) {
+			mngr_->setAlive(msg.ghost_collision_data.e, false);
+		}
+		else {
+
+		}
 	}
 	else if (msg.id == _m_IMMUNITY_START) {
 		pacManImmune = true;
