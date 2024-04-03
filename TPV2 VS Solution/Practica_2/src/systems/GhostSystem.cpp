@@ -42,33 +42,24 @@ void GhostSystem::recieve(const Message& msg)
 
 			health->currentLifes--;
 
+			Message msgRoundOver;
+
+			msgRoundOver.id = _m_ROUND_OVER;
+
+			mngr_->send(msgRoundOver, true);
+
 			if (health->currentLifes <= 0) {
 
-				Message msg1;
+				Message msgNewGame;
 
-				msg1.id = _m_ROUND_OVER;
+				msgNewGame.id = _m_NEW_GAME;
 
-				mngr_->send(msg1, true);
-
-				Message msg2;
-
-				msg2.id = _m_NEW_GAME;
-
-				mngr_->send(msg2, true);
-
+				mngr_->send(msgNewGame, true);
 
 				Game::instance()->setState(Game::NEWGAME);
-
 			}
-			else {
-				Message msg;
-
-				msg.id = _m_ROUND_OVER;
-
-				mngr_->send(msg, true);
-
-				Game::instance()->setState(Game::NEWROUND);
-			
+			else {		
+				Game::instance()->setState(Game::NEWROUND);		
 			}
 		}
 	}
