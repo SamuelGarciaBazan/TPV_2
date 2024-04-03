@@ -39,7 +39,25 @@ void RunningState::update()
 
 	if (ih().isKeyDown(SDL_SCANCODE_P)) {
 		//go pause state
-		Game::instance()->setState(Game::PAUSED);
+		Game::instance()->setState(Game::PAUSED);	
+	}
+
+
+	//PARA TESTEAR
+	if (ih().isKeyDown(SDL_SCANCODE_K)) {
+
+
+		Message m;
+		m.id = _m_IMMUNITY_START;
+
+		mngr->send(m);
+	}
+	if (ih().isKeyDown(SDL_SCANCODE_L)) {
+
+		Message m;
+		m.id = _m_IMMUNITY_END;
+
+		mngr->send(m);
 	}
 
 	/*antiguo update

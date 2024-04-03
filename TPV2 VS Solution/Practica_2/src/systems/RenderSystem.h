@@ -30,5 +30,15 @@ private:
     void renderImageWithFrames(ImageWithFrames*);
     void updateImageWithFrames(ImageWithFrames*);
 
+    void updateGhostsImmunityON(ImageWithFrames*);
+
+    void immunityStart();
+    void immunityEnd();
+
+    bool pacManImmune = false;
+
+    int firstIndexImmunityGhost = 30;
+    int lastIndexImmunityGhost = 31;
+
 };
 

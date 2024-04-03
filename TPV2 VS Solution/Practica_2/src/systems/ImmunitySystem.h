@@ -20,7 +20,7 @@ private:
 
     void updateImmnunity();
 
-    uint32_t immunityTime;
+    uint32_t immunityTime = 10000;
     uint32_t timeStart;
 
     bool isImmune = false;

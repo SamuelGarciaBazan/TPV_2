@@ -25,8 +25,14 @@ void RenderSystem::update()
 	renderPacman();
 }
 
-void RenderSystem::recieve(const Message&)
+void RenderSystem::recieve(const Message& msg)
 {
+	if (msg.id == _m_IMMUNITY_START) {
+		immunityStart();
+	}
+	else if (msg.id == _m_IMMUNITY_END) {
+		immunityEnd();
+	}
 }
 
 void RenderSystem::renderFruits()
@@ -38,7 +44,12 @@ void RenderSystem::renderGhosts()
 	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		auto img = mngr_->getComponent<ImageWithFrames>(e);
 
-		updateImageWithFrames(img);
+		if (!pacManImmune) {
+			updateImageWithFrames(img);
+		}
+		else {
+			updateGhostsImmunityON(img);
+		}
 		renderImageWithFrames(img);
 	}
 
@@ -84,4 +95,48 @@ void RenderSystem::updateImageWithFrames(ImageWithFrames* img)
 		}
 	}
 
+}
+
+void RenderSystem::updateGhostsImmunityON(ImageWithFrames* img)
+{
+
+	if ((img->lastFrame + img->frameTime) < sdlutils().virtualTimer().currTime()) {
+
+		img->lastFrame = sdlutils().virtualTimer().currTime();
+		img->currentFrame++;
+		if (img->currentFrame >lastIndexImmunityGhost) {
+			img->currentFrame = firstIndexImmunityGhost;
+		}
+	}
+}
+
+void RenderSystem::immunityStart()
+{
+	pacManImmune = true;
+
+	//setear el frame a fantasma asustado de manera aleatoria
+	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+		auto img = mngr_->getComponent<ImageWithFrames>(e);
+
+		int rand = sdlutils().rand().nextInt(0, 2);
+
+		img->currentFrame = rand == 0 ? firstIndexImmunityGhost : lastIndexImmunityGhost;
+
+	}
+}
+
+void RenderSystem::immunityEnd()
+{
+	pacManImmune = false;
+
+	//devolver el frame a su sitio correspondiente, de manera aleatoriaa
+	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+
+		auto img = mngr_->getComponent<ImageWithFrames>(e);
+
+		int rand = sdlutils().rand().nextInt(0, 8);
+
+		img->currentFrame = img->firstIndex + rand;
+
+	}
 }
