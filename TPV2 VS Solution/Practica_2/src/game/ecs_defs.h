@@ -8,7 +8,6 @@
 #define _CMPS_LIST_ \
 	TRANSFORM, \
 	IMAGE, \
-	FOLLOW, \
 	HEALTH, \
 	IMAGEWITHFRAMES,\
 

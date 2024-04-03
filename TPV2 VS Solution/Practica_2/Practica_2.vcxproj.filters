@@ -105,9 +105,6 @@
     <ClCompile Include="src\ecs\Manager.cpp">
       <Filter>Source Files\ecs</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\Follow.cpp">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
     <ClCompile Include="src\components\Health.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
@@ -238,9 +235,6 @@
     </ClInclude>
     <ClInclude Include="src\ecs\System.h">
       <Filter>Header Files\ecs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\Follow.h">
-      <Filter>Header Files\components</Filter>
     </ClInclude>
     <ClInclude Include="src\components\Health.h">
       <Filter>Header Files\components</Filter>

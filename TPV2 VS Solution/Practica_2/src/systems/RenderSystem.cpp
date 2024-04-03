@@ -73,7 +73,11 @@ void RenderSystem::renderLifes()
 
 	auto healthCmp = mngr_->getComponent<Health>(pacMan);
 
-	healthCmp->render();//cambiar para evitar llamada a metodos virtuales
+	Vector2D pos;
+	for (int i = 0; i < healthCmp->currentLifes; i++) {
+		pos.set(healthCmp->initialX + (healthCmp->offSetX * i), healthCmp->initialY);
+		healthCmp->healthTexture->render(build_sdlrect(pos, healthCmp->healthTexture->width() * healthCmp->scale, healthCmp->healthTexture->height() * healthCmp->scale));
+	}
 }
 
 void RenderSystem::renderImageWithFrames(ImageWithFrames* img)

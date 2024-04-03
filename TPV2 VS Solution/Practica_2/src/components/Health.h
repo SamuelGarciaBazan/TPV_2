@@ -23,7 +23,7 @@ public:
 
     void setLifes(int n) { currentLifes = n; }
 
-private:
+//private: ahora es public
 
     Texture* healthTexture;
     int maxLifes = 3;
