@@ -95,7 +95,19 @@ void PacManSystem::movePacMan()
 		leftPressed = false;
 	}
 
+	if (tf->vel_.getX() != 0 && 
+		tf->vel_.getY() != 0) {
 
+		std::cout << tf->vel_ << std::endl;
+	}
+
+	if ( (tf->pos_.getX() <= 0 && tf->vel_.getX() < -0.01) ||
+		 (tf->pos_.getY() <= 0 && tf->vel_.getY() < -0.01) || 
+	     (tf->pos_.getX() >= (sdlutils().width()  - tf->width_) && tf->vel_.getX() > 0.01) ||
+		 (tf->pos_.getY() >= (sdlutils().height() - tf->height_) && tf->vel_.getY() >  0.01)) {
+
+		tf->vel_.set(0, 0);
+	}
 
 	tf->pos_ = tf->pos_ + tf->vel_;
 }
