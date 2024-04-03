@@ -111,11 +111,47 @@ void GhostSystem::generateGhosts()
 		}
 
 
+		//velocidad inicial del fantasma
+
+		auto posPM = mngr_->getComponent<Transform>(mngr_->getHandler(ecs::hdlr::PACMAN))->pos_;
+
+		tf->vel_ = (posPM - tf->pos_).normalize() * 1.1f;
+
+
 	}
 }
 
 void GhostSystem::moveGhosts()
 {
+	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+		
+		auto tf = mngr_->getComponent<Transform>(e);
+
+		int rand = sdlutils().rand().nextInt(1, 1000);
+
+		//randon chance para actualizar el vecto de velocidad
+		if (rand < followChance) {
+
+			auto posPM = mngr_->getComponent<Transform>(mngr_->getHandler(ecs::hdlr::PACMAN))->pos_;
+
+			tf->vel_ = (posPM - tf->pos_).normalize() * 1.1f;
+		}
+			
+		tf->pos_ = tf->pos_ + tf->vel_;
+
+
+		//los fantasmas rebotan con los bordes
+		if ((tf->pos_.getX() <= 0 && tf->vel_.getX() < -0.01) ||
+			(tf->pos_.getX() >= (sdlutils().width() - tf->width_) && tf->vel_.getX() > 0.01)) {
+			tf->vel_.set(-tf->vel_.getX(), tf->vel_.getY());
+		}
+		else if ((tf->pos_.getY() <= 0 && tf->vel_.getY() < -0.01) ||
+			(tf->pos_.getY() >= (sdlutils().height() - tf->height_) && tf->vel_.getY() > 0.01)) {
+			tf->vel_.set(tf->vel_.getX(), -tf->vel_.getY());
+		}
+
+	}
+
 }
 
 void GhostSystem::destroyGhosts()
