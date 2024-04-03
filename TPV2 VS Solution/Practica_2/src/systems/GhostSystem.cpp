@@ -72,6 +72,11 @@ void GhostSystem::recieve(const Message& msg)
 	else if (msg.id == _m_ROUND_OVER) {
 		destroyGhosts();
 	}
+	else if (msg.id == _m_ROUND_START) {
+
+		//actualizar el contador de tiempo
+		lastSpawn = sdlutils().virtualTimer().currTime();
+	}
 
 }
 

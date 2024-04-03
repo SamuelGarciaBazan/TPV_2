@@ -28,6 +28,7 @@ void FoodSystem::recieve(const Message& msg)
 
 void FoodSystem::generateFruits()
 {
+
 }
 
 void FoodSystem::updateMiracleFruits()
