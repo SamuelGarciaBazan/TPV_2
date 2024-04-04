@@ -111,11 +111,12 @@ void Game::start() {
 		//render
 		sdlutils().presentRenderer();
 
-		//eliminar entidades muertas
-		mngr_->refresh();
 
 		//envio de mensajes
 		mngr_->flushMessagesWithSwap();
+
+		//eliminar entidades muertas
+		mngr_->refresh();
 
 		//sleep the process
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;

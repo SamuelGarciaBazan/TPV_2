@@ -28,22 +28,22 @@ void CollisionsSystem::checkCollisions()
 {
 	//comprobar colisiones y enviar los mensajes correspondientes
 
-	auto pair = collisionsGhosts();
+	auto pair1 = collisionsGhosts();
 
-	if (pair.first) {
+	if (pair1.first) {
 		Message msg;
 		msg.id = _m_PACMAN_GHOST_COLLISION;
 
-		msg.ghost_collision_data.e = pair.second;
+		msg.ghost_collision_data.e = pair1.second;
 
 		mngr_->send(msg, true);
 	}
-	pair = collisionsFood();
-	if (pair.first) {
+	auto pair2 = collisionsFood();
+	if (pair2.first) {
 		Message msg;
 		msg.id = m_PACMAN_FOOD_COLLISION;
 		
-		msg.fruit_eaten_data.e = pair.second;
+		msg.fruit_eaten_data.e = pair2.second;
 
 		mngr_->send(msg, true);
 	}
