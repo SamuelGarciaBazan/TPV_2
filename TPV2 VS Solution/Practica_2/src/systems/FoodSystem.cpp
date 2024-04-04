@@ -4,6 +4,7 @@
 
 #include "../components/Transform.h"
 #include "../components/Image.h"
+#include "../game/Game.h"
 
 FoodSystem::FoodSystem()
 {
@@ -30,6 +31,27 @@ void FoodSystem::recieve(const Message& msg)
 	}
 	else if (msg.id == m_PACMAN_FOOD_COLLISION) {
 		//quitar fruta
+
+		mngr_->setAlive(msg.fruit_eaten_data.e, false);
+
+		if (mngr_->getEntities(ecs::grp::FRUITS).size() == 0) {
+
+			Message mRoundOver;
+
+			mRoundOver.id = _m_ROUND_OVER;
+
+			mngr_->send(mRoundOver,true);
+
+
+			Message mGameOver;
+
+			mGameOver.id = _m_GAME_OVER;
+			
+			mngr_->send(mGameOver, true);
+
+			Game::instance()->setState(Game::GAMEOVER);
+
+		}
 	}
 }
 
