@@ -21,6 +21,9 @@ private:
 
     void updateMiracleFruits();
 
+    int fils = 6;
+    int cols = 6;
 
+    
 };
 

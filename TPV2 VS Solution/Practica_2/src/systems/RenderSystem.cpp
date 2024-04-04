@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 #include "../ecs/Manager.h"
 #include "../components/ImageWithFrames.h"
+#include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../components/Health.h"
 #include "../sdlutils/SDLUtils.h"
@@ -37,6 +38,15 @@ void RenderSystem::recieve(const Message& msg)
 
 void RenderSystem::renderFruits()
 {
+	for (auto& e : mngr_->getEntities(ecs::grp::FRUITS)) {
+
+		auto img = mngr_->getComponent<Image>(e);
+
+		
+		img->myTexture->render(build_sdlrect((img->currentFrame % img->cols) * img->frameWidth, (img->currentFrame / img->cols) * img->frameHeight, img->frameWidth, img->frameHeight),
+			build_sdlrect(img->myTransform->getPos(), img->myTransform->getWidth(), img->myTransform->getHeight()), img->myTransform->getRot());
+
+	}
 }
 
 void RenderSystem::renderGhosts()

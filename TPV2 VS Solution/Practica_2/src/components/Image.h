@@ -13,7 +13,7 @@ class Image :
 public:
     __CMPID_DECL__(ecs::cmp::IMAGE);
 
-    Image(std::string key);
+    Image(std::string id, int fils, int cols);
     ~Image();
 
     void render() override;
@@ -22,10 +22,18 @@ public:
 
     Texture& getTexture() { return *myTexture; }
 
-private:
+//private:, ahora es public
 
     Texture* myTexture;
     Transform* myTransform;
 
+
+    int fils;
+    int cols;
+
+    int frameWidth;
+    int frameHeight;
+
+    int currentFrame = 26;
 };
 

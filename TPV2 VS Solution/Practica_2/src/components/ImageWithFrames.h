@@ -34,7 +34,7 @@ public:
     int currentFrame = 26;
 
     uint32_t lastFrame = 0 ;
-    uint16_t frameTime = 50 ;
+    uint16_t frameTime = 100;
 
     Transform* myTransform;
 

@@ -8,9 +8,13 @@
 
 
 
-Image::Image(std::string key)
+Image::Image(std::string id, int fils, int cols)
+	:fils(fils), cols(cols)
 {
-	myTexture =  &sdlutils().instance()->images().at(key);
+	myTexture = &sdlutils().images().at(id);
+
+	frameWidth = myTexture->width() / cols;
+	frameHeight = myTexture->height() / fils;
 }
 
 Image::~Image()

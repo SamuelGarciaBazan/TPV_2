@@ -76,6 +76,11 @@ void Game::init() {
 
 	current_state_ = newgame_state_;
 	newgame_state_->enter();
+
+	Message m;
+
+	m.id = _m_NEW_GAME;
+	mngr_->send(m, true);
 }
 
 void Game::start() {
