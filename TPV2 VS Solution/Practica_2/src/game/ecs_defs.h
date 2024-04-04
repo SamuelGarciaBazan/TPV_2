@@ -10,6 +10,7 @@
 	IMAGE, \
 	HEALTH, \
 	IMAGEWITHFRAMES,\
+	MIRACLEFRUIT,\
 
 
 // Groups list - must have at least one element
