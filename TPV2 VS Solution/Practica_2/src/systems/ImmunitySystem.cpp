@@ -51,7 +51,11 @@ void ImmunitySystem::updateImmnunity()
 	if (timeStart + immunityTime < sdlutils().virtualTimer().currTime()) {
 
 		//si han pasado los 10 seg, se envia el mensaje
+		Message m;
 
+		m.id = _m_IMMUNITY_END;
+
+		mngr_->send(m, true);
 		//desactivar la inmmunidad
 		isImmune = false;
 	}

@@ -104,6 +104,7 @@ void FoodSystem::updateMiracleFruits()
 			//si ha pasado el tiempo
 			if (miracleCmp->startTime + miracleCmp->miracleDuration < sdlutils().virtualTimer().currTime()) {
 				miracleCmp->resetTimer();
+				
 			}
 		}
 		else {
