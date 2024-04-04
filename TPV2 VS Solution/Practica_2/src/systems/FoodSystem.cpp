@@ -29,6 +29,7 @@ void FoodSystem::update()
 void FoodSystem::recieve(const Message& msg)
 {
 	if (msg.id == _m_NEW_GAME) {
+		destroyFruits();
 		generateFruits();
 	}
 	else if (msg.id == m_PACMAN_FOOD_COLLISION) {
@@ -36,7 +37,9 @@ void FoodSystem::recieve(const Message& msg)
 
 		mngr_->setAlive(msg.fruit_eaten_data.e, false);
 
-		if (mngr_->getEntities(ecs::grp::FRUITS).size() == 0) {
+		std::cout << mngr_->getEntities(ecs::grp::FRUITS).size() << std::endl;
+
+		if (mngr_->getEntities(ecs::grp::FRUITS).size() == 1) {
 
 			Message mRoundOver;
 
@@ -138,4 +141,12 @@ void FoodSystem::updateMiracleFruits()
 
 	}
 
+}
+
+void FoodSystem::destroyFruits()
+{
+
+	for (auto& e : mngr_->getEntities(ecs::grp::FRUITS)) {
+		mngr_->setAlive(e, false);
+	}
 }

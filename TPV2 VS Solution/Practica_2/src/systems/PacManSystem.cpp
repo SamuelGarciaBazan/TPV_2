@@ -98,7 +98,7 @@ void PacManSystem::movePacMan()
 	if (tf->vel_.getX() != 0 && 
 		tf->vel_.getY() != 0) {
 
-		std::cout << tf->vel_ << std::endl;
+		//std::cout << tf->vel_ << std::endl;
 	}
 
 	if ( (tf->pos_.getX() <= 0 && tf->vel_.getX() < -0.01) ||

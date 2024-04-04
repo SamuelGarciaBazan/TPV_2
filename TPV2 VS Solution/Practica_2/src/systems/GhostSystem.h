@@ -26,7 +26,7 @@ private:
 
     bool pacManImmune = false;
 
-    uint32_t ghostSpawnRate = 1000;
+    uint32_t ghostSpawnRate = 5000;
     uint32_t lastSpawn = 0;
 
     int followChance = 5;//sobre 1000

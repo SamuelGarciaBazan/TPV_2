@@ -1,7 +1,17 @@
 {
 
   "GameConstants": [
-    
+    {"id": "foodFils", "value": 4},
+    {"id": "foodCols", "value": 4},
+    {"id": "miracleMinCooldown", "value": 3},
+    {"id": "miracleMaxCooldown", "value": 3},
+    {"id": "miracleMinDuration", "value": 3},
+    {"id": "miracleMaxDuration", "value": 3},
+    {"id": "pacManLifes", "value": 3},
+    {"id": " ", "value": 3},
+    {"id": " ", "value": 3},
+    {"id": " ", "value": 3},
+    {"id": " ", "value": 3}
   ]
 
 

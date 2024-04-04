@@ -23,6 +23,8 @@ private:
 
     void updateMiracleFruits();
 
+    void destroyFruits();
+
     int fils = 6;
     int cols = 6;
 

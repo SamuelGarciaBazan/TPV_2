@@ -5,12 +5,20 @@
 
 #include "../sdlutils/InputHandler.h"
 
+//#include "../ecs/messages.h"
+
 void GameOverState::update()
 {
 	messageTexture->render(messageRect);
 
 	if (ih().keyDownEvent()) {
 		Game::instance()->setState(Game::NEWGAME);
+
+		Message m;
+
+		m.id = _m_NEW_GAME;
+
+		Game::instance()->getMngr()->send(m, true);
 	}
 }
 

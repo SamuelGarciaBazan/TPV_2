@@ -24,8 +24,8 @@ public:
 
     void startMiracle();
 
-    uint32_t minCooldown = 1000;
-    uint32_t maxCooldown = 2000;
+    uint32_t minCooldown = 10000;
+    uint32_t maxCooldown = 20000;
     uint32_t minDuration = 1000;
     uint32_t maxDuration = 5000;
 

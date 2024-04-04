@@ -23,7 +23,7 @@ private:
 
     ecs::entity_t pacMan;
 
-    float pacManVel = 1.f;
+    float pacManVel = 3.f;
 
     bool leftPressed = false;
     bool rightPressed = false;
