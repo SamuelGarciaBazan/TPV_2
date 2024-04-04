@@ -2,7 +2,7 @@
 #include "../sdlutils/SDLUtils.h"
 
 
-MiracleFruit::MiracleFruit(std::string id, int fils, int cols)
+MiracleFruit::MiracleFruit()
 {
 	miracleCooldown = sdlutils().rand().nextInt(minCooldown, maxCooldown);
 

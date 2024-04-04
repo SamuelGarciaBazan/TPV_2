@@ -4,6 +4,7 @@
 
 #include "../components/Transform.h"
 #include "../components/Image.h"
+#include "../components/MiracleFruit.h"
 #include "../game/Game.h"
 
 FoodSystem::FoodSystem()
@@ -79,6 +80,8 @@ void FoodSystem::generateFruits()
 		auto tf = mngr_->addComponent<Transform>(newFruit);
 
 		auto img = mngr_->addComponent<Image>(newFruit,"spriteSheet",8,8);
+
+		mngr_->addComponent<MiracleFruit>(newFruit);
 
 		img->currentFrame = 12;
 

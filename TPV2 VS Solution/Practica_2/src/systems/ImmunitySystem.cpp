@@ -1,7 +1,8 @@
 #include "ImmunitySystem.h"
 
 #include "../sdlutils/SDLUtils.h"
-
+#include "../components/MiracleFruit.h"
+#include "../ecs/Manager.h"
 
 ImmunitySystem::ImmunitySystem()
 {
@@ -23,13 +24,21 @@ void ImmunitySystem::update()
 void ImmunitySystem::recieve(const Message& msg)
 {
 	if (msg.id == m_PACMAN_FOOD_COLLISION) {
-		//si es una fruta milagrosa, avisa de que ha empezado la inmunidad(si no esta en inmunidad)
-		if (!isImmune && false) {
-			//falta comprobar que la fruta es milagrosa
 
+		auto miracle = mngr_->getComponent<MiracleFruit>(msg.fruit_eaten_data.e);
+
+		//si es una fruta milagrosa, avisa de que ha empezado la inmunidad(si no esta en inmunidad)
+		if (!isImmune && miracle->miracleON) {
 
 			isImmune = true;
 			timeStart = sdlutils().virtualTimer().currTime();
+
+			Message m;
+			
+			m.id = _m_IMMUNITY_START;
+
+			mngr_->send(m);
+
 		}
 	}
 

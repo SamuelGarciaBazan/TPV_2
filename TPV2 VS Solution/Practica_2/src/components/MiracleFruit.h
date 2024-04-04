@@ -11,7 +11,7 @@ public:
 
     __CMPID_DECL__(ecs::cmp::MIRACLEFRUIT);
 
-    MiracleFruit(std::string id, int fils, int cols);
+    MiracleFruit();
     ~MiracleFruit();
 
     void update() override;
