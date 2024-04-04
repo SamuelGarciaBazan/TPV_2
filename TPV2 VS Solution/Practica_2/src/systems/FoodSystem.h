@@ -19,10 +19,15 @@ private:
     
     void generateFruits();
 
+    void resetTimers();
+
     void updateMiracleFruits();
 
     int fils = 6;
     int cols = 6;
+
+    int spriteDefault = 12;
+    int spriteMiracle = 15;
 
     
 };

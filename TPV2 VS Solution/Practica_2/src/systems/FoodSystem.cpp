@@ -55,6 +55,10 @@ void FoodSystem::recieve(const Message& msg)
 
 		}
 	}
+	else if (msg.id == _m_ROUND_START) {
+
+		resetTimers();
+	}
 }
 
 void FoodSystem::generateFruits()
@@ -94,17 +98,31 @@ void FoodSystem::generateFruits()
 	}
 }
 
+void FoodSystem::resetTimers()
+{
+	for (auto& e : mngr_->getEntities(ecs::grp::FRUITS)) {
+
+		auto miracleCmp = mngr_->getComponent<MiracleFruit>(e);
+		auto img = mngr_->getComponent<Image>(e);
+		
+		miracleCmp->resetTimer();
+		img->currentFrame = spriteDefault;
+
+	}
+}
+
 void FoodSystem::updateMiracleFruits()
 {
 	for (auto& e : mngr_->getEntities(ecs::grp::FRUITS)) {
 
 		auto miracleCmp = mngr_->getComponent<MiracleFruit>(e);
+		auto img = mngr_->getComponent<Image>(e);
 
 		if (miracleCmp->miracleON) {
 			//si ha pasado el tiempo
 			if (miracleCmp->startTime + miracleCmp->miracleDuration < sdlutils().virtualTimer().currTime()) {
 				miracleCmp->resetTimer();
-				
+				img->currentFrame = spriteDefault;
 			}
 		}
 		else {
@@ -112,6 +130,8 @@ void FoodSystem::updateMiracleFruits()
 			//si ha pasado el tiempo
 			if (miracleCmp->startTime + miracleCmp->miracleCooldown < sdlutils().virtualTimer().currTime()) {
 				miracleCmp->startMiracle();
+				img->currentFrame = spriteMiracle;
+
 			}
 
 		}
