@@ -37,7 +37,7 @@ void ImmunitySystem::recieve(const Message& msg)
 			
 			m.id = _m_IMMUNITY_START;
 
-			mngr_->send(m);
+			mngr_->send(m,true);
 
 		}
 	}

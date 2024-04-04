@@ -50,14 +50,14 @@ void RunningState::update()
 		Message m;
 		m.id = _m_IMMUNITY_START;
 
-		mngr->send(m);
+		mngr->send(m,true);
 	}
 	if (ih().isKeyDown(SDL_SCANCODE_L)) {
 
 		Message m;
 		m.id = _m_IMMUNITY_END;
 
-		mngr->send(m);
+		mngr->send(m,true);
 	}
 
 	/*antiguo update

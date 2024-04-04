@@ -23,6 +23,7 @@ void FoodSystem::initSystem()
 
 void FoodSystem::update()
 {
+	updateMiracleFruits();
 }
 
 void FoodSystem::recieve(const Message& msg)
@@ -95,8 +96,25 @@ void FoodSystem::generateFruits()
 
 void FoodSystem::updateMiracleFruits()
 {
+	for (auto& e : mngr_->getEntities(ecs::grp::FRUITS)) {
 
+		auto miracleCmp = mngr_->getComponent<MiracleFruit>(e);
 
+		if (miracleCmp->miracleON) {
+			//si ha pasado el tiempo
+			if (miracleCmp->startTime + miracleCmp->miracleDuration < sdlutils().virtualTimer().currTime()) {
+				miracleCmp->resetTimer();
+			}
+		}
+		else {
 
+			//si ha pasado el tiempo
+			if (miracleCmp->startTime + miracleCmp->miracleCooldown < sdlutils().virtualTimer().currTime()) {
+				miracleCmp->startMiracle();
+			}
+
+		}
+
+	}
 
 }
