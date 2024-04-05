@@ -28,7 +28,7 @@ void ImmunitySystem::recieve(const Message& msg)
 		auto miracle = mngr_->getComponent<MiracleFruit>(msg.fruit_eaten_data.e);
 
 		//si es una fruta milagrosa, avisa de que ha empezado la inmunidad(si no esta en inmunidad)
-		if (!isImmune && miracle->miracleON) {
+		if (!isImmune && miracle != nullptr && miracle->miracleON) {
 
 			isImmune = true;
 			timeStart = sdlutils().virtualTimer().currTime();

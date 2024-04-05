@@ -37,7 +37,7 @@ void FoodSystem::recieve(const Message& msg)
 
 		mngr_->setAlive(msg.fruit_eaten_data.e, false);
 
-		//std::cout << mngr_->getEntities(ecs::grp::FRUITS).size() << std::endl;
+		//ºstd::cout << mngr_->getEntities(ecs::grp::FRUITS).size() << std::endl;
 
 		if (mngr_->getEntities(ecs::grp::FRUITS).size() == 1) {
 
@@ -89,7 +89,14 @@ void FoodSystem::generateFruits()
 
 		auto img = mngr_->addComponent<Image>(newFruit,"spriteSheet",8,8);
 
-		mngr_->addComponent<MiracleFruit>(newFruit);
+		int random = sdlutils().rand().nextInt(0,1000);
+
+		if (random < miracleChance) {
+
+			mngr_->addComponent<MiracleFruit>(newFruit);
+		
+		}
+
 
 		img->currentFrame = 12;
 
@@ -108,8 +115,13 @@ void FoodSystem::resetTimers()
 		auto miracleCmp = mngr_->getComponent<MiracleFruit>(e);
 		auto img = mngr_->getComponent<Image>(e);
 		
-		miracleCmp->resetTimer();
-		img->currentFrame = spriteDefault;
+		if (miracleCmp != nullptr) {
+
+			miracleCmp->resetTimer();
+			img->currentFrame = spriteDefault;
+
+		}
+
 
 	}
 }
@@ -121,23 +133,29 @@ void FoodSystem::updateMiracleFruits()
 		auto miracleCmp = mngr_->getComponent<MiracleFruit>(e);
 		auto img = mngr_->getComponent<Image>(e);
 
-		if (miracleCmp->miracleON) {
-			//si ha pasado el tiempo
-			if (miracleCmp->startTime + miracleCmp->miracleDuration < sdlutils().virtualTimer().currTime()) {
-				miracleCmp->resetTimer();
-				img->currentFrame = spriteDefault;
+		if (miracleCmp != nullptr) {
+
+
+			if (miracleCmp->miracleON) {
+				//si ha pasado el tiempo
+				if (miracleCmp->startTime + miracleCmp->miracleDuration < sdlutils().virtualTimer().currTime()) {
+					miracleCmp->resetTimer();
+					img->currentFrame = spriteDefault;
+				}
 			}
-		}
-		else {
+			else {
 
-			//si ha pasado el tiempo
-			if (miracleCmp->startTime + miracleCmp->miracleCooldown < sdlutils().virtualTimer().currTime()) {
-				miracleCmp->startMiracle();
-				img->currentFrame = spriteMiracle;
+				//si ha pasado el tiempo
+				if (miracleCmp->startTime + miracleCmp->miracleCooldown < sdlutils().virtualTimer().currTime()) {
+					miracleCmp->startMiracle();
+					img->currentFrame = spriteMiracle;
+
+				}
 
 			}
 
 		}
+
 
 	}
 

@@ -31,6 +31,6 @@ private:
     int spriteDefault = 12;
     int spriteMiracle = 15;
 
-    
+    int miracleChance = 100;//sobre 1000
 };
 
