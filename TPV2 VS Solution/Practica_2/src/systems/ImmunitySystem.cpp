@@ -6,6 +6,8 @@
 
 ImmunitySystem::ImmunitySystem()
 {
+
+	immunityTime = sdlutils().gameConstants().at("immunityTime");
 }
 
 ImmunitySystem::~ImmunitySystem()

@@ -9,6 +9,11 @@
 
 GhostSystem::GhostSystem()
 {
+	followFactor = sdlutils().gameConstants().at("ghostsVelocity");
+
+	ghostSpawnRate = sdlutils().gameConstants().at("ghostSpawnRate");
+
+	followChance = sdlutils().gameConstants().at("ghostFollowChance");
 }
 
 GhostSystem::~GhostSystem()

@@ -4,6 +4,15 @@
 
 MiracleFruit::MiracleFruit()
 {
+	minCooldown = sdlutils().gameConstants().at("miracleMinCooldown");
+	maxCooldown = sdlutils().gameConstants().at("miracleMaxCooldown");
+
+	minDuration = sdlutils().gameConstants().at("miracleMinDuration");
+	maxDuration = sdlutils().gameConstants().at("miracleMaxDuration");
+
+
+
+
 	miracleCooldown = sdlutils().rand().nextInt(minCooldown, maxCooldown);
 
 	resetTimer();

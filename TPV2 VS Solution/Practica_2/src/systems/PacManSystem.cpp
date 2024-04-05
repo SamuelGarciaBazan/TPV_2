@@ -11,6 +11,8 @@
 
 PacManSystem::PacManSystem()
 {
+	pacManVel = sdlutils().gameConstants().at("pacManVelocity");
+
 }
 
 PacManSystem::~PacManSystem()

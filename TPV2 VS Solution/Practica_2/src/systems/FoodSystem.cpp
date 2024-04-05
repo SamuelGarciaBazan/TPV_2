@@ -9,7 +9,15 @@
 
 FoodSystem::FoodSystem()
 {
+	fils = sdlutils().gameConstants().at("foodFils");
+	cols = sdlutils().gameConstants().at("foodCols");
+
+	spriteDefault = sdlutils().gameConstants().at("foodSpriteDefault");
+	spriteMiracle = sdlutils().gameConstants().at("foodSpriteMiracle");
 	
+	
+	miracleChance = sdlutils().gameConstants().at("foodChanceMiracle");
+
 
 }
 
@@ -89,7 +97,7 @@ void FoodSystem::generateFruits()
 
 		auto img = mngr_->addComponent<Image>(newFruit,"spriteSheet",8,8);
 
-		int random = sdlutils().rand().nextInt(0,1000);
+ 		int random = sdlutils().rand().nextInt(0,1000);
 
 		if (random < miracleChance) {
 
