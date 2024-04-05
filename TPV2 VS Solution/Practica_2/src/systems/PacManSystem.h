@@ -23,12 +23,17 @@ private:
 
     ecs::entity_t pacMan;
 
-    float pacManVel = 3.f;
+    float pacManVel = 1.f;
 
     bool leftPressed = false;
     bool rightPressed = false;
 
     int pacmanWidth = 40;
     int pacmanHeight = 40;
+
+
+    uint32_t lastSound;
+    uint32_t soundRate = 590;
+
 };
 

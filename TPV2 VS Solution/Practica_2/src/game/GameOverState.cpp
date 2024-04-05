@@ -5,7 +5,6 @@
 
 #include "../sdlutils/InputHandler.h"
 
-//#include "../ecs/messages.h"
 
 void GameOverState::update()
 {

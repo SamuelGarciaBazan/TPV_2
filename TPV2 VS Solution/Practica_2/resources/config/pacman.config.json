@@ -8,10 +8,13 @@
     {"id": "miracleMinDuration", "value": 3},
     {"id": "miracleMaxDuration", "value": 3},
     {"id": "pacManLifes", "value": 3},
-    {"id": " ", "value": 3},
-    {"id": " ", "value": 3},
-    {"id": " ", "value": 3},
-    {"id": " ", "value": 3}
+    {"id": "pacManVelocity", "value": 1},
+    {"id": "ghostsVelocity", "value": 1.1},
+    {"id": "immunityTime", "value": 10000},
+    {"id": "ghostSpawnRate", "value": 5000},
+    {"id": "ghostFollowChance", "value": 5},
+    {"id": "foodSpriteDefaut", "value": 12},
+    {"id": "foodSpriteMiracle", "value": 15}
   ]
 
 

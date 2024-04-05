@@ -37,7 +37,7 @@ void FoodSystem::recieve(const Message& msg)
 
 		mngr_->setAlive(msg.fruit_eaten_data.e, false);
 
-		std::cout << mngr_->getEntities(ecs::grp::FRUITS).size() << std::endl;
+		//std::cout << mngr_->getEntities(ecs::grp::FRUITS).size() << std::endl;
 
 		if (mngr_->getEntities(ecs::grp::FRUITS).size() == 1) {
 

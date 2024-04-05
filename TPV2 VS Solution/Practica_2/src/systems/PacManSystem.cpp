@@ -57,6 +57,9 @@ void PacManSystem::recieve(const Message& msg)
 	if (msg.id == _m_ROUND_START) {
 		//nueva ronda, resetear posicion
 		resetPos();
+
+		lastSound = sdlutils().virtualTimer().currTime();
+
 	}
 	else if (msg.id == _m_NEW_GAME) {
 		//nueva partida resetear vidas
@@ -110,6 +113,16 @@ void PacManSystem::movePacMan()
 	}
 
 	tf->pos_ = tf->pos_ + tf->vel_;
+
+	if ((tf->vel_.getX() != 0 || tf->vel_.getY() != 0 )&&
+		lastSound+soundRate < sdlutils().virtualTimer().currTime()) {
+		lastSound = sdlutils().virtualTimer().currTime();
+		sdlutils().soundEffects().at("chomp").play();
+	}
+	else if((tf->vel_.getX() == 0 && tf->vel_.getY() == 0)){
+		//sdlutils().soundEffects().at("chomp").pauseChannel();
+
+	}
 }
 
 void PacManSystem::resetPos()
