@@ -17,6 +17,7 @@ FoodSystem::FoodSystem()
 	
 	
 	miracleChance = sdlutils().gameConstants().at("foodChanceMiracle");
+	 
 
 
 }
@@ -47,6 +48,8 @@ void FoodSystem::recieve(const Message& msg)
 
 		//ºstd::cout << mngr_->getEntities(ecs::grp::FRUITS).size() << std::endl;
 
+		sdlutils().soundEffects().at("eat").play();
+
 		if (mngr_->getEntities(ecs::grp::FRUITS).size() == 1) {
 
 			Message mRoundOver;
@@ -63,6 +66,9 @@ void FoodSystem::recieve(const Message& msg)
 			mngr_->send(mGameOver, true);
 
 			Game::instance()->setState(Game::GAMEOVER);
+
+			sdlutils().soundEffects().at("won").play();
+
 
 		}
 	}

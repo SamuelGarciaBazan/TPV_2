@@ -53,6 +53,8 @@ void GhostSystem::recieve(const Message& msg)
 
 			mngr_->send(msgRoundOver, true);
 
+			sdlutils().soundEffects().at("death").play();
+
 			if (health->currentLifes <= 0) {
 
 				Message msgNewGame;

@@ -66,6 +66,8 @@ void PacManSystem::recieve(const Message& msg)
 	else if (msg.id == _m_NEW_GAME) {
 		//nueva partida resetear vidas
 		resetLifes();
+
+		sdlutils().soundEffects().at("intro").play();
 	}	
 }
 
