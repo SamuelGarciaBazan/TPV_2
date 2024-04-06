@@ -33,3 +33,4 @@
 	IMMUNITY, \
 	COLLISIONS, \
 	RENDER, \
+	SCORE, \
