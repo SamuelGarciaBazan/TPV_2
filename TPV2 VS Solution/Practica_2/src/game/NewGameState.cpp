@@ -11,7 +11,7 @@ NewGameState::NewGameState()
 
 	//rect, center screen
 	messageRect = build_sdlrect((sdlutils().width() - messageTexture->width()) / 2,//x
-		(sdlutils().height() - messageTexture->height()) / 2,//y
+		400,//y
 		messageTexture->width(), messageTexture->height()); // w / h
 }
 
@@ -22,10 +22,15 @@ NewGameState::~NewGameState()
 
 void NewGameState::update()
 {
+	
+
+	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
+
+	sdlutils().images().at("startBackground").render(destinyRect);
+
 	//render message
 	messageTexture->render(messageRect);
 
-	
 	if (ih().keyDownEvent()) {
 
 		//cambiar al estado newRound
