@@ -5,7 +5,7 @@ ScoreSystem::ScoreSystem()
 {
 	font = &sdlutils().fonts().at("ARIAL24");
 
-	destinationRect = SDL_Rect{ 700,20,60,40 };
+	destinationRect = SDL_Rect{ 680,20,100,40 };
 
 	textColor = SDL_Color{255,255,255,1};
 }

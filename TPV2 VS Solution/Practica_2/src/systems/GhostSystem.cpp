@@ -39,6 +39,11 @@ void GhostSystem::recieve(const Message& msg)
 
 		if (pacManImmune) {
 			mngr_->setAlive(msg.ghost_collision_data.e, false);
+
+			Message mScore;
+			mScore.id = _m_PACMAN_SCORE_GHOST;
+
+			mngr_->send(mScore, true);
 		}
 		else {
 			auto pacMan = mngr_->getHandler(ecs::hdlr::PACMAN);

@@ -71,6 +71,12 @@ void FoodSystem::recieve(const Message& msg)
 
 
 		}
+
+		Message mScore;
+		mScore.id = _m_PACMAN_SCORE_FOOD;
+
+		mngr_->send(mScore, true);
+
 	}
 	else if (msg.id == _m_ROUND_START) {
 
