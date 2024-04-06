@@ -21,6 +21,7 @@
 #include "../systems/ImmunitySystem.h"
 #include "../systems/CollisionsSystem.h"
 #include "../systems/RenderSystem.h"
+#include "../systems/ScoreSystem.h"
 
 using ecs::Manager;
 
@@ -63,13 +64,14 @@ void Game::init() {
 	immunitySystem = mngr_->addSystem<ImmunitySystem>();
 	collisionsSystem = mngr_->addSystem<CollisionsSystem>();
 	renderSystem = mngr_->addSystem<RenderSystem>();
+	scoreSystem = mngr_->addSystem<ScoreSystem>();
 
 
 	//creacion de estados
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
 	runing_state_ = new RunningState(pacManSystem,ghostSystem,foodSystem,
-									immunitySystem,collisionsSystem,renderSystem);
+									immunitySystem,collisionsSystem,renderSystem,scoreSystem);
 
 	paused_state_ = new PausedState();
 	gameover_state_ = new GameOverState();

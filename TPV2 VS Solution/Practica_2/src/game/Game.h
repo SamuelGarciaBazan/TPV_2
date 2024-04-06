@@ -18,6 +18,7 @@ class FoodSystem;
 class ImmunitySystem;
 class CollisionsSystem;
 class RenderSystem;
+class ScoreSystem;
 
 
 
@@ -77,6 +78,7 @@ private:
 	ImmunitySystem* immunitySystem;
 	CollisionsSystem* collisionsSystem;
 	RenderSystem* renderSystem;
+	ScoreSystem* scoreSystem;
 	
 };
 

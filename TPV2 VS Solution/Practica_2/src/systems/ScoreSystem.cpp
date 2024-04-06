@@ -3,11 +3,11 @@
 
 ScoreSystem::ScoreSystem()
 {
-	font = &sdlutils().fonts().at("ARIAL16");
+	font = &sdlutils().fonts().at("ARIAL24");
 
-	destinationRect = SDL_Rect{ 400,20,100,100 };
+	destinationRect = SDL_Rect{ 700,20,60,40 };
 
-	textColor = SDL_Color{0,0,0,1};
+	textColor = SDL_Color{255,255,255,1};
 }
 
 ScoreSystem::~ScoreSystem()
@@ -38,7 +38,7 @@ void ScoreSystem::recieve(const Message& msg)
 
 void ScoreSystem::renderText()
 {
-	SDL_Surface* sur = font->renderText("Score" + currentScore, textColor);
+	SDL_Surface* sur = font->renderText(std::string("Score: ")+ std::to_string(currentScore), textColor);
 
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(sdlutils().renderer(), sur);
 

@@ -9,6 +9,7 @@ class FoodSystem;
 class ImmunitySystem;
 class CollisionsSystem;
 class RenderSystem;
+class ScoreSystem;
 
 
 class RunningState :
@@ -18,7 +19,7 @@ class RunningState :
 public:
 
 	RunningState(PacManSystem*,GhostSystem*,FoodSystem*,
-				ImmunitySystem*,CollisionsSystem*,RenderSystem*);
+				ImmunitySystem*,CollisionsSystem*,RenderSystem*,ScoreSystem*);
 	~RunningState();
 
 	void update() override;
@@ -34,5 +35,7 @@ private:
 	ImmunitySystem* immunitySystem;
 	CollisionsSystem* collisionsSystem;
 	RenderSystem* renderSystem;
+	ScoreSystem* scoreSystem;
+
 };
 
