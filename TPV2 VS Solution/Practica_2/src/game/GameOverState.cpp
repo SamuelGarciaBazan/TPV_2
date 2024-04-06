@@ -10,6 +10,10 @@
 
 void GameOverState::update()
 {
+	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
+	//render background
+	sdlutils().images().at("playBackground").render(destinyRect);
+
 	messageTexture->render(messageRect);
 
 	if (ih().keyDownEvent()) {
@@ -25,6 +29,8 @@ void GameOverState::update()
 
 void GameOverState::enter()
 {
+	
+
 	auto mngr = Game::instance()->getMngr();
 
 	auto pacman = mngr->getHandler(ecs::hdlr::PACMAN);
