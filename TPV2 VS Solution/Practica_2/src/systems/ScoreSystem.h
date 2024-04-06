@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../ecs/System.h"
+#include "../sdlutils/SDLUtils.h"
 
+class Font;
 
 class ScoreSystem
 	:public ecs::System
@@ -19,5 +21,18 @@ public:
 
 private:
 
+    Font* font;
+
+    int currentScore = 0;
+
+    int foodScore = 10;
+
+    int ghostScore = 100;
+
+    SDL_Rect destinationRect;
+    
+    SDL_Color textColor;
+
+    void renderText();
 };
 
