@@ -9,7 +9,8 @@
   "images" : [
     { "id" : "heart", "file" : "resources/images/heart.png"},
     { "id" : "spriteSheet", "file" : "resources/images/pacman_sprites.png"},
-    { "id" : "startBackground", "file" : "resources/images/startBackground.png"}
+    { "id" : "startBackground", "file" : "resources/images/startBackground.png"},
+    { "id" : "playBackground", "file" : "resources/images/playBackground.png"}
   ],
   
   "messages" : [

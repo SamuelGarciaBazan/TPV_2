@@ -61,20 +61,9 @@ void RunningState::update()
 		mngr->send(m,true);
 	}
 
-	/*antiguo update
-	//update de entidades
-	mngr->update();
+	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
 
-	//colision
-	collisions();
-
-	//render de todo
-	mngr->render();
-
-	//refresh del manager
-	mngr->refresh();
-	*/
-
+	sdlutils().images().at("playBackground").render(destinyRect);
 	
 	pacManSystem->update();
 	ghostSystem->update();
