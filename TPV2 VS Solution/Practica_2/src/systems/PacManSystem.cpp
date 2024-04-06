@@ -145,7 +145,7 @@ void PacManSystem::resetLifes()
 {
 	auto healthCmp = mngr_->getComponent<Health>(pacMan);
 
-	healthCmp->setLifes(3);
+	healthCmp->setLifes(healthCmp->maxLifes);
 
 }
 

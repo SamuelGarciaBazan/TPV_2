@@ -9,7 +9,7 @@ Health::Health(std::string name,float scale)
 	offSetX = healthTexture->width() * scale;
 
 	maxLifes = sdlutils().gameConstants().at("pacManMaxLifes");
-
+	currentLifes = maxLifes;
 }
 
 Health::~Health()

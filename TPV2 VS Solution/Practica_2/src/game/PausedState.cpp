@@ -22,6 +22,10 @@ PausedState::~PausedState()
 
 void PausedState::update()
 {
+	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
+
+	sdlutils().images().at("playBackground").render(destinyRect);
+
 	messageTexture->render(messageRect);
 
 	if (ih().keyDownEvent()) {

@@ -5,6 +5,8 @@
 
 #include "../sdlutils/InputHandler.h"
 
+#include "../components/Health.h"
+
 
 void GameOverState::update()
 {
@@ -23,7 +25,13 @@ void GameOverState::update()
 
 void GameOverState::enter()
 {
-	if (true) {
+	auto mngr = Game::instance()->getMngr();
+
+	auto pacman = mngr->getHandler(ecs::hdlr::PACMAN);
+
+	auto health = mngr->getComponent<Health>(pacman);
+
+	if (  health->currentLifes >0 ) {
 		messageTexture = &sdlutils().msgs().at("game_over_win");
 	}
 	else {

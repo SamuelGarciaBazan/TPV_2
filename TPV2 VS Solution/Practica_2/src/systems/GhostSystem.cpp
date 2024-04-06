@@ -68,7 +68,7 @@ void GhostSystem::recieve(const Message& msg)
 
 				mngr_->send(msgNewGame, true);
 
-				Game::instance()->setState(Game::NEWGAME);
+				Game::instance()->setState(Game::GAMEOVER);
 			}
 			else {		
 				Game::instance()->setState(Game::NEWROUND);		

@@ -9,7 +9,7 @@ NewRoundState::NewRoundState()
 
 	//rect, center screen
 	messageRect = build_sdlrect((sdlutils().width() - messageTexture->width()) / 2,//x
-		(sdlutils().height() - messageTexture->height()) / 2,//y
+		400,//y
 		messageTexture->width(), messageTexture->height()); // w / h
 }
 
@@ -19,6 +19,12 @@ NewRoundState::~NewRoundState()
 
 void NewRoundState::update()
 {
+
+	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
+	//renderBackground
+	sdlutils().images().at("startBackground").render(destinyRect);
+
+	//renderMessage
 	messageTexture->render(messageRect);
 
 	if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
