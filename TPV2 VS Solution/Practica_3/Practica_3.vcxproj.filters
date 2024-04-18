@@ -69,6 +69,9 @@
     <ClCompile Include="src\sdlutils\Texture.cpp">
       <Filter>Source Files\sdlutil</Filter>
     </ClCompile>
+    <ClCompile Include="src\sdlutils\SDLNetUtils.cpp">
+      <Filter>Source Files\sdlutil</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\Game.h">
