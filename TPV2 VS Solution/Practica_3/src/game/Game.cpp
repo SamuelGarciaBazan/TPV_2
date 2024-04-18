@@ -19,7 +19,7 @@ Game::~Game() {
 void Game::init() {
 
 	// initialize the SDLUtils singleton
-	SDLUtils::init("Demo", 900, 480,
+	SDLUtils::init("LittleWolf", 900, 480,
 			"resources/config/littlewolf.resources.json",
 		"resources/config/littlewolf.config.json");
 
