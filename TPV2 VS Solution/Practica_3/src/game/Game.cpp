@@ -20,7 +20,8 @@ void Game::init() {
 
 	// initialize the SDLUtils singleton
 	SDLUtils::init("Demo", 900, 480,
-			"resources/config/littlewolf.resources.json");
+			"resources/config/littlewolf.resources.json",
+		"resources/config/littlewolf.config.json");
 
 	little_wolf_ = new LittleWolf(sdlutils().width(), sdlutils().height(),
 			sdlutils().window(), sdlutils().renderer());

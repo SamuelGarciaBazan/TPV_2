@@ -19,6 +19,24 @@
     <Filter Include="Header Files\game">
       <UniqueIdentifier>{0a74ae8b-8526-4c4b-94cd-d9737e1baf62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\json">
+      <UniqueIdentifier>{a540adac-765f-4591-8ccc-47cffb2b5ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\json">
+      <UniqueIdentifier>{9f5442a7-c0c4-42d2-a87c-f7bef45fe87b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{42f5f7df-7e42-47e6-bb25-820775a75c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{601977e9-b7e6-4aaf-a2c2-073a5b868ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sdlutil">
+      <UniqueIdentifier>{6b885977-64db-4be9-9974-207fa9db80a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sdlutil">
+      <UniqueIdentifier>{2c3752b1-10b2-4125-abfd-98e5ce52cf4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -30,6 +48,27 @@
     <ClCompile Include="src\game\LittleWolf.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\json\JSON.cpp">
+      <Filter>Source Files\json</Filter>
+    </ClCompile>
+    <ClCompile Include="src\json\JSONValue.cpp">
+      <Filter>Source Files\json</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Vector2D.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Collisions.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sdlutils\SDLUtils.cpp">
+      <Filter>Source Files\sdlutil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sdlutils\SoundEffect.cpp">
+      <Filter>Source Files\sdlutil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sdlutils\Texture.cpp">
+      <Filter>Source Files\sdlutil</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\Game.h">
@@ -38,5 +77,67 @@
     <ClInclude Include="src\game\LittleWolf.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="src\json\JSON.h">
+      <Filter>Header Files\json</Filter>
+    </ClInclude>
+    <ClInclude Include="src\json\JSONValue.h">
+      <Filter>Header Files\json</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Collisions.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\DynamicBitSet.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\mpl.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\ptr_iterator.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Singleton.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Vector2D.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\Font.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\InputHandler.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\macros.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\Music.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\RandomNumberGenerator.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\SDLNetUtils.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\SDLUtils.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\SoundEffect.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\Texture.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdlutils\VirtualTimer.h">
+      <Filter>Header Files\sdlutil</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\config\littlewolf.config.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resources\config\littlewolf.resources.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
