@@ -7,16 +7,22 @@
 #include "LittleWolf.h"
 
 
+Game* Game::_instance = nullptr;
+
+
 Game::Game() :
 		little_wolf_(nullptr) //
 {
+	_instance = this;
 }
 
 Game::~Game() {
 	delete little_wolf_;
 }
 
-void Game::init() {
+
+
+bool Game::init(const char* host, int port) {
 
 	// initialize the SDLUtils singleton
 	SDLUtils::init("LittleWolf", 900, 480,
@@ -34,6 +40,8 @@ void Game::init() {
 	little_wolf_->addPlayer(1);
 	little_wolf_->addPlayer(2);
 	little_wolf_->addPlayer(3);
+
+	return true;
 }
 
 void Game::start() {
