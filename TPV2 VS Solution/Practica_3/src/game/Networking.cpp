@@ -9,6 +9,8 @@
 #include "netwrok_messages.h"
 #include "../sdlutils/SDLNetUtils.h"
 
+#include "LittleWolf.h"
+
 Networking::Networking() :
 		sock_(), //
 		socketSet_(), //
@@ -163,7 +165,7 @@ void Networking::update() {
 
 void Networking::handle_new_client(Uint8 id) {
 	if (id != clientId_){}
-		//Game::instance()->get_fighters().send_my_info();
+		Game::instance()->getLittleWolf()->send_my_info();
 }
 
 void Networking::handle_disconnet(Uint8 id) {

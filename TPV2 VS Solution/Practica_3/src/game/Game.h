@@ -16,6 +16,11 @@ public:
 
 	static Game* instance(){return _instance;};
 
+
+	LittleWolf* getLittleWolf();
+
+	Networking* getNetworking();
+
 private:
 	LittleWolf *little_wolf_;
 

@@ -10,6 +10,9 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
+#include "Game.h"
+#include "Networking.h"
+
 LittleWolf::LittleWolf(uint16_t xres, uint16_t yres, SDL_Window *window,
 		SDL_Renderer *render) :
 		walling_width(xres / walling_size_factor), walling_height(
@@ -181,31 +184,6 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	return true;
 }
 
-void LittleWolf::render() {
-
-	// if the player is dead we only render upper view, otherwise the normal view
-
-	/*
-	if (players_[player_id_].state == DEAD)
-		render_upper_view();
-	else
-		render_map(players_[player_id_]);
-	*/
-
-	if (upView) {
-		render_upper_view();
-
-	}
-	else {
-		render_map(players_[player_id_]);
-
-	}
-
-
-	// render the identifiers, state, etc
-	render_players_info();
-}
-
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 		uint8_t **walling, bool ignore_players, bool ignore_deads) {
 	// Determine whether to step horizontally or vertically on the grid.
@@ -251,6 +229,34 @@ LittleWolf::Wall LittleWolf::project(const int xres, const int yres,
 	const Wall wall = { top > yres ? yres : top, bot < 0 ? 0 : bot, size };
 	return wall;
 }
+
+#pragma region Render methods
+
+void LittleWolf::render() {
+
+	// if the player is dead we only render upper view, otherwise the normal view
+
+	/*
+	if (players_[player_id_].state == DEAD)
+		render_upper_view();
+	else
+		render_map(players_[player_id_]);
+	*/
+
+	if (upView) {
+		render_upper_view();
+
+	}
+	else {
+		render_map(players_[player_id_]);
+
+	}
+
+
+	// render the identifiers, state, etc
+	render_players_info();
+}
+
 
 void LittleWolf::render_map(Player &p) {
 	// lock the texture
@@ -401,6 +407,9 @@ void LittleWolf::render_players_info() {
 	}
 }
 
+#pragma endregion
+
+
 void LittleWolf::move(Player &p) {
 	auto &ihdrl = ih();
 
@@ -502,7 +511,7 @@ bool LittleWolf::shoot(Player &p) {
 				return true;
 			}
 		}
-	}
+}
 	return false;
 }
 
@@ -526,3 +535,15 @@ void LittleWolf::bringAllToLife() {
 		}
 	}
 }
+
+
+#pragma region Multiplayer methods
+
+void LittleWolf::send_my_info()
+{
+	auto& p = players_[player_id_];
+	Game::instance()->getNetworking()->send_my_info(Vector2D(p.where.x, p.where.y), 0, 0, 0, p.state);
+}
+
+#pragma endregion
+

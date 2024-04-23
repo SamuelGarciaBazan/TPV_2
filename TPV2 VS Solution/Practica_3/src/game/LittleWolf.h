@@ -18,6 +18,8 @@
 class LittleWolf {
 public:
 
+#pragma region Structs
+
 	// a point in a 2D-plane
 	struct Point {
 		float x;
@@ -108,6 +110,8 @@ public:
 			}
 		}
 	};
+
+#pragma endregion
 
 	// the constructor get the window's dimensions and the sdl winodw/renderer
 	LittleWolf(uint16_t xres, uint16_t yres, SDL_Window *window,
@@ -369,10 +373,14 @@ private:
 	Gpu gpu_;
 
 
+	//MULTIPLAYER ONLINE
 public:
 	
 
 	bool upView = false;
+
+
+	void send_my_info();
 
 
 };
