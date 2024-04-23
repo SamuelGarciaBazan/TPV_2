@@ -368,5 +368,12 @@ private:
 	// the GPU structure with all the needed elements to draw the world
 	Gpu gpu_;
 
+
+public:
+	
+
+	bool upView = false;
+
+
 };
 

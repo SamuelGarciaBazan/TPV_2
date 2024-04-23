@@ -184,10 +184,23 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
+
+	/*
 	if (players_[player_id_].state == DEAD)
 		render_upper_view();
 	else
 		render_map(players_[player_id_]);
+	*/
+
+	if (upView) {
+		render_upper_view();
+
+	}
+	else {
+		render_map(players_[player_id_]);
+
+	}
+
 
 	// render the identifiers, state, etc
 	render_players_info();
@@ -451,9 +464,9 @@ void LittleWolf::spin(Player &p) {
 		d = 0.005f;
 	}
 
-	if (ihdrl.isKeyDown(SDL_SCANCODE_H))
+	if (ihdrl.isKeyDown(SDL_SCANCODE_LEFT))
 		p.theta -= d;
-	if (ihdrl.isKeyDown(SDL_SCANCODE_L))
+	if (ihdrl.isKeyDown(SDL_SCANCODE_RIGHT))
 		p.theta += d;
 }
 

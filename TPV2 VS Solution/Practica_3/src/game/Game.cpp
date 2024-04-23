@@ -80,7 +80,13 @@ void Game::start() {
 				little_wolf_->bringAllToLife();
 			}
 
+
+			if (ihdlr.isKeyDown(SDL_SCANCODE_V)) {
+				little_wolf_->upView = !little_wolf_->upView;
+			}
 		}
+
+		net_->update();
 
 		little_wolf_->update();
 
