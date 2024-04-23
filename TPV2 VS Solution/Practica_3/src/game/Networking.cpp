@@ -21,7 +21,7 @@ Networking::Networking() :
 Networking::~Networking() {
 }
 
-bool Networking::init(char *host, Uint16 port) {
+bool Networking::init(const char *host, Uint16 port) {
 
 	if (SDLNet_ResolveHost(&srvadd_, host, port) < 0) {
 		SDLNetUtils::print_SDLNet_error();
@@ -57,12 +57,16 @@ bool Networking::init(char *host, Uint16 port) {
 			if (SDLNetUtils::deserializedReceive(m0, p_, sock_) > 0) {
 				switch (m0._type) {
 				case _CONNECTION_ACCEPTED:
+					std::cout << "Recived message with type: _CONNECTION_ACCEPTED" << std::endl;
+
 					m1.deserialize(p_->data);
 					clientId_ = m1._client_id;
 					masterId_ = m1._master_id;
 					connected = true;
 					break;
 				case _CONNECTION_REJECTED:
+					std::cout << "Recived message with type: _CONNECTION_REJECTED" << std::endl;
+
 					break;
 				}
 			}
@@ -101,38 +105,53 @@ void Networking::update() {
 
 		switch (m0._type) {
 		case _NEW_CLIENT_CONNECTED:
+			std::cout << "Recived message with type: _NEW_CLIENT_CONNECTED" << std::endl;
+
 			m1.deserialize(p_->data);
 			masterId_ = m1._master_id;
 			handle_new_client(m1._client_id);
 			break;
 
 		case _DISCONNECTED:
+			std::cout << "Recived message with type: _DISCONNECTED" << std::endl;
+
 			m1.deserialize(p_->data);
 			masterId_ = m1._master_id;
 			handle_disconnet(m1._client_id);
 			break;
 
 		case _PLAYER_STATE:
+			std::cout << "Recived message with type: _PLAYER_STATE" << std::endl;
+
 			m2.deserialize(p_->data);
 			handle_player_state(m2);
 			break;
 
 		case _PLAYER_INFO:
+			std::cout << "Recived message with type: _PLAYER_INFO" << std::endl;
+
 			m5.deserialize(p_->data);
 			handle_player_info(m5);
 			break;
 
 		case _SHOOT:
+			std::cout << "Recived message with type: _SHOOT" << std::endl;
+
 			m3.deserialize(p_->data);
 			handle_shoot(m3);
 			break;
 
 		case _DEAD:
+			std::cout << "Recived message with type: _DEAD" << std::endl;
+
+
 			m4.deserialize(p_->data);
 			handle_dead(m4);
 			break;
 
 		case _RESTART:
+			std::cout << "Recived message with type: _RESTART" << std::endl;
+
 			handle_restart();
 			break;
 

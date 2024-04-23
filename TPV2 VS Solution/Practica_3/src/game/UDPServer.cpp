@@ -1,13 +1,10 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
-//#include "../../../fighters/net/game/UDPServer.h"
 #include "UDPServer.h"
-
 
 #include <iostream>
 #include <SDL_net.h>
 
-//#include "../../../fighters/net/game/netwrok_messages.h"
 #include "netwrok_messages.h"
 
 #include "../sdlutils/SDLNetUtils.h"
@@ -83,10 +80,14 @@ void UDPServer::listen() {
 
 					// for future use ...
 					case _NONE:
+
+						std::cout << "Recived message with type: _NONE" << std::endl;
 						break;
 
 						// the message is a connection request
 					case _CONNECTION_REQUEST: {
+						std::cout << "Recived message with type: _CONNECTION_REQUEST" << std::endl;
+
 
 						// seek a free slot
 						Uint8 j = 0;
@@ -116,6 +117,8 @@ void UDPServer::listen() {
 							SDLNetUtils::print_ip(p_->address, true);
 
 						} else {
+
+
 							// if not free slots, send a message to the client rejecting the connection
 							m0._type = _CONNECTION_REJECTED;
 							SDLNetUtils::serializedSend(m0, p_, sock_); // IP is already in p_->address
@@ -125,6 +128,7 @@ void UDPServer::listen() {
 
 						// the message is a client informing about disconnection
 					case _DISCONNECTED: {
+						std::cout << "Recived message with type: _DISCONNECTED" << std::endl;
 
 						// we need to deserialize again since we have des wrt Msg only
 						m1.deserialize(p_->data);
@@ -152,6 +156,10 @@ void UDPServer::listen() {
 					}
 
 					default: {
+
+						std::cout << "Recived message default" << std::endl;
+
+
 						// just forward the message to all clients -- the message must be a subtype
 						// of MsgWithId
 

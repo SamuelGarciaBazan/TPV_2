@@ -26,6 +26,8 @@ int main(int, char**) {
 
 	try {
 
+		SDLNetUtils::initSDLNet();
+
 		const char* host ;
 
 		host = "localhost";
@@ -44,7 +46,7 @@ int main(int, char**) {
 			client(host, port);
 		}
 		else {
-
+			std::cout << "Must write s/c, try again" << std::endl;
 		}
 
 	} catch (const std::string &e) { // catch exceptions thrown as strings

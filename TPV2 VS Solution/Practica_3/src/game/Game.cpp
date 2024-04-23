@@ -6,6 +6,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "LittleWolf.h"
 
+#include "Networking.h"
 
 Game* Game::_instance = nullptr;
 
@@ -24,6 +25,14 @@ Game::~Game() {
 
 bool Game::init(const char* host, int port) {
 
+
+	net_ = new Networking();
+
+	if (!net_->init(host, port)) {
+		SDLNetUtils::print_SDLNet_error();
+	}
+	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
+
 	// initialize the SDLUtils singleton
 	SDLUtils::init("LittleWolf", 900, 480,
 			"resources/config/littlewolf.resources.json",
@@ -37,9 +46,6 @@ bool Game::init(const char* host, int port) {
 
 	// add some players
 	little_wolf_->addPlayer(0);
-	little_wolf_->addPlayer(1);
-	little_wolf_->addPlayer(2);
-	little_wolf_->addPlayer(3);
 
 	return true;
 }

@@ -2,7 +2,7 @@
 
 #pragma once
 
-
+class Networking;
 class LittleWolf;
 
 class Game {
@@ -18,6 +18,8 @@ public:
 
 private:
 	LittleWolf *little_wolf_;
+
+	Networking* net_;
 
 };
 
