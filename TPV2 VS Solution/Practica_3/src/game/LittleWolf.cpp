@@ -46,6 +46,7 @@ void LittleWolf::update() {
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
+
 }
 
 void LittleWolf::load(std::string filename) {
@@ -183,7 +184,6 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 
 	return true;
 }
-
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 		uint8_t **walling, bool ignore_players, bool ignore_deads) {
 	// Determine whether to step horizontally or vertically on the grid.
@@ -459,6 +459,9 @@ void LittleWolf::move(Player &p) {
 			map_.walling[y0][x0] = 0;
 		}
 	}
+
+
+	send_my_info();
 }
 
 void LittleWolf::spin(Player &p) {
@@ -570,8 +573,15 @@ void LittleWolf::update_player_info(int playerID, float posX, float posY, float 
 		players_[playerID] = p;
 	}
 	else {
-
 		auto& p = players_[playerID];
+
+		map_.walling[(int)p.where.y][(int)p.where.x] =0 ;
+
+		if (Game::instance()->getNetworking()->is_master()) {
+
+			//comprobar cosas
+
+		}
 
 		p.where.x = posX;
 		p.where.y = posY;
