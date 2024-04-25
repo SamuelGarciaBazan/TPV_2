@@ -164,7 +164,7 @@ void Networking::update() {
 }
 
 void Networking::handle_new_client(Uint8 id) {
-	if (id != clientId_){}
+	if (id != clientId_)
 		Game::instance()->getLittleWolf()->send_my_info();
 }
 
@@ -248,8 +248,11 @@ void Networking::send_my_info(	const Vector2D& pos, const Vector2D& vel,
 
 void Networking::handle_player_info(const PlayerInfoMsg &m) {
 	if (m._client_id != clientId_) {
-		//Game::instance()->get_fighters().update_player_info(m._client_id, m.x,
-			//	m.y, m.w, m.h, m.rot, m.state);
+		std::cout << "Recived info from othter player" << std::endl;
+		
+		Game::instance()->getLittleWolf()->update_player_info(
+			m._client_id,m.posX,m.posY,m.velX,m.velY,
+			m.speed,m.acceleration,m.theta,(LittleWolf::PlayerState)m.state);
 	}
 }
 

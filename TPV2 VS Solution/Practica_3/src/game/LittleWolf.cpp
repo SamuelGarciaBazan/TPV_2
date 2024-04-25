@@ -548,5 +548,48 @@ void LittleWolf::send_my_info()
 					p.speed,p.acceleration,p.theta, p.state);
 }
 
+void LittleWolf::update_player_info(int playerID, float posX, float posY, float velX, float velY, float speed, float acceleration, float theta, PlayerState state)
+{
+	assert(playerID < max_player);
+
+	if (players_[playerID].state == NOT_USED) {
+
+		// initialize the player
+		Player p = { //
+				playerID, //
+						viewport(0.8f),             // focal
+						{ posX + 0.5f, posY + 0.5f }, // Where.
+						{ velX,velY }, 			// Velocity.
+						speed, 			            // Speed.
+						acceleration,		            	// Acceleration.
+						theta, 			            // Rotation angle in radians.
+						ALIVE                       // Player state
+		};
+
+		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
+		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
+		players_[playerID] = p;
+	}
+	else {
+
+		auto& p = players_[playerID];
+
+		p.where.x = posX;
+		p.where.y = posY;
+
+		p.velocity.x = velX;
+		p.velocity.y = velY;
+
+		p.speed = speed;
+		p.acceleration = acceleration;
+		p.theta = theta;
+		p.state = state;
+
+		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
+	}
+
+
+}
+
 #pragma endregion
 

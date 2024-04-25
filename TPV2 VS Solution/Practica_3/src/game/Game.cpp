@@ -33,8 +33,7 @@ bool Game::init(const char* host, int port) {
 	}
 	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
 
-	//al conectarnos, mandamos nuestra informacion
-	little_wolf_->send_my_info();
+	
 
 
 	// initialize the SDLUtils singleton
@@ -50,6 +49,10 @@ bool Game::init(const char* host, int port) {
 
 	// add some players
 	little_wolf_->addPlayer(0);
+
+
+	//al conectarnos, mandamos nuestra informacion
+	little_wolf_->send_my_info();
 
 	return true;
 }
