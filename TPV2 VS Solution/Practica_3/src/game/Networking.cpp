@@ -224,17 +224,25 @@ void Networking::handle_dead(const MsgWithId &m) {
 	//Game::instance()->get_fighters().killPlayer(m._client_id);
 }
 
-void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,
-		Uint8 state) {
-	PlayerInfoMsg m;
-	m._type = _PLAYER_INFO;
+void Networking::send_my_info(	const Vector2D& pos, const Vector2D& vel,
+								float speed, float acceleration, float theta,
+								Uint8 state) 
+{
+	PlayerInfoMsg m; 
+	//id && type of message
 	m._client_id = clientId_;
-	m.x = pos.getX();
-	m.y = pos.getY();
-	m.w = w;
-	m.h = h;
-	m.rot = rot;
+	m._type = _PLAYER_INFO;
+
+	//info player
+	m.posX = pos.getX();
+	m.posY = pos.getY();
+	m.velX = vel.getX();
+	m.velY = vel.getY();
+	m.acceleration = acceleration;
+	m.theta = theta;
 	m.state = state;
+
+	//send message
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 

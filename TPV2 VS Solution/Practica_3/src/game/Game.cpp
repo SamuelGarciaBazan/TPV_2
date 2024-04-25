@@ -33,6 +33,10 @@ bool Game::init(const char* host, int port) {
 	}
 	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
 
+	//al conectarnos, mandamos nuestra informacion
+	little_wolf_->send_my_info();
+
+
 	// initialize the SDLUtils singleton
 	SDLUtils::init("LittleWolf", 900, 480,
 			"resources/config/littlewolf.resources.json",

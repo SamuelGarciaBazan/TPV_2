@@ -542,7 +542,10 @@ void LittleWolf::bringAllToLife() {
 void LittleWolf::send_my_info()
 {
 	auto& p = players_[player_id_];
-	Game::instance()->getNetworking()->send_my_info(Vector2D(p.where.x, p.where.y), 0, 0, 0, p.state);
+
+	Game::instance()->getNetworking()->send_my_info(
+					Vector2D(p.where.x, p.where.y),Vector2D(p.velocity.x,p.velocity.y),
+					p.speed,p.acceleration,p.theta, p.state);
 }
 
 #pragma endregion
