@@ -249,7 +249,6 @@ void LittleWolf::render() {
 	}
 	else {
 		render_map(players_[player_id_]);
-
 	}
 
 

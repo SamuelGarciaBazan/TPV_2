@@ -48,7 +48,7 @@ bool Game::init(const char* host, int port) {
 	little_wolf_->load("resources/maps/little_wolf/map_0.txt");
 
 	// add some players
-	little_wolf_->addPlayer(0);
+	little_wolf_->addPlayer(net_->client_id());
 
 
 	//al conectarnos, mandamos nuestra informacion
