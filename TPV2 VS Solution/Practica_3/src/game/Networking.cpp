@@ -179,6 +179,7 @@ void Networking::handle_new_client(Uint8 id) {
 }
 
 void Networking::handle_disconnet(Uint8 id) {
+	Game::instance()->getLittleWolf()->disconnet_player(id);
 	//Game::instance()->get_fighters().removePlayer(id);
 }
 

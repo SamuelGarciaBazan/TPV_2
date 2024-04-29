@@ -391,5 +391,6 @@ public:
 	void update_syncro_info(int playerID,const Vector2D & pos);
 
 
+	void disconnet_player(int playerID);
 };
 

@@ -650,6 +650,15 @@ void LittleWolf::update_syncro_info(int playerID, const Vector2D& pos)
 	players_[playerID].where.y = pos.getY();
 }
 
+void LittleWolf::disconnet_player(int playerID)
+{
+	auto& p = players_[playerID];
+	//resetear el tile anterior
+	map_.walling[(int)p.where.y][(int)p.where.x] = 0;
+
+	p.state = NOT_USED;
+}
+
 
 
 #pragma endregion
