@@ -390,7 +390,16 @@ public:
 
 	void update_syncro_info(int playerID,const Vector2D & pos);
 
-
 	void disconnet_player(int playerID);
+
+	void send_shoot_request();
+
+	void proccess_shoot_request(int playerID);
+
+
+	void send_player_die(int playerID);
+
+	void proccess_player_die(int playerID);
+
 };
 

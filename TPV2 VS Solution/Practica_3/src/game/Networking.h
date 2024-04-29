@@ -36,6 +36,10 @@ public:
 
 
 	void send_syncro_info(int clientId, const Vector2D& pos);
+	void send_shoot_request();
+
+	void send_player_die(int playerID);
+
 
 
 private:
@@ -49,6 +53,11 @@ private:
 	void handle_restart();
 
 	void handle_syncro_info(const SyncroMsg& m);
+
+	void handle_shoot_request(const MsgWithId& m);
+
+	void handle_player_die(const MsgWithId& m);
+
 
 	UDPsocket sock_;
 	SDLNet_SocketSet socketSet_;

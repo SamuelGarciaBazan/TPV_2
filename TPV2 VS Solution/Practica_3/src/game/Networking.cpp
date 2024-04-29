@@ -159,14 +159,36 @@ void Networking::update() {
 
 		case _SYNCRO: {
 
+			std::cout << "Recived message with type: _SYNCRO" << std::endl;
 			SyncroMsg m;
 			m.deserialize(p_->data);
 
-			std::cout << "Recived message with type: _SYNCRO" << std::endl;
 
 			handle_syncro_info(m);
 			break;
 		}
+		case _SHOOT_REQUEST: {
+
+			std::cout << "Recived message with type: _SHOOT_REQUEST" << std::endl;
+
+			MsgWithId m;
+			m.deserialize(p_->data);
+
+			handle_shoot_request(m);
+
+			break;
+		}
+		case _PLAYER_DIE: {
+			std::cout << "Recived message with type: _PLAYER_DIE" << std::endl;
+
+			MsgWithId m;
+			m.deserialize(p_->data);
+
+			handle_player_die(m);
+			
+			break;
+		}
+
 		default:
 			break;
 		}
@@ -285,6 +307,22 @@ void Networking::handle_syncro_info(const SyncroMsg& m)
 	Game::instance()->getLittleWolf()->update_syncro_info(m._client_id,Vector2D(m.posX,m.posY));
 }
 
+void Networking::handle_shoot_request(const MsgWithId& m)
+{
+	if (is_master()) {
+
+		std::cout << "Master process shoot" << std::endl;
+
+		Game::instance()->getLittleWolf()->proccess_shoot_request(m._client_id);
+	}
+}
+
+void Networking::handle_player_die(const MsgWithId& m)
+{
+	Game::instance()->getLittleWolf()->proccess_player_die(m._client_id);
+
+}
+
 
 void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 {
@@ -295,6 +333,26 @@ void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 
 	m.posX = pos.getX();
 	m.posY = pos.getY();
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+
+}
+
+void Networking::send_shoot_request()
+{
+	MsgWithId m;
+	m._client_id = clientId_;
+	m._type = _SHOOT_REQUEST;
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+}
+
+void Networking::send_player_die(int playerID)
+{
+
+	MsgWithId m;
+	m._client_id = playerID;
+	m._type = _PLAYER_DIE;
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 
