@@ -460,7 +460,7 @@ void LittleWolf::move(Player &p) {
 		}
 	}
 
-
+	//enviar la informacion del movimiento
 	send_my_info();
 }
 
@@ -550,10 +550,14 @@ void LittleWolf::send_my_info()
 					p.speed,p.acceleration,p.theta, p.state);
 }
 
-void LittleWolf::update_player_info(int playerID, float posX, float posY, float velX, float velY, float speed, float acceleration, float theta, PlayerState state)
+void LittleWolf::update_player_info(int playerID, 
+	float posX, float posY, float velX, float velY,
+	float speed, float acceleration, float theta, PlayerState state)
 {
 	assert(playerID < max_player);
 
+	//si es la primera vez que se recibe el mensaje
+	//crear el player y añadirlo a la lista de players
 	if (players_[playerID].state == NOT_USED) {
 
 		// initialize the player
@@ -568,20 +572,48 @@ void LittleWolf::update_player_info(int playerID, float posX, float posY, float 
 						ALIVE                       // Player state
 		};
 
+	
+
 		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
 		players_[playerID] = p;
 	}
-	else {
+	else {//recibir la informacion del player
+
 		auto& p = players_[playerID];
 
-		map_.walling[(int)p.where.y][(int)p.where.x] =0 ;
+		bool colision = false;
 
+		//si somos el master
 		if (Game::instance()->getNetworking()->is_master()) {
 
-			//comprobar cosas
+			const Point last = p.where, zero = { 0.0f, 0.0f };
 
+			//si hay una colison
+			if (tile(p.where, map_.walling) != player_to_tile(playerID)
+				&& tile(p.where, map_.walling) != 0) {
+
+				colision = true;
+
+				p.velocity = zero;
+				p.where = last;
+
+			}	
 		}
+
+		if (colision) {
+			//mandar mensaje de colision con la nueva info de todos los jugadores
+			std::cout << "colision" << std::endl;
+
+			send_syncro_info();
+
+			return;
+		}
+
+		//resetear el tile anterior
+		map_.walling[(int)p.where.y][(int)p.where.x] = 0;
+
+		//hacer el movimiento
 
 		p.where.x = posX;
 		p.where.y = posY;
@@ -594,11 +626,31 @@ void LittleWolf::update_player_info(int playerID, float posX, float posY, float 
 		p.theta = theta;
 		p.state = state;
 
+		//marcar el tile
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
 	}
 
 
 }
+
+void LittleWolf::send_syncro_info()
+{
+	for (int i = 0; i < max_player; i++) {
+		if (players_[i].state != NOT_USED) {
+
+			Game::instance()->getNetworking()->send_syncro_info(i,
+				Vector2D(players_[i].where.x, players_[i].where.y));
+		}
+	}
+}
+
+void LittleWolf::update_syncro_info(int playerID, const Vector2D& pos)
+{
+	players_[playerID].where.x = pos.getX();
+	players_[playerID].where.y = pos.getY();
+}
+
+
 
 #pragma endregion
 

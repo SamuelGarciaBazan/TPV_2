@@ -130,7 +130,7 @@ void Networking::update() {
 			break;
 
 		case _PLAYER_INFO:
-			std::cout << "Recived message with type: _PLAYER_INFO" << std::endl;
+			//std::cout << "Recived message with type: _PLAYER_INFO" << std::endl;
 
 			m5.deserialize(p_->data);
 			handle_player_info(m5);
@@ -157,6 +157,16 @@ void Networking::update() {
 			handle_restart();
 			break;
 
+		case _SYNCRO: {
+
+			SyncroMsg m;
+			m.deserialize(p_->data);
+
+			std::cout << "Recived message with type: _SYNCRO" << std::endl;
+
+			handle_syncro_info(m);
+			break;
+		}
 		default:
 			break;
 		}
@@ -246,13 +256,15 @@ void Networking::send_my_info(	const Vector2D& pos, const Vector2D& vel,
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
+
 void Networking::handle_player_info(const PlayerInfoMsg &m) {
 	if (m._client_id != clientId_) {
-		std::cout << "Recived info from othter player" << std::endl;
+		//std::cout << "Recived info from other player" << std::endl;
 		
+
 		Game::instance()->getLittleWolf()->update_player_info(
-			m._client_id,m.posX,m.posY,m.velX,m.velY,
-			m.speed,m.acceleration,m.theta,(LittleWolf::PlayerState)m.state);
+		m._client_id, m.posX, m.posY, m.velX, m.velY,
+		m.speed, m.acceleration, m.theta, (LittleWolf::PlayerState)m.state);
 	}
 }
 
@@ -264,5 +276,25 @@ void Networking::send_restart() {
 
 void Networking::handle_restart() {
 	//Game::instance()->get_fighters().bringAllToLife();
+
+}
+
+void Networking::handle_syncro_info(const SyncroMsg& m)
+{
+	Game::instance()->getLittleWolf()->update_syncro_info(m._client_id,Vector2D(m.posX,m.posY));
+}
+
+
+void Networking::send_syncro_info(int clientId, const Vector2D& pos)
+{
+	SyncroMsg m;
+
+	m._client_id = clientId;
+	m._type = _SYNCRO;
+
+	m.posX = pos.getX();
+	m.posY = pos.getY();
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 
 }

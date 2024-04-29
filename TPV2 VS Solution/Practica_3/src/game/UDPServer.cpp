@@ -157,7 +157,7 @@ void UDPServer::listen() {
 
 					default: {
 
-						std::cout << "Recived message default" << std::endl;
+						//std::cout << "Recived message default" << std::endl;
 
 
 						// just forward the message to all clients -- the message must be a subtype

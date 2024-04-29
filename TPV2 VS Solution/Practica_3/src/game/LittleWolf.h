@@ -14,6 +14,7 @@
 #include <fstream>
 
 #include "../sdlutils/InputHandler.h"
+#include "../utils/Vector2D.h"
 
 class LittleWolf {
 public:
@@ -384,6 +385,10 @@ public:
 
 	void update_player_info(int playerID,float posX,float posY,float velX,float velY,
 							float speed,float acceleration,float theta,PlayerState state);
+
+	void send_syncro_info();
+
+	void update_syncro_info(int playerID,const Vector2D & pos);
 
 
 };
