@@ -56,7 +56,7 @@ private:
 
 	void handle_shoot_request(const MsgWithId& m);
 
-	void handle_player_die(const MsgWithId& m);
+	void handle_player_die(const PlayerDieMsg& m);
 
 
 	UDPsocket sock_;

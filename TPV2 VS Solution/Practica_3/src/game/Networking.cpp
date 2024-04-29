@@ -181,7 +181,7 @@ void Networking::update() {
 		case _PLAYER_DIE: {
 			std::cout << "Recived message with type: _PLAYER_DIE" << std::endl;
 
-			MsgWithId m;
+			PlayerDieMsg m;
 			m.deserialize(p_->data);
 
 			handle_player_die(m);
@@ -317,9 +317,11 @@ void Networking::handle_shoot_request(const MsgWithId& m)
 	}
 }
 
-void Networking::handle_player_die(const MsgWithId& m)
+void Networking::handle_player_die(const PlayerDieMsg& m)
 {
-	Game::instance()->getLittleWolf()->proccess_player_die(m._client_id);
+	if (m._client_id != clientId_) {
+		Game::instance()->getLittleWolf()->proccess_player_die(m.playerDie);
+	}
 
 }
 
@@ -350,8 +352,9 @@ void Networking::send_shoot_request()
 void Networking::send_player_die(int playerID)
 {
 
-	MsgWithId m;
-	m._client_id = playerID;
+	PlayerDieMsg m;
+	m._client_id = clientId_;
+	m.playerDie = playerID;
 	m._type = _PLAYER_DIE;
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);

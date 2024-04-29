@@ -90,3 +90,10 @@ struct SyncroMsg : MsgWithId {
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,posX,posY)
 };
+
+struct PlayerDieMsg : MsgWithId {
+
+	int playerDie;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,playerDie)
+};

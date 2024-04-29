@@ -249,7 +249,7 @@ void LittleWolf::render() {
 		render_map(players_[player_id_]);
 	*/
 
-	if (upView) {
+	if (upView || (players_[player_id_].state == DEAD)) {
 		render_upper_view();
 
 	}
