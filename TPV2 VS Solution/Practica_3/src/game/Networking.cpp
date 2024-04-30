@@ -202,7 +202,16 @@ void Networking::update() {
 
 			break;
 		}
+		case _PLAYER_HIT: {
 
+			PlayerHit m;
+
+			m.deserialize(p_->data);
+			
+			handle_player_hit(m);
+
+			break;
+		}
 		default:
 			break;
 		}
@@ -212,6 +221,7 @@ void Networking::update() {
 void Networking::handle_new_client(Uint8 id) {
 	if (id != clientId_)
 		Game::instance()->getLittleWolf()->send_my_info();
+		Game::instance()->getLittleWolf()->send_Info_Points();
 }
 
 void Networking::handle_disconnet(Uint8 id) {
@@ -350,6 +360,12 @@ void Networking::handle_new_start()
 	Game::instance()->getLittleWolf()->proccess_new_start();
 }
 
+void Networking::handle_player_hit(const PlayerHit& m)
+{
+	Game::instance()->getLittleWolf()->proccess_player_hit(m.id_life,m.id_points,m.currentLife,m.currentPoints);
+
+}
+
 
 void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 {
@@ -402,4 +418,18 @@ void Networking::send_new_start()
 	m._type = _NEW_START;
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+}
+
+void Networking::send_player_hit(int idLife,int idPoints, int life, int points)
+{
+	PlayerHit m;
+
+	m._type = _PLAYER_HIT;
+	m.id_life = idLife;
+	m.id_points = idPoints;
+	m.currentLife = life;
+	m.currentPoints = points;
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+
 }

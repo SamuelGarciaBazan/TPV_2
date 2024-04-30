@@ -193,7 +193,8 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 					0.9f,		            	// Acceleration.
 					0.0f, 			            // Rotation angle in radians.
 					ALIVE,                       // Player state
-					playerLife
+					playerLife,
+					0
 			};
 
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
@@ -416,7 +417,7 @@ void LittleWolf::render_players_info() {
 		if (s != NOT_USED) {
 
 			std::string msg = (i == player_id_ ? "*P" : " P")
-					+ std::to_string(i) + (s == DEAD ? " (dead)" : " life:" +std::to_string((int)players_[i].life));
+					+ std::to_string(i) + (s == DEAD ? " (dead)" : " Life:" +std::to_string((int)players_[i].life) + " Points: "+ std::to_string((int)players_[i].points));
 
 			Texture info(sdlutils().renderer(), msg,
 					sdlutils().fonts().at("ARIAL24"),
@@ -540,14 +541,23 @@ bool LittleWolf::shoot(Player &p) {
 			uint8_t id = tile_to_player(hit.tile);
 
 			sdlutils().soundEffects().at("pain").play();
+
+
+			
+
 			//mandar mensaje de sondido por distancia
 		
 
 			//restar vida
 
 			players_[id].life -= (shoot_distace - distance);
-
 			std::cout << players_[id].life << std::endl;
+			
+			p.points++;
+			//mandar mensaje de vida y puntos a todos
+
+			send_player_hit(id,p.id, players_[id].life, p.points);
+
 
 			if (players_[id].life <= 0) {
 
@@ -643,7 +653,8 @@ void LittleWolf::update_player_info(int playerID,
 						acceleration,		            	// Acceleration.
 						theta, 			            // Rotation angle in radians.
 						ALIVE,                       // Player state
-						life
+						life,
+						0
 		};
 
 	
@@ -699,7 +710,7 @@ void LittleWolf::update_player_info(int playerID,
 		p.acceleration = acceleration;
 		p.theta = theta;
 		//p.state = state;
-		p.life = life;
+		//p.life = life;
 
 		//marcar el tile
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
@@ -830,6 +841,23 @@ void LittleWolf::proccess_new_start()
 
 	for (auto& p : players_) if (p.state != NOT_USED) { p.state = ALIVE; p.life = playerLife; }
 
+}
+
+void LittleWolf::send_player_hit(int idLife,int idPoints,int currentLifes,int currentPoints)
+{
+	Game::instance()->getNetworking()->send_player_hit(idLife, idPoints, currentLifes, currentPoints);
+
+}
+
+void LittleWolf::send_Info_Points()
+{
+	send_player_hit(player_id_, player_id_, players_[player_id_].life, players_[player_id_].points);
+}
+
+void LittleWolf::proccess_player_hit(int idLife , int idPoints, int currentLifes, int currentPoints)
+{
+	players_[idLife].life = currentLifes;
+	players_[idPoints].points = currentPoints;
 }
 
 

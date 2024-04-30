@@ -78,6 +78,7 @@ public:
 		float theta;         // rotation (in rad)
 		PlayerState state;   // the state
 		float life; 
+		int points;
 	};
 
 	// Representing a map, the user_walling is the walling provided by the user, and
@@ -420,6 +421,14 @@ public:
 	void send_new_start();
 
 	void proccess_new_start();
+	
+
+	void send_player_hit(int playerID,  int idPoints ,int currentLifes, int currentPoints);
+
+	void send_Info_Points();//only for new players
+
+	void proccess_player_hit(int playerID, int idPoints, int currentLifes, int currentPoints);
+
 
 
 };

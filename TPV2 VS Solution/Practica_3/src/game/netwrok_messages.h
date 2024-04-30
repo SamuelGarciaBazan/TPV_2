@@ -21,7 +21,8 @@ enum MsgType : Uint8 {
 	_SHOOT_REQUEST,
 	_PLAYER_DIE,
 	_START_WAITING,
-	_NEW_START
+	_NEW_START,
+	_PLAYER_HIT
 };
 
 struct Msg {
@@ -99,4 +100,15 @@ struct PlayerDieMsg : MsgWithId {
 	int playerDie;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,playerDie)
+};
+
+struct PlayerHit : Msg {
+
+	int id_life;
+	int id_points;
+	int currentLife;
+	int currentPoints;
+
+
+	_IMPL_SERIALIAZION_WITH_BASE_(Msg, id_life, id_points,currentLife,currentPoints)
 };

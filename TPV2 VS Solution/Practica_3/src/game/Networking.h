@@ -45,6 +45,8 @@ public:
 
 	void send_new_start();
 
+	void send_player_hit(int idLifes,int idPoints, int life, int points);
+
 private:
 
 	void handle_new_client(Uint8 id);
@@ -60,10 +62,11 @@ private:
 	void handle_shoot_request(const MsgWithId& m);
 
 	void handle_player_die(const PlayerDieMsg& m);
-
 	void handle_start_waiting();
 
 	void handle_new_start();
+
+	void handle_player_hit(const PlayerHit& m);
 
 
 	UDPsocket sock_;
