@@ -41,6 +41,9 @@ public:
 	void send_player_die(int playerID);
 
 
+	void send_waiting_msg();
+
+	//void send_new_start();
 
 private:
 
@@ -57,6 +60,8 @@ private:
 	void handle_shoot_request(const MsgWithId& m);
 
 	void handle_player_die(const PlayerDieMsg& m);
+
+	void handle_start_waiting();
 
 
 	UDPsocket sock_;

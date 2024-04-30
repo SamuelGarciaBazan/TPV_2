@@ -375,8 +375,18 @@ private:
 
 
 	//MULTIPLAYER ONLINE
-public:
+private:
 	
+	void render_wait_msg();
+
+	float lastFrame;
+
+	float waitingTime = 0;
+
+	bool waiting = false;
+
+
+public:
 
 	bool upView = false;
 
@@ -400,6 +410,15 @@ public:
 	void send_player_die(int playerID);
 
 	void proccess_player_die(int playerID);
+
+	void send_waiting_msg();
+
+	void process_wainting_msg();
+
+	void send_new_start();
+
+	void proccess_new_start();
+
 
 };
 

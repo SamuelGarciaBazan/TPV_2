@@ -39,6 +39,22 @@ void LittleWolf::update() {
 
 	Player &p = players_[player_id_];
 
+
+	if (waiting) {
+
+		
+
+		waitingTime -= (sdlutils().virtualTimer().currTime() - lastFrame);
+
+		lastFrame = sdlutils().virtualTimer().currTime();
+
+
+		if (Game::instance()->getNetworking()->is_master() && waitingTime  ==  0) {
+			//send_new_start();
+		}
+
+		return;
+	}
 	// dead player don't move/spin/shoot
 	if (p.state != ALIVE)
 		return;
@@ -190,6 +206,7 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 
 	return true;
 }
+
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 		uint8_t **walling, bool ignore_players, bool ignore_deads) {
 	// Determine whether to step horizontally or vertically on the grid.
@@ -260,6 +277,10 @@ void LittleWolf::render() {
 
 	// render the identifiers, state, etc
 	render_players_info();
+
+	if (waiting) {
+		render_wait_msg();
+	}
 }
 
 
@@ -524,6 +545,19 @@ bool LittleWolf::shoot(Player &p) {
 			send_player_die(id);
 			//mandar mensaje de sondido por distancia
 
+
+			//si quedan menos de 2 jugadores
+
+			int playersAlives = 0;
+
+			for (auto& p : players_)if (p.state == ALIVE) playersAlives++;
+
+			if (playersAlives < 2) {
+				send_waiting_msg();
+
+			}
+
+
 			return true;
 		}
 	}
@@ -554,6 +588,20 @@ void LittleWolf::bringAllToLife() {
 
 
 #pragma region Multiplayer methods
+
+void LittleWolf::render_wait_msg()
+{
+	std::string msg = "The game will restart in " + std::to_string((int)(waitingTime)/1000) + " seconds";
+
+	Texture info(sdlutils().renderer(), msg,
+		sdlutils().fonts().at("ARIAL48"),
+		build_sdlcolor(color_rgba( 10)));
+
+
+	SDL_Rect dest = build_sdlrect((sdlutils().width() - info.width())/2, (sdlutils().height() - info.height()) / 2, info.width(), info.height());
+
+	info.render(dest);
+}
 
 void LittleWolf::send_my_info()
 {
@@ -691,6 +739,66 @@ void LittleWolf::send_player_die(int playerID)
 void LittleWolf::proccess_player_die(int playerID)
 {
 	players_[playerID].state = DEAD;
+}
+
+void LittleWolf::send_waiting_msg()
+{
+	Game::instance()->getNetworking()->send_waiting_msg();
+}
+
+void LittleWolf::process_wainting_msg()
+{
+	waiting = true;
+	waitingTime = 5000;
+
+	lastFrame = sdlutils().virtualTimer().currTime();
+}
+
+void LittleWolf::send_new_start()
+{
+	//restart de las posiciones
+	for (int i = 0; i < max_player; i++) {
+
+		if (players_[i].state == NOT_USED) continue;
+
+		auto& p = players_[i];
+
+		auto& rand = sdlutils().rand();
+
+		// The search for an empty cell start at a random position (orow,ocol)
+		uint16_t orow = rand.nextInt(0, map_.walling_height);
+		uint16_t ocol = rand.nextInt(0, map_.walling_width);
+
+		// search for an empty cell
+		uint16_t row = orow;
+		uint16_t col = (ocol + 1) % map_.walling_width;
+		while (!((orow == row) && (ocol == col)) && map_.walling[row][col] != 0) {
+			col = (col + 1) % map_.user_walling_width;
+			if (col == 0)
+				row = (row + 1) % map_.walling_height;
+		}
+
+
+		p.where.x = col + 0.5f;
+		p.where.y = row + 0.5f;
+	
+		p.velocity.x = 0;
+		p.velocity.y = 0;
+		p.speed = 2.0;
+		p.acceleration = 0.9;
+		p.theta = 0;
+		p.state = ALIVE;
+
+
+		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
+		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(i);
+
+		Game::instance()->getNetworking()->send_syncro_info(i, Vector2D(p.where.x, p.where.y));
+
+	}
+
+
+	//Game::instance()->getNetworking()->send_new_start();
 }
 
 

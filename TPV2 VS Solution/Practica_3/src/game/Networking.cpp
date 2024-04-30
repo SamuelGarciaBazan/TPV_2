@@ -188,6 +188,14 @@ void Networking::update() {
 			
 			break;
 		}
+		case _START_WAITING: {
+			std::cout << "Recived message with type: _START_WAITING" << std::endl;
+
+			handle_start_waiting();
+
+
+			break;
+		}
 
 		default:
 			break;
@@ -325,6 +333,11 @@ void Networking::handle_player_die(const PlayerDieMsg& m)
 
 }
 
+void Networking::handle_start_waiting()
+{
+	Game::instance()->getLittleWolf()->process_wainting_msg();
+}
+
 
 void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 {
@@ -359,4 +372,13 @@ void Networking::send_player_die(int playerID)
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 
+}
+
+void Networking::send_waiting_msg()
+{
+	Msg m;
+
+	m._type = _START_WAITING;
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
