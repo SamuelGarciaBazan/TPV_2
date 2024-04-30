@@ -78,6 +78,7 @@ void Game::start() {
 			}
 
 			// N switches to the next player view
+			/*
 			if (ihdlr.isKeyDown(SDL_SCANCODE_N)) {
 				little_wolf_->switchToNextPlayer();
 			}
@@ -86,6 +87,7 @@ void Game::start() {
 			if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
 				little_wolf_->bringAllToLife();
 			}
+			*/
 
 
 			if (ihdlr.isKeyDown(SDL_SCANCODE_V)) {

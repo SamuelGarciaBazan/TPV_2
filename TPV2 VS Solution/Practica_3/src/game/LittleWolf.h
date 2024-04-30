@@ -77,6 +77,7 @@ public:
 		float acceleration;  // acceleration
 		float theta;         // rotation (in rad)
 		PlayerState state;   // the state
+		float life; 
 	};
 
 	// Representing a map, the user_walling is the walling provided by the user, and
@@ -385,6 +386,7 @@ private:
 
 	bool waiting = false;
 
+	int playerLife = 120;
 
 public:
 

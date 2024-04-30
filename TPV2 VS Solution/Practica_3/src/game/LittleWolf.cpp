@@ -39,7 +39,6 @@ void LittleWolf::update() {
 
 	Player &p = players_[player_id_];
 
-
 	if (waiting) {
 
 		waitingTime -= (sdlutils().virtualTimer().currTime() - lastFrame);
@@ -193,7 +192,8 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 					2.0f, 			            // Speed.
 					0.9f,		            	// Acceleration.
 					0.0f, 			            // Rotation angle in radians.
-					ALIVE                       // Player state
+					ALIVE,                       // Player state
+					playerLife
 			};
 
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
@@ -528,33 +528,46 @@ bool LittleWolf::shoot(Player &p) {
 		direction.y = direction.y / mag(direction);
 		const Hit hit = cast(p.where, direction, map_.walling, false, true);
 
+
+		auto distance = mag(sub(p.where, hit.where));
 #if _DEBUG
-		printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile,mag(sub(p.where, hit.where)));
+		printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile, distance);
 #endif
 
 		// if we hit a tile with a player id and the distance from that tile is smaller
 		// than shoot_distace, we mark the player as dead
-		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
+		if (hit.tile > 9 &&distance < shoot_distace) {
 			uint8_t id = tile_to_player(hit.tile);
-			players_[id].state = DEAD;
+
 			sdlutils().soundEffects().at("pain").play();
-
-			//mandar mensaje de jugador muerto
-			send_player_die(id);
 			//mandar mensaje de sondido por distancia
+		
+
+			//restar vida
+
+			players_[id].life -= (shoot_distace - distance);
+
+			std::cout << players_[id].life << std::endl;
+
+			if (players_[id].life <= 0) {
+
+				players_[id].state = DEAD;
+				//mandar mensaje de jugador muerto
+				send_player_die(id);
 
 
-			//si quedan menos de 2 jugadores
+				//si quedan menos de 2 jugadores
 
-			int playersAlives = 0;
+				int playersAlives = 0;
 
-			for (auto& p : players_)if (p.state == ALIVE) playersAlives++;
+				for (auto& p : players_)if (p.state == ALIVE) playersAlives++;
 
-			if (playersAlives < 2) {
-				send_waiting_msg();
+				if (playersAlives < 2) {
+					send_waiting_msg();
+
+				}
 
 			}
-
 
 			return true;
 		}
@@ -706,8 +719,14 @@ void LittleWolf::send_syncro_info()
 
 void LittleWolf::update_syncro_info(int playerID, const Vector2D& pos)
 {
+	//resetear el tile anterior
+	map_.walling[(int)players_[playerID].where.y][(int)players_[playerID].where.x] = 0;
+
 	players_[playerID].where.x = pos.getX();
 	players_[playerID].where.y = pos.getY();
+
+	map_.walling[(int)players_[playerID].where.y][(int)players_[playerID].where.x] = player_to_tile(playerID);
+
 }
 
 void LittleWolf::disconnet_player(int playerID)
@@ -777,6 +796,9 @@ void LittleWolf::send_new_start()
 		}
 
 
+		//resetear el tile anterior
+		map_.walling[(int)p.where.y][(int)p.where.x] = 0;
+
 		p.where.x = col + 0.5f;
 		p.where.y = row + 0.5f;
 	
@@ -786,6 +808,7 @@ void LittleWolf::send_new_start()
 		p.acceleration = 0.9;
 		p.theta = 0;
 		p.state = ALIVE;
+		p.life = playerLife;
 
 
 		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
@@ -803,7 +826,7 @@ void LittleWolf::proccess_new_start()
 {
 	waiting = false;
 
-	for (auto& p : players_) if (p.state != NOT_USED) p.state = ALIVE;
+	for (auto& p : players_) if (p.state != NOT_USED) { p.state = ALIVE; p.life = playerLife; }
 
 }
 
