@@ -416,8 +416,8 @@ void LittleWolf::render_players_info() {
 		// render player info if it is used
 		if (s != NOT_USED) {
 
-			std::string msg = (i == player_id_ ? "*P" : " P")
-					+ std::to_string(i) + (s == DEAD ? " (dead)" : " Life:" +std::to_string((int)players_[i].life) + " Points: "+ std::to_string((int)players_[i].points));
+			std::string msg = (i == player_id_ ? "*" : "") + players_[i].name
+				+ (s == DEAD ? " (dead)" : " Life:" +std::to_string((int)players_[i].life) + " Points: "+ std::to_string((int)players_[i].points));
 
 			Texture info(sdlutils().renderer(), msg,
 					sdlutils().fonts().at("ARIAL24"),
@@ -658,7 +658,6 @@ void LittleWolf::update_player_info(int playerID,
 		};
 
 	
-
 		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
 		players_[playerID] = p;
@@ -859,6 +858,21 @@ void LittleWolf::proccess_player_hit(int idLife , int idPoints, int currentLifes
 	players_[idLife].life = currentLifes;
 	players_[idPoints].points = currentPoints;
 }
+
+void LittleWolf::setName(int playerID, std::string name)
+{
+	players_[playerID].name = name;
+
+}
+
+void LittleWolf::send_my_name()
+{
+	
+	Game::instance()->getNetworking()->send_player_name(player_id_, players_[player_id_].name);
+
+}
+
+
 
 
 

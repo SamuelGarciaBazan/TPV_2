@@ -12,7 +12,7 @@ public:
 	Networking();
 	virtual ~Networking();
 
-	bool init(const char *host, Uint16 port);
+	bool init(const char *host, Uint16 port,std::string& name);
 	bool disconnect();
 	void update();
 
@@ -47,6 +47,8 @@ public:
 
 	void send_player_hit(int idLifes,int idPoints, int life, int points);
 
+	void send_player_name(int id, std::string name);
+
 private:
 
 	void handle_new_client(Uint8 id);
@@ -68,6 +70,8 @@ private:
 
 	void handle_player_hit(const PlayerHit& m);
 
+	void handle_player_name(PlayerName& m);
+
 
 	UDPsocket sock_;
 	SDLNet_SocketSet socketSet_;
@@ -75,5 +79,11 @@ private:
 	IPaddress srvadd_;
 	Uint8 clientId_;
 	Uint8 masterId_;
+
+
+
+	void string_to_chars(std::string& str, char c_str[11]);
+
+	void chars_to_string(std::string& str, char c_str[11]);
 };
 

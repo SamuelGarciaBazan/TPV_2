@@ -23,7 +23,7 @@ Networking::Networking() :
 Networking::~Networking() {
 }
 
-bool Networking::init(const char *host, Uint16 port) {
+bool Networking::init(const char *host, Uint16 port,std::string& name) {
 
 	if (SDLNet_ResolveHost(&srvadd_, host, port) < 0) {
 		SDLNetUtils::print_SDLNet_error();
@@ -47,6 +47,9 @@ bool Networking::init(const char *host, Uint16 port) {
 
 	Msg m0;
 	MsgWithMasterId m1;
+
+
+	std::cin >> name;
 
 	// request to connect
 	m0._type = _CONNECTION_REQUEST;
@@ -83,6 +86,8 @@ bool Networking::init(const char *host, Uint16 port) {
 #ifdef _DEBUG
 	std::cout << "Connected with id " << (int) clientId_ << std::endl;
 #endif
+
+
 
 	return true;
 }
@@ -212,6 +217,15 @@ void Networking::update() {
 
 			break;
 		}
+		case _PLAYER_NAME: {
+
+			PlayerName m;
+
+			m.deserialize(p_->data);
+
+			handle_player_name(m);
+			break;
+		}
 		default:
 			break;
 		}
@@ -222,6 +236,7 @@ void Networking::handle_new_client(Uint8 id) {
 	if (id != clientId_)
 		Game::instance()->getLittleWolf()->send_my_info();
 		Game::instance()->getLittleWolf()->send_Info_Points();
+		Game::instance()->getLittleWolf()->send_my_name();
 }
 
 void Networking::handle_disconnet(Uint8 id) {
@@ -366,6 +381,29 @@ void Networking::handle_player_hit(const PlayerHit& m)
 
 }
 
+void Networking::handle_player_name(PlayerName& m)
+{
+	std::string name;
+
+	chars_to_string(name, m.name);
+
+	Game::instance()->getLittleWolf()->setName(m.id, name);
+
+}
+
+void Networking::string_to_chars(std::string& str, char c_str[11])
+{
+	auto i = 0u;
+	for (; i < str.size() && i < 10; i++) c_str[i] = str[i];
+	c_str[i] = 0;
+}
+
+void Networking::chars_to_string(std::string& str, char c_str[11])
+{
+	c_str[10] = 0;
+	str = std::string(c_str);
+}
+
 
 void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 {
@@ -432,4 +470,16 @@ void Networking::send_player_hit(int idLife,int idPoints, int life, int points)
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 
+}
+
+void Networking::send_player_name(int id, std::string name)
+{
+	PlayerName m;
+
+	m._type = _PLAYER_NAME;
+	m.id = id;
+
+	string_to_chars(name, m.name);
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }

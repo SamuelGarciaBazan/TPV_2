@@ -79,6 +79,7 @@ public:
 		PlayerState state;   // the state
 		float life; 
 		int points;
+		std::string name;
 	};
 
 	// Representing a map, the user_walling is the walling provided by the user, and
@@ -429,6 +430,9 @@ public:
 
 	void proccess_player_hit(int playerID, int idPoints, int currentLifes, int currentPoints);
 
+	void setName(int playerID, std::string name);
+
+	void send_my_name();
 
 
 };

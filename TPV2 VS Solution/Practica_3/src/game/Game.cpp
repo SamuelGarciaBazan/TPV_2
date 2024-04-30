@@ -28,7 +28,9 @@ bool Game::init(const char* host, int port) {
 
 	net_ = new Networking();
 
-	if (!net_->init(host, port)) {
+	std::string name;
+
+	if (!net_->init(host, port,name)) {
 		SDLNetUtils::print_SDLNet_error();
 	}
 	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
@@ -53,6 +55,9 @@ bool Game::init(const char* host, int port) {
 
 	//al conectarnos, mandamos nuestra informacion
 	little_wolf_->send_my_info();
+	little_wolf_->setName(net_->client_id(), name);
+	little_wolf_->send_my_name();
+
 
 	return true;
 }
