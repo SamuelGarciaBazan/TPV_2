@@ -273,7 +273,7 @@ void Networking::handle_dead(const MsgWithId &m) {
 
 void Networking::send_my_info(	const Vector2D& pos, const Vector2D& vel,
 								float speed, float acceleration, float theta,
-								Uint8 state) 
+								Uint8 state,float life) 
 {
 	PlayerInfoMsg m; 
 	//id && type of message
@@ -288,6 +288,7 @@ void Networking::send_my_info(	const Vector2D& pos, const Vector2D& vel,
 	m.acceleration = acceleration;
 	m.theta = theta;
 	m.state = state;
+	m.life = life;
 
 	//send message
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
@@ -301,7 +302,7 @@ void Networking::handle_player_info(const PlayerInfoMsg &m) {
 
 		Game::instance()->getLittleWolf()->update_player_info(
 		m._client_id, m.posX, m.posY, m.velX, m.velY,
-		m.speed, m.acceleration, m.theta, (LittleWolf::PlayerState)m.state);
+		m.speed, m.acceleration, m.theta, (LittleWolf::PlayerState)m.state,m.life);
 	}
 }
 

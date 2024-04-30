@@ -63,11 +63,12 @@ struct PlayerInfoMsg: MsgWithId {
 	float speed;
 	float acceleration;
 	float theta;
+	float life;
 	Uint8 state;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,
 		posX, posY, velX, velY,
-		speed, acceleration, theta, state);
+		speed, acceleration, theta, state,life);
 
 };
 struct ShootMsg: MsgWithId {

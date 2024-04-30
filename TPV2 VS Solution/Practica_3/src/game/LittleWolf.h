@@ -396,7 +396,7 @@ public:
 	void send_my_info();
 
 	void update_player_info(int playerID,float posX,float posY,float velX,float velY,
-							float speed,float acceleration,float theta,PlayerState state);
+							float speed,float acceleration,float theta,PlayerState state,float life);
 
 	void send_syncro_info();
 

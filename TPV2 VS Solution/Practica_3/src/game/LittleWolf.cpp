@@ -416,7 +416,7 @@ void LittleWolf::render_players_info() {
 		if (s != NOT_USED) {
 
 			std::string msg = (i == player_id_ ? "*P" : " P")
-					+ std::to_string(i) + (s == DEAD ? " (dead)" : "");
+					+ std::to_string(i) + (s == DEAD ? " (dead)" : " life:" +std::to_string((int)players_[i].life));
 
 			Texture info(sdlutils().renderer(), msg,
 					sdlutils().fonts().at("ARIAL24"),
@@ -620,12 +620,12 @@ void LittleWolf::send_my_info()
 
 	Game::instance()->getNetworking()->send_my_info(
 					Vector2D(p.where.x, p.where.y),Vector2D(p.velocity.x,p.velocity.y),
-					p.speed,p.acceleration,p.theta, p.state);
+					p.speed,p.acceleration,p.theta, p.state,p.life);
 }
 
 void LittleWolf::update_player_info(int playerID, 
 	float posX, float posY, float velX, float velY,
-	float speed, float acceleration, float theta, PlayerState state)
+	float speed, float acceleration, float theta, PlayerState state,float life)
 {
 	assert(playerID < max_player);
 
@@ -642,7 +642,8 @@ void LittleWolf::update_player_info(int playerID,
 						speed, 			            // Speed.
 						acceleration,		            	// Acceleration.
 						theta, 			            // Rotation angle in radians.
-						ALIVE                       // Player state
+						ALIVE,                       // Player state
+						life
 		};
 
 	
@@ -697,7 +698,8 @@ void LittleWolf::update_player_info(int playerID,
 		p.speed = speed;
 		p.acceleration = acceleration;
 		p.theta = theta;
-		p.state = state;
+		//p.state = state;
+		p.life = life;
 
 		//marcar el tile
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
