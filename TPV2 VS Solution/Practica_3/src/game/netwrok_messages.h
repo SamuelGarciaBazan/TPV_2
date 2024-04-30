@@ -20,7 +20,8 @@ enum MsgType : Uint8 {
 	_SYNCRO,
 	_SHOOT_REQUEST,
 	_PLAYER_DIE,
-	_START_WAITING
+	_START_WAITING,
+	_NEW_START
 };
 
 struct Msg {

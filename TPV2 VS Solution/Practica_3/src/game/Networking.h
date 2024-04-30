@@ -43,7 +43,7 @@ public:
 
 	void send_waiting_msg();
 
-	//void send_new_start();
+	void send_new_start();
 
 private:
 
@@ -62,6 +62,8 @@ private:
 	void handle_player_die(const PlayerDieMsg& m);
 
 	void handle_start_waiting();
+
+	void handle_new_start();
 
 
 	UDPsocket sock_;

@@ -196,6 +196,12 @@ void Networking::update() {
 
 			break;
 		}
+		case _NEW_START: {
+
+			handle_new_start();
+
+			break;
+		}
 
 		default:
 			break;
@@ -338,6 +344,11 @@ void Networking::handle_start_waiting()
 	Game::instance()->getLittleWolf()->process_wainting_msg();
 }
 
+void Networking::handle_new_start()
+{
+	Game::instance()->getLittleWolf()->proccess_new_start();
+}
+
 
 void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 {
@@ -379,6 +390,15 @@ void Networking::send_waiting_msg()
 	Msg m;
 
 	m._type = _START_WAITING;
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+}
+
+void Networking::send_new_start()
+{
+	Msg m;
+
+	m._type = _NEW_START;
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }

@@ -42,15 +42,13 @@ void LittleWolf::update() {
 
 	if (waiting) {
 
-		
-
 		waitingTime -= (sdlutils().virtualTimer().currTime() - lastFrame);
 
 		lastFrame = sdlutils().virtualTimer().currTime();
 
 
-		if (Game::instance()->getNetworking()->is_master() && waitingTime  ==  0) {
-			//send_new_start();
+		if (Game::instance()->getNetworking()->is_master() && waitingTime  <=  0) {
+			send_new_start();
 		}
 
 		return;
@@ -798,7 +796,15 @@ void LittleWolf::send_new_start()
 	}
 
 
-	//Game::instance()->getNetworking()->send_new_start();
+	Game::instance()->getNetworking()->send_new_start();
+}
+
+void LittleWolf::proccess_new_start()
+{
+	waiting = false;
+
+	for (auto& p : players_) if (p.state != NOT_USED) p.state = ALIVE;
+
 }
 
 
