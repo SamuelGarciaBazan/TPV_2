@@ -12,11 +12,7 @@ enum MsgType : Uint8 {
 	_CONNECTION_REJECTED, //
 	_DISCONNECTED,
 	_NEW_CLIENT_CONNECTED, //
-	_PLAYER_STATE, //
 	_PLAYER_INFO, //
-	_SHOOT, //
-	_DEAD, //
-	_RESTART,
 	_SYNCRO,
 	_SHOOT_REQUEST,
 	_PLAYER_DIE,
@@ -27,18 +23,29 @@ enum MsgType : Uint8 {
 };
 
 struct Msg {
+
+	Msg(Uint8 _type) : _type(_type) {};
+
 	Uint8 _type;
 
 	_IMPL_SERIALIAZION_(_type)
 };
 
 struct MsgWithId: Msg {
+
+	MsgWithId(Uint8 _type, Uint8 _client_id)
+		:Msg(_type), _client_id(_client_id) {};
+
 	Uint8 _client_id;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(Msg,_client_id)
 };
 
 struct MsgWithMasterId: MsgWithId {
+
+	MsgWithMasterId(Uint8 _type, Uint8 _client_id, Uint8 _master_id)
+		:MsgWithId(_type, _client_id), _master_id(_master_id) {};
+
 	Uint8 _master_id;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,_master_id)
