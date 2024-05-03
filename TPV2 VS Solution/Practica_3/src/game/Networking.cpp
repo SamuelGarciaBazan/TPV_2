@@ -129,24 +129,19 @@ void Networking::update() {
 			handle_player_info(m5);
 			break;
 		case _SYNCRO: {
-
 			std::cout << "Recived message with type: _SYNCRO" << std::endl;
+
 			SyncroMsg m;
 			m.deserialize(p_->data);
-
-
 			handle_syncro_info(m);
 			break;
 		}
 		case _SHOOT_REQUEST: {
-
 			std::cout << "Recived message with type: _SHOOT_REQUEST" << std::endl;
 
 			MsgWithId m;
 			m.deserialize(p_->data);
-
 			handle_shoot_request(m);
-
 			break;
 		}
 		case _PLAYER_DIE: {
@@ -154,41 +149,31 @@ void Networking::update() {
 
 			PlayerDieMsg m;
 			m.deserialize(p_->data);
-
-			handle_player_die(m);
-			
+			handle_player_die(m);		
 			break;
 		}
 		case _START_WAITING: {
 			std::cout << "Recived message with type: _START_WAITING" << std::endl;
 
 			handle_start_waiting();
-
-
 			break;
 		}
 		case _NEW_START: {
 
 			handle_new_start();
-
 			break;
 		}
 		case _PLAYER_HIT: {
 
 			PlayerHit m;
-
-			m.deserialize(p_->data);
-			
+			m.deserialize(p_->data);			
 			handle_player_hit(m);
-
 			break;
 		}
 		case _PLAYER_NAME: {
 
 			PlayerName m;
-
 			m.deserialize(p_->data);
-
 			handle_player_name(m);
 			break;
 		}
@@ -202,10 +187,11 @@ void Networking::update() {
 
 
 void Networking::handle_new_client(Uint8 id) {
-	if (id != clientId_)
+	if (id != clientId_) {
 		Game::instance()->getLittleWolf()->send_my_info();
-	Game::instance()->getLittleWolf()->send_Info_Points();
-	Game::instance()->getLittleWolf()->send_my_name();
+		Game::instance()->getLittleWolf()->send_Info_Points();
+		Game::instance()->getLittleWolf()->send_my_name();
+	}
 }
 
 void Networking::handle_disconnet(Uint8 id) {
@@ -324,7 +310,6 @@ void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 	m.posY = pos.getY();
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
-
 }
 
 void Networking::send_shoot_request()
@@ -342,7 +327,6 @@ void Networking::send_player_die(int playerID)
 	m._type = _PLAYER_DIE;
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
-
 }
 
 void Networking::send_waiting_msg()
@@ -370,7 +354,6 @@ void Networking::send_player_hit(int idLife,int idPoints, int life, int points)
 	m.currentPoints = points;
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
-
 }
 
 void Networking::send_player_name(int id, std::string name)

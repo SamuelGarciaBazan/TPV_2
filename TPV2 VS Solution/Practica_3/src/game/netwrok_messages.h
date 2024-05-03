@@ -69,7 +69,7 @@ struct PlayerInfoMsg: MsgWithId {
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,
 		posX, posY, velX, velY,
-		speed, acceleration, theta, state,life);
+		speed, acceleration, theta,life, state);
 
 };
 struct ShootMsg: MsgWithId {
