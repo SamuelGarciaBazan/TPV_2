@@ -26,16 +26,15 @@ Game::~Game() {
 bool Game::init(const char* host, int port) {
 
 
-	net_ = new Networking();
-
+	//para guardar el nombre del jugador
 	std::string name;
+
+	net_ = new Networking();
 
 	if (!net_->init(host, port,name)) {
 		SDLNetUtils::print_SDLNet_error();
 	}
 	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
-
-	
 
 
 	// initialize the SDLUtils singleton
@@ -82,22 +81,13 @@ void Game::start() {
 				continue;
 			}
 
-			// N switches to the next player view
-			/*
-			if (ihdlr.isKeyDown(SDL_SCANCODE_N)) {
-				little_wolf_->switchToNextPlayer();
-			}
+			//para cambiar la vista , solo en debug
 
-			// R brings deads to life
-			if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
-				little_wolf_->bringAllToLife();
-			}
-			*/
-
-
+#ifdef _DEBUG
 			if (ihdlr.isKeyDown(SDL_SCANCODE_V)) {
 				little_wolf_->upView = !little_wolf_->upView;
 			}
+#endif // _DEBUG
 		}
 
 		net_->update();

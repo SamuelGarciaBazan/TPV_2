@@ -39,19 +39,20 @@ void LittleWolf::update() {
 
 	Player &p = players_[player_id_];
 
+	//si estamos esperando, actualizar el tiempo de espera
 	if (waiting) {
 
 		waitingTime -= (sdlutils().virtualTimer().currTime() - lastFrame);
-
 		lastFrame = sdlutils().virtualTimer().currTime();
 
-
+		//si ha pasado el tiempo de espera , mandar mensaje
 		if (Game::instance()->getNetworking()->is_master() && waitingTime  <=  0) {
 			send_new_start();
 		}
 
 		return;
 	}
+
 	// dead player don't move/spin/shoot
 	if (p.state != ALIVE)
 		return;
@@ -59,13 +60,10 @@ void LittleWolf::update() {
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	
-
+	//handle shooting
 	if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_SPACE)) {
 		send_shoot_request();
 	}
-
-	//shoot(p); // handle shooting
-
 }
 
 void LittleWolf::load(std::string filename) {
@@ -193,8 +191,8 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 					0.9f,		            	// Acceleration.
 					0.0f, 			            // Rotation angle in radians.
 					ALIVE,                       // Player state
-					playerLife,
-					0
+					playerLife, //vida del jugador
+					0 //puntos del jugador
 			};
 
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
@@ -258,13 +256,6 @@ void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
 
-	/*
-	if (players_[player_id_].state == DEAD)
-		render_upper_view();
-	else
-		render_map(players_[player_id_]);
-	*/
-
 	if (upView || (players_[player_id_].state == DEAD)) {
 		render_upper_view();
 
@@ -273,10 +264,10 @@ void LittleWolf::render() {
 		render_map(players_[player_id_]);
 	}
 
-
 	// render the identifiers, state, etc
 	render_players_info();
 
+	//si estamos esperando, mostrar el mensaje
 	if (waiting) {
 		render_wait_msg();
 	}
@@ -416,8 +407,12 @@ void LittleWolf::render_players_info() {
 		// render player info if it is used
 		if (s != NOT_USED) {
 
-			std::string msg = (i == player_id_ ? "*" : "") + players_[i].name
-				+ (s == DEAD ? " (dead)" : " Life:" +std::to_string((int)players_[i].life) + " Points: "+ std::to_string((int)players_[i].points));
+			std::string msg = 
+				(i == player_id_ ? "*" : "")// */vacio , para saber que jugador somos
+				+ players_[i].name //nombre del jugador
+				+ (s == DEAD ? " (dead)" :  //si esta muerto (dead)
+				" Life:" +std::to_string((int)players_[i].life) + //vida del jugador
+				" Points: "+ std::to_string((int)players_[i].points)); //puntos del jugador
 
 			Texture info(sdlutils().renderer(), msg,
 					sdlutils().fonts().at("ARIAL24"),
@@ -427,7 +422,6 @@ void LittleWolf::render_players_info() {
 
 			info.render(dest);
 			y += info.height() + 5;
-
 		}
 	}
 }
@@ -507,11 +501,12 @@ void LittleWolf::spin(Player &p) {
 		p.theta += d;
 }
 
+
+//solo lo deberia llamar el master
 bool LittleWolf::shoot(Player &p) {
 	auto &ihdrl = ih();
 
 	
-
 	// play gun shot sound
 	sdlutils().soundEffects().at("gunshot").play();
 
@@ -549,13 +544,14 @@ bool LittleWolf::shoot(Player &p) {
 		
 
 			//restar vida
-
 			players_[id].life -= (shoot_distace - distance);
 			std::cout << players_[id].life << std::endl;
 			
+			//aumentar puntos
 			p.points++;
-			//mandar mensaje de vida y puntos a todos
 
+
+			//mandar mensaje de vida y puntos a todos
 			send_player_hit(id,p.id, players_[id].life, p.points);
 
 
@@ -566,15 +562,16 @@ bool LittleWolf::shoot(Player &p) {
 				send_player_die(id);
 
 
-				//si quedan menos de 2 jugadores
+				//si quedan menos de 2 jugadores, mandar mensaje de esperar para reiniciar
 
 				int playersAlives = 0;
 
-				for (auto& p : players_)if (p.state == ALIVE) playersAlives++;
+				int i = 0;
+
+				while(i < max_player && i < 2) if (players_[i].state == ALIVE) playersAlives++;
 
 				if (playersAlives < 2) {
 					send_waiting_msg();
-
 				}
 
 			}
@@ -658,7 +655,7 @@ void LittleWolf::update_player_info(int playerID,
 		};
 
 	
-		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
+		//marcar la tile y asignar el player
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
 		players_[playerID] = p;
 	}
@@ -666,34 +663,31 @@ void LittleWolf::update_player_info(int playerID,
 
 		auto& p = players_[playerID];
 
-		bool colision = false;
 
 		//si somos el master
 		if (Game::instance()->getNetworking()->is_master()) {
 
 			const Point last = p.where, zero = { 0.0f, 0.0f };
 
-			//si hay una colison
+			//SI HAY COLISION
 			if (tile(p.where, map_.walling) != player_to_tile(playerID)
 				&& tile(p.where, map_.walling) != 0) {
-
-				colision = true;
 
 				p.velocity = zero;
 				p.where = last;
 
+
+				//mandar mensaje de colision con la nueva info de todos los jugadores
+				std::cout << "colision" << std::endl;
+
+				send_syncro_info();
+
+				return;
 			}	
 		}
+		//sino somos el master o no hay colision...
 
-		if (colision) {
-			//mandar mensaje de colision con la nueva info de todos los jugadores
-			std::cout << "colision" << std::endl;
-
-			send_syncro_info();
-
-			return;
-		}
-
+			
 		//resetear el tile anterior
 		map_.walling[(int)p.where.y][(int)p.where.x] = 0;
 
@@ -715,9 +709,9 @@ void LittleWolf::update_player_info(int playerID,
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(playerID);
 	}
 
-
 }
 
+//manda el mensaje de sincronizacion de todas las posiciones
 void LittleWolf::send_syncro_info()
 {
 	for (int i = 0; i < max_player; i++) {
@@ -826,11 +820,13 @@ void LittleWolf::send_new_start()
 		// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(i);
 
+
+		//mandar info de sincronizacion
 		Game::instance()->getNetworking()->send_syncro_info(i, Vector2D(p.where.x, p.where.y));
 
 	}
 
-
+	//enviar mensaje de restart
 	Game::instance()->getNetworking()->send_new_start();
 }
 
@@ -839,13 +835,11 @@ void LittleWolf::proccess_new_start()
 	waiting = false;
 
 	for (auto& p : players_) if (p.state != NOT_USED) { p.state = ALIVE; p.life = playerLife; }
-
 }
 
 void LittleWolf::send_player_hit(int idLife,int idPoints,int currentLifes,int currentPoints)
 {
 	Game::instance()->getNetworking()->send_player_hit(idLife, idPoints, currentLifes, currentPoints);
-
 }
 
 void LittleWolf::send_Info_Points()
@@ -862,19 +856,12 @@ void LittleWolf::proccess_player_hit(int idLife , int idPoints, int currentLifes
 void LittleWolf::setName(int playerID, std::string name)
 {
 	players_[playerID].name = name;
-
 }
 
 void LittleWolf::send_my_name()
-{
-	
+{	
 	Game::instance()->getNetworking()->send_player_name(player_id_, players_[player_id_].name);
-
 }
-
-
-
-
 
 #pragma endregion
 

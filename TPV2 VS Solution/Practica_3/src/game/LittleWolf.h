@@ -410,7 +410,6 @@ public:
 
 	void proccess_shoot_request(int playerID);
 
-
 	void send_player_die(int playerID);
 
 	void proccess_player_die(int playerID);
@@ -423,7 +422,6 @@ public:
 
 	void proccess_new_start();
 	
-
 	void send_player_hit(int playerID,  int idPoints ,int currentLifes, int currentPoints);
 
 	void send_Info_Points();//only for new players
