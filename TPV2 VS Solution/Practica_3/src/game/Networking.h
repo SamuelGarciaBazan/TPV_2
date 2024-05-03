@@ -24,7 +24,7 @@ public:
 		return clientId_ == masterId_;
 	}
 
-
+	//METODOS PARA ENVIAR INFORMACION
 
 	void send_my_info(const Vector2D &pos,const Vector2D &vel ,float speed, float acceleration ,float theta,
 			Uint8 state,float life);
@@ -44,6 +44,8 @@ public:
 	void send_player_name(int id, std::string name);
 
 private:
+
+	//METODOS PARA PROCESAR INFORMACION
 
 	void handle_new_client(Uint8 id);
 
@@ -65,6 +67,8 @@ private:
 
 	void handle_player_name(PlayerName& m);
 
+	
+	//variables de gestion net
 
 	UDPsocket sock_;
 	SDLNet_SocketSet socketSet_;
@@ -73,7 +77,7 @@ private:
 	Uint8 clientId_;
 	Uint8 masterId_;
 
-
+	//conversion de string a char y viceversa
 
 	void string_to_chars(std::string& str, char c_str[11]);
 

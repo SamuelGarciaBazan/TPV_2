@@ -91,16 +91,14 @@ bool Networking::init(const char *host, Uint16 port,std::string& name) {
 }
 
 bool Networking::disconnect() {
-	MsgWithId m;
-	m._type = _DISCONNECTED;
-	m._client_id = clientId_;
+	MsgWithId m(_DISCONNECTED,clientId_);
+
 	return (SDLNetUtils::serializedSend(m, p_, sock_, srvadd_) > 0);
 }
 
 void Networking::update() {
 	Msg m0;
 	MsgWithMasterId m1;
-	PlayerStateMsg m2;
 	ShootMsg m3;
 	MsgWithId m4;
 	PlayerInfoMsg m5;
@@ -200,54 +198,29 @@ void Networking::update() {
 	}
 }
 
+#pragma region Handle methods
+
+
 void Networking::handle_new_client(Uint8 id) {
 	if (id != clientId_)
 		Game::instance()->getLittleWolf()->send_my_info();
-		Game::instance()->getLittleWolf()->send_Info_Points();
-		Game::instance()->getLittleWolf()->send_my_name();
+	Game::instance()->getLittleWolf()->send_Info_Points();
+	Game::instance()->getLittleWolf()->send_my_name();
 }
 
 void Networking::handle_disconnet(Uint8 id) {
 	Game::instance()->getLittleWolf()->disconnet_player(id);
 }
 
-
-void Networking::send_my_info(	const Vector2D& pos, const Vector2D& vel,
-								float speed, float acceleration, float theta,
-								Uint8 state,float life) 
-{
-	PlayerInfoMsg m; 
-	//id && type of message
-	m._client_id = clientId_;
-	m._type = _PLAYER_INFO;
-
-	//info player
-	m.posX = pos.getX();
-	m.posY = pos.getY();
-	m.velX = vel.getX();
-	m.velY = vel.getY();
-	m.acceleration = acceleration;
-	m.theta = theta;
-	m.state = state;
-	m.life = life;
-
-	//send message
-	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
-}
-
-
 void Networking::handle_player_info(const PlayerInfoMsg &m) {
 	if (m._client_id != clientId_) {
 		//std::cout << "Recived info from other player" << std::endl;
 		
-
 		Game::instance()->getLittleWolf()->update_player_info(
 		m._client_id, m.posX, m.posY, m.velX, m.velY,
 		m.speed, m.acceleration, m.theta, (LittleWolf::PlayerState)m.state,m.life);
 	}
 }
-
-
 
 void Networking::handle_syncro_info(const SyncroMsg& m)
 {
@@ -269,7 +242,6 @@ void Networking::handle_player_die(const PlayerDieMsg& m)
 	if (m._client_id != clientId_) {
 		Game::instance()->getLittleWolf()->proccess_player_die(m.playerDie);
 	}
-
 }
 
 void Networking::handle_start_waiting()
@@ -285,7 +257,6 @@ void Networking::handle_new_start()
 void Networking::handle_player_hit(const PlayerHit& m)
 {
 	Game::instance()->getLittleWolf()->proccess_player_hit(m.id_life,m.id_points,m.currentLife,m.currentPoints);
-
 }
 
 void Networking::handle_player_name(PlayerName& m)
@@ -295,8 +266,11 @@ void Networking::handle_player_name(PlayerName& m)
 	chars_to_string(name, m.name);
 
 	Game::instance()->getLittleWolf()->setName(m.id, name);
-
 }
+
+#pragma endregion
+
+#pragma region Conversiom string <-> chars
 
 void Networking::string_to_chars(std::string& str, char c_str[11])
 {
@@ -309,6 +283,33 @@ void Networking::chars_to_string(std::string& str, char c_str[11])
 {
 	c_str[10] = 0;
 	str = std::string(c_str);
+}
+
+#pragma endregion
+
+#pragma region Send Methods
+
+void Networking::send_my_info(const Vector2D& pos, const Vector2D& vel,
+	float speed, float acceleration, float theta,
+	Uint8 state, float life)
+{
+	PlayerInfoMsg m;
+	//id && type of message
+	m._client_id = clientId_;
+	m._type = _PLAYER_INFO;
+
+	//info player
+	m.posX = pos.getX();
+	m.posY = pos.getY();
+	m.velX = vel.getX();
+	m.velY = vel.getY();
+	m.acceleration = acceleration;
+	m.theta = theta;
+	m.state = state;
+	m.life = life;
+
+	//send message
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
 
@@ -328,16 +329,13 @@ void Networking::send_syncro_info(int clientId, const Vector2D& pos)
 
 void Networking::send_shoot_request()
 {
-	MsgWithId m;
-	m._client_id = clientId_;
-	m._type = _SHOOT_REQUEST;
+	MsgWithId m(_SHOOT_REQUEST,clientId_);
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
 void Networking::send_player_die(int playerID)
 {
-
 	PlayerDieMsg m;
 	m._client_id = clientId_;
 	m.playerDie = playerID;
@@ -349,18 +347,14 @@ void Networking::send_player_die(int playerID)
 
 void Networking::send_waiting_msg()
 {
-	Msg m;
-
-	m._type = _START_WAITING;
+	Msg m(_START_WAITING);
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
 void Networking::send_new_start()
 {
-	Msg m;
-
-	m._type = _NEW_START;
+	Msg m(_NEW_START);
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
@@ -390,3 +384,5 @@ void Networking::send_player_name(int id, std::string name)
 
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
+
+#pragma endregion

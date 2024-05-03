@@ -24,6 +24,7 @@ enum MsgType : Uint8 {
 
 struct Msg {
 
+	Msg() {};
 	Msg(Uint8 _type) : _type(_type) {};
 
 	Uint8 _type;
@@ -32,7 +33,8 @@ struct Msg {
 };
 
 struct MsgWithId: Msg {
-
+	
+	MsgWithId() {};
 	MsgWithId(Uint8 _type, Uint8 _client_id)
 		:Msg(_type), _client_id(_client_id) {};
 
@@ -43,6 +45,7 @@ struct MsgWithId: Msg {
 
 struct MsgWithMasterId: MsgWithId {
 
+	MsgWithMasterId() {};
 	MsgWithMasterId(Uint8 _type, Uint8 _client_id, Uint8 _master_id)
 		:MsgWithId(_type, _client_id), _master_id(_master_id) {};
 
@@ -51,17 +54,6 @@ struct MsgWithMasterId: MsgWithId {
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId,_master_id)
 };
 
-struct PlayerStateMsg: MsgWithId {
-
-	float x;
-	float y;
-	int w;
-	int h;
-	float rot;
-
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y,w,h,rot)
-
-};
 
 struct PlayerInfoMsg: MsgWithId {
 
