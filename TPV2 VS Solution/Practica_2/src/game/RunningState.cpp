@@ -45,6 +45,9 @@ void RunningState::update()
 
 
 	//PARA TESTEAR
+
+#ifdef _DEBUG
+
 	if (ih().isKeyDown(SDL_SCANCODE_K)) {
 
 
@@ -60,6 +63,9 @@ void RunningState::update()
 
 		mngr->send(m,true);
 	}
+#endif // !_DEBUG
+
+
 
 	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
 

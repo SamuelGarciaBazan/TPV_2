@@ -11,6 +11,7 @@
 void GameOverState::update()
 {
 	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
+
 	//render background
 	sdlutils().images().at("playBackground").render(destinyRect);
 
@@ -29,7 +30,6 @@ void GameOverState::update()
 
 void GameOverState::enter()
 {
-	
 
 	auto mngr = Game::instance()->getMngr();
 
@@ -37,7 +37,8 @@ void GameOverState::enter()
 
 	auto health = mngr->getComponent<Health>(pacman);
 
-	if (  health->currentLifes >0 ) {
+	//mostrar mensaje de victoria/ derrota
+	if (health->currentLifes >0 ) {
 		messageTexture = &sdlutils().msgs().at("game_over_win");
 	}
 	else {

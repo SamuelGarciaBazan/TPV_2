@@ -24,6 +24,7 @@ void PausedState::update()
 {
 	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
 
+	//render background
 	sdlutils().images().at("playBackground").render(destinyRect);
 
 	messageTexture->render(messageRect);
@@ -41,5 +42,4 @@ void PausedState::enter()
 void PausedState::leave()
 {
 	sdlutils().virtualTimer().resume();
-
 }

@@ -164,8 +164,6 @@ void GhostSystem::generateGhosts()
 		auto posPM = mngr_->getComponent<Transform>(mngr_->getHandler(ecs::hdlr::PACMAN))->pos_;
 
 		tf->vel_ = (posPM - tf->pos_).normalize() * 1.1f;
-
-
 	}
 }
 

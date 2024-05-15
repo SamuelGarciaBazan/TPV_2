@@ -141,8 +141,6 @@ void FoodSystem::resetTimers()
 			img->currentFrame = spriteDefault;
 
 		}
-
-
 	}
 }
 
@@ -183,7 +181,6 @@ void FoodSystem::updateMiracleFruits()
 
 void FoodSystem::destroyFruits()
 {
-
 	for (auto& e : mngr_->getEntities(ecs::grp::FRUITS)) {
 		mngr_->setAlive(e, false);
 	}

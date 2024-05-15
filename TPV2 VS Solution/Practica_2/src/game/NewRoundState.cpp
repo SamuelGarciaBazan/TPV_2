@@ -21,6 +21,7 @@ void NewRoundState::update()
 {
 
 	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
+
 	//renderBackground
 	sdlutils().images().at("startBackground").render(destinyRect);
 
@@ -30,7 +31,6 @@ void NewRoundState::update()
 	if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
 
 		Game::instance()->setState(Game::RUNNING);
-
 
 		//lanzar mensaje
 		Message msg;

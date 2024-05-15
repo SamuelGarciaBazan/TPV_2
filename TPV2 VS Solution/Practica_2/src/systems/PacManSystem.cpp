@@ -36,7 +36,7 @@ void PacManSystem::initSystem()
 	auto imgF_Cmp = mngr_->addComponent<ImageWithFrames>(pacMan,"spriteSheet",fils,cols);
 	auto healthCmp =  mngr_->addComponent<Health>(pacMan,"heart",healthImageScale);
 
-	
+
 	trasnformCmp->setHeight(pacmanHeight);
 	trasnformCmp->setWidth(pacmanWidth);
 
@@ -116,8 +116,12 @@ void PacManSystem::movePacMan()
 		tf->vel_.set(0, 0);
 	}
 
+
+	//actualizar la posicion
 	tf->pos_ = tf->pos_ + tf->vel_;
 
+
+	//sonidos
 	if ((tf->vel_.getX() != 0 || tf->vel_.getY() != 0 )&&
 		lastSound+soundRate < sdlutils().virtualTimer().currTime()) {
 		lastSound = sdlutils().virtualTimer().currTime();
@@ -125,7 +129,6 @@ void PacManSystem::movePacMan()
 	}
 	else if((tf->vel_.getX() == 0 && tf->vel_.getY() == 0)){
 		//sdlutils().soundEffects().at("chomp").pauseChannel();
-
 	}
 }
 
@@ -146,8 +149,4 @@ void PacManSystem::resetLifes()
 	auto healthCmp = mngr_->getComponent<Health>(pacMan);
 
 	healthCmp->setLifes(healthCmp->maxLifes);
-
 }
-
-
-

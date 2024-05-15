@@ -22,10 +22,10 @@ NewGameState::~NewGameState()
 
 void NewGameState::update()
 {
-	
 
 	SDL_Rect destinyRect{ 0,0,sdlutils().width(),sdlutils().height() };
 
+	//render background
 	sdlutils().images().at("startBackground").render(destinyRect);
 
 	//render message
