@@ -32,5 +32,17 @@ private:
     int followChance = 5;//sobre 1000
     float followFactor = 1.1f;
 
+
+    int weakChance = 500; //sobre mil
+
+    int minWeakCollisions = 1;
+    int maxWeakCollisions = 6;//max excusive
+
+
+    //examen
+
+    void handleInmmunityStart();
+    void handleInmmunityEnd();
+
 };
 

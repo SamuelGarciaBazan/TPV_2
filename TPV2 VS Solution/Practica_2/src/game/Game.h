@@ -19,6 +19,8 @@ class ImmunitySystem;
 class CollisionsSystem;
 class RenderSystem;
 class ScoreSystem;
+class SafeSystem;
+
 
 
 
@@ -79,6 +81,7 @@ private:
 	CollisionsSystem* collisionsSystem;
 	RenderSystem* renderSystem;
 	ScoreSystem* scoreSystem;
+	SafeSystem* safeSystem;
 	
 };
 

@@ -2,6 +2,8 @@
 #include "../ecs/Manager.h"
 #include "../utils/Collisions.h"
 #include "../components/Transform.h"
+#include "../components/Weak.h"
+#include "../components/ImageWithFrames.h"
 
 CollisionsSystem::CollisionsSystem()
 {
@@ -26,17 +28,35 @@ void CollisionsSystem::recieve(const Message& msg)
 
 void CollisionsSystem::checkCollisions()
 {
+	
 	//comprobar colisiones y enviar los mensajes correspondientes
 
 	auto pair1 = collisionsGhosts();
 
 	if (pair1.first) {
-		Message msg;
-		msg.id = _m_PACMAN_GHOST_COLLISION;
 
-		msg.ghost_collision_data.e = pair1.second;
+		auto weakCmp = mngr_->getComponent<Weak>(pair1.second);
 
-		mngr_->send(msg, true);
+		if (weakCmp != nullptr) {
+
+			Message msg;
+			msg.id = _m_PACMAN_GHOST_WEAK_COLLISION;
+
+			msg.ghost_collision_data.e = pair1.second;
+
+			mngr_->send(msg, true);
+		}
+
+		else {
+
+			Message msg;
+			msg.id = _m_PACMAN_GHOST_COLLISION;
+
+			msg.ghost_collision_data.e = pair1.second;
+
+			mngr_->send(msg, true);
+		}
+
 	}
 	auto pair2 = collisionsFood();
 	if (pair2.first) {

@@ -52,6 +52,7 @@ void PacManSystem::update()
 {
 	//mover el pacman
 	movePacMan();
+
 }
 
 void PacManSystem::recieve(const Message& msg)
@@ -69,6 +70,7 @@ void PacManSystem::recieve(const Message& msg)
 
 		sdlutils().soundEffects().at("intro").play();
 	}	
+	
 }
 
 void PacManSystem::movePacMan()
@@ -150,3 +152,4 @@ void PacManSystem::resetLifes()
 
 	healthCmp->setLifes(healthCmp->maxLifes);
 }
+

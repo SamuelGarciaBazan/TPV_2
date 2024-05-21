@@ -11,6 +11,8 @@
 	HEALTH, \
 	IMAGEWITHFRAMES,\
 	MIRACLEFRUIT,\
+	WEAK, \
+	GHOST, \
 
 
 // Groups list - must have at least one element
@@ -34,3 +36,4 @@
 	COLLISIONS, \
 	RENDER, \
 	SCORE, \
+	SAFE, \

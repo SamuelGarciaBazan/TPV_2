@@ -22,6 +22,7 @@
 #include "../systems/CollisionsSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/ScoreSystem.h"
+#include "../systems/SafeSystem.h"
 
 using ecs::Manager;
 
@@ -54,7 +55,7 @@ Game::~Game() {
 void Game::init() {
 
 	// initialise the SDLUtils singleton
-	SDLUtils::init("ASTEROIDS", 800, 600,
+	SDLUtils::init("PACMAN", 800, 600,
 			"resources/config/pacman.resources.json","resources/config/pacman.config.json");
 
 	//creacion de los sistemas
@@ -65,13 +66,14 @@ void Game::init() {
 	collisionsSystem = mngr_->addSystem<CollisionsSystem>();
 	renderSystem = mngr_->addSystem<RenderSystem>();
 	scoreSystem = mngr_->addSystem<ScoreSystem>();
-
+	safeSystem = mngr_->addSystem<SafeSystem>();
+	
 
 	//creacion de estados
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
 	runing_state_ = new RunningState(pacManSystem,ghostSystem,foodSystem,
-									immunitySystem,collisionsSystem,renderSystem,scoreSystem);
+									immunitySystem,collisionsSystem,renderSystem,scoreSystem,safeSystem);
 
 	paused_state_ = new PausedState();
 	gameover_state_ = new GameOverState();

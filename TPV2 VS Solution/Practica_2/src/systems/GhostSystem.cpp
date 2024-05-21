@@ -5,6 +5,8 @@
 #include "../components/Transform.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Health.h"
+#include "../components/Weak.h"
+#include "../components/Ghost.h"
 #include "../game/Game.h"
 
 GhostSystem::GhostSystem()
@@ -75,11 +77,72 @@ void GhostSystem::recieve(const Message& msg)
 			}
 		}
 	}
+	else if (msg.id == _m_PACMAN_GHOST_WEAK_COLLISION) {
+
+
+		if (pacManImmune) {
+			mngr_->setAlive(msg.ghost_collision_data.e, false);
+
+			Message mScore;
+			mScore.id = _m_PACMAN_SCORE_GHOST;
+
+			mngr_->send(mScore, true);
+		}
+		else {
+			auto weakCmp = mngr_->getComponent<Weak>(msg.ghost_collision_data.e);
+
+			weakCmp->nCol--;
+
+			if (weakCmp->nCol <= 0) {
+
+				Message msg_;
+				msg_.id = _m_PACMAN_GHOST_COLLISION;
+
+				msg_.ghost_collision_data.e = msg.ghost_collision_data.e;
+
+				mngr_->send(msg_, true);
+
+#ifdef _DEBUG
+				std::cout << "Muere fantasma debil" << std::endl;
+				std::cout << weakCmp->nCol << std::endl;
+#endif // DEBUG
+			}
+			else {
+				//devolver a su posicion 
+
+				auto tf = mngr_->getComponent<Transform>(msg.ghost_collision_data.e);
+
+
+				tf->pos_ = weakCmp->initialPos;
+
+
+#ifdef _DEBUG
+				std::cout << "Devuelve pos fantasma debil" << std::endl;
+				std::cout << tf->pos_ << std::endl;
+				std::cout << tf->vel_ << std::endl;
+#endif // DEBUG
+
+				if (weakCmp->nCol <= 1) {
+
+					auto img = mngr_->getComponent<ImageWithFrames>(msg.ghost_collision_data.e);
+
+					img->firstIndex = 32;
+					img->lastIndex = 39;
+					img->currentFrame = 32;
+				}
+
+			}
+		}
+		
+	}
+
 	else if (msg.id == _m_IMMUNITY_START) {
 		pacManImmune = true;
+		handleInmmunityStart();
 	}
 	else if (msg.id == _m_IMMUNITY_END) {
 		pacManImmune = false;
+		handleInmmunityEnd();
 	}
 	else if (msg.id == _m_ROUND_OVER) {
 		destroyGhosts();
@@ -88,6 +151,19 @@ void GhostSystem::recieve(const Message& msg)
 
 		//actualizar el contador de tiempo
 		lastSpawn = sdlutils().virtualTimer().currTime();
+	}
+	else if (msg.id == _m_ENTER_SAFE_MODE) {
+
+		for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+			auto ghsCmp = mngr_->getComponent<Ghost>(e);
+			ghsCmp->move = false;
+		}	
+	}
+	else if (msg.id == _m_EXIT_SAFE_MODE) {
+		for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+			auto ghsCmp = mngr_->getComponent<Ghost>(e);
+			ghsCmp->move = true;
+		}
 	}
 
 }
@@ -112,6 +188,7 @@ void GhostSystem::generateGhosts()
 
 		auto tf = mngr_->addComponent<Transform>(newGhost);
 		auto img = mngr_->addComponent<ImageWithFrames>(newGhost,"spriteSheet",fils,cols);
+		auto ghCmpt = mngr_->addComponent<Ghost>(newGhost);
 
 		tf->setWidth(width);
 		tf->setHeight(height);
@@ -130,25 +207,38 @@ void GhostSystem::generateGhosts()
 
 			break;
 		case 1:
-			img->firstIndex = 40;
-			img->lastIndex = 47;
-			img->currentFrame = 40;
+			img->firstIndex = 32;
+			img->lastIndex = 39;
+			//img->firstIndex = 40;
+			//img->lastIndex = 47;
+			img->currentFrame = 32;
+
 
 			tf->getPos().set(0, sdlutils().height()-height);
 
 			break;
 		case 2:
-			img->firstIndex = 48;
-			img->lastIndex = 55;
-			img->currentFrame = 48;
+			img->firstIndex = 32;
+			img->lastIndex = 39;
+			//img->firstIndex = 48;
+			//img->lastIndex = 55;
+			//img->currentFrame = 48;
+			img->currentFrame = 32;
+
+
 
 			tf->getPos().set(sdlutils().width() -width, 0);
 
 			break;
 		case 3:
-			img->firstIndex = 56;
-			img->lastIndex = 63;
-			img->currentFrame = 56;
+			img->firstIndex = 32;
+			img->lastIndex = 39;
+			//img->firstIndex = 56;
+			//img->lastIndex = 63;
+			//img->currentFrame = 56;
+			img->currentFrame = 32;
+
+
 
 			tf->getPos().set(sdlutils().width() - width, sdlutils().height() - height);
 
@@ -164,6 +254,31 @@ void GhostSystem::generateGhosts()
 		auto posPM = mngr_->getComponent<Transform>(mngr_->getHandler(ecs::hdlr::PACMAN))->pos_;
 
 		tf->vel_ = (posPM - tf->pos_).normalize() * 1.1f;
+
+		//decidir si el fantasma es un fantasma debil
+
+		if (sdlutils().rand().nextInt(0, 1000) <= weakChance) {
+
+			int nChoques = sdlutils().rand().nextInt(minWeakCollisions, maxWeakCollisions);
+
+
+			mngr_->addComponent<Weak>(newGhost, nChoques,tf->getPos());
+
+			//si es fantasma debil cambiamos el color
+			img->firstIndex = 56;
+			img->lastIndex = 63;
+			img->currentFrame = 56;
+
+#ifdef _DEBUG
+			std::cout << "Creado fantasma debil" << std::endl;
+#endif // DEBUG
+
+		}
+
+
+		
+
+
 	}
 }
 
@@ -171,6 +286,10 @@ void GhostSystem::moveGhosts()
 {
 	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		
+		auto ghsCmp = mngr_->getComponent<Ghost>(e);
+
+		if (!ghsCmp->move) continue;
+
 		auto tf = mngr_->getComponent<Transform>(e);
 
 		int rand = sdlutils().rand().nextInt(1, 1000);
@@ -204,5 +323,42 @@ void GhostSystem::destroyGhosts()
 {
 	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		mngr_->setAlive(e, false);
+	}
+}
+
+void GhostSystem::handleInmmunityStart()
+{
+	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+
+		auto weak = mngr_->getComponent<Weak>(e);
+
+		if (weak != nullptr) {
+
+			auto img = mngr_->getComponent<ImageWithFrames>(e);
+
+			img->firstIndex = 32;
+			img->lastIndex = 39;
+			img->currentFrame = 32;
+		}
+	}
+
+
+}
+
+void GhostSystem::handleInmmunityEnd()
+{
+
+	for (auto& e : mngr_->getEntities(ecs::grp::GHOSTS)) {
+
+		auto weak = mngr_->getComponent<Weak>(e);
+
+		if (weak != nullptr && weak->nCol >1) {
+
+			auto img = mngr_->getComponent<ImageWithFrames>(e);
+
+			img->firstIndex = 56;
+			img->lastIndex = 63;
+			img->currentFrame = 56;
+		}
 	}
 }

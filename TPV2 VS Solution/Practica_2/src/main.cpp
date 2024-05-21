@@ -1,11 +1,22 @@
+
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #include <iostream>
 
 #include "game/Game.h"
 
+
+
+
+
+
+
+
 int main(int, char**) {
 
+	
+
+	
 	try {
 		Game &g = *Game::instance();
 		g.init();
@@ -19,7 +30,12 @@ int main(int, char**) {
 	} catch (...) {
 		std::cerr << "Caught and exception of unknown type ...";
 	}
+	
 
 	return 0;
 }
+
+
+
+
 

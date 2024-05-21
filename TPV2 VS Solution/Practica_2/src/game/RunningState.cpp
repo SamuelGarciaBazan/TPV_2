@@ -20,11 +20,12 @@
 #include "../systems/CollisionsSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/ScoreSystem.h"
+#include "../systems/SafeSystem.h"
 
 RunningState::RunningState(PacManSystem* pc, GhostSystem*gh, FoodSystem*fo,
-	ImmunitySystem*im, CollisionsSystem*col, RenderSystem*r,ScoreSystem* sc)
+	ImmunitySystem*im, CollisionsSystem*col, RenderSystem*r,ScoreSystem* sc, SafeSystem* sfsys)
 	:pacManSystem(pc),ghostSystem(gh),foodSystem(fo),
-	immunitySystem(im),collisionsSystem(col),renderSystem(r),scoreSystem(sc)
+	immunitySystem(im),collisionsSystem(col),renderSystem(r),scoreSystem(sc),safeSystem(sfsys)
 {
 
 }
@@ -78,6 +79,7 @@ void RunningState::update()
 	collisionsSystem->update();
 	renderSystem->update();
 	scoreSystem->update();
+	safeSystem->update();
 }
 
 

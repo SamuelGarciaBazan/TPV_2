@@ -1,0 +1,13 @@
+Samuel García Bazán
+
+Pregunta 1,
+ nuevo componente weak para llevar la cuenta de las colisiones y la pos inicial
+collision sistem manda mensaje distinto para colision con weak ghost
+ghost sistem procesa el mensaje con la logica correspondiente
+render sistem cambiado para devolver al color adecuado a cada uno
+
+Pregunta 2,
+
+safeSystem para gestionar toda la logica del safe
+componente ghost para saber si se pueden mover o no
+ghost sistem, al recibir el mensaje de entrar en safe mode pone a todos los fantasmas actuales a dontMove y al recibir el exit de ese estado los vuelve a poner a move
